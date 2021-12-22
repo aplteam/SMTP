@@ -1,0 +1,20 @@
+ R←Test_Attachments_001(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;mat
+⍝ Check the GetMimeType function
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ mat←SMTP.Attachment.GetAllMimeTypes
+ →T.PassesIf 2=2⊃⍴mat
+ →T.PassesIf 0<≢mat
+ →T.PassesIf(,'.')≡∪⊃¨mat[;1]
+ →T.PassesIf~∨/∨/¨mat[;2]∊¨⊂⎕UCS 9 32 ⍝ tab and space
+
+ →T.PassesIf'application/octet-stream'≡SMTP.Attachment.GetMimeType'Does-not-exist-for-sure'
+ →T.PassesIf'application/octet-stream'≡SMTP.Attachment.GetMimeType''
+ →T.PassesIf'text/plain'≡SMTP.Attachment.GetMimeType'.txt'
+ →T.PassesIf'application/pdf'≡SMTP.Attachment.GetMimeType'pdf'
+ →T.PassesIf'application/msword'≡SMTP.Attachment.GetMimeType'.DOC'
+
+ R←T._OK
+⍝Done

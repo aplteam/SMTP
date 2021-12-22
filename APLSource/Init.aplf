@@ -1,0 +1,4 @@
+ Init
+ {}TestCases.FilesAndDirs.Cd CiderConfig.HOME
+ ⎕←' Current dir is ',TestCases.FilesAndDirs.PWD
+⍝Done
