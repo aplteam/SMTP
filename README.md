@@ -1,8 +1,8 @@
 # SMTP
 
-`SMTP` is a Tatin package (See https://tatin.dev ) that allows you to send emails from within Dyalog APL. 
+`SMTP` allows you to send emails from within Dyalog APL. It comes with a ready-to-go example that works out of the box.
 
-The package comes with a ready-to-go example that works out of the box.
+**Note:** `SMTP` releases are published as [Tatin](https://tatin.dev "Link to the principal Tatin Registry") packages, see there.
 
 
 1. Install the package with 
