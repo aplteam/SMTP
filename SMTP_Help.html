@@ -15,7 +15,7 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}b
 <body>
 <div class="h_tag">
 <a href="#SMTP-Help" id="SMTP-Help" class="autoheader_anchor">
-<h1 data-id="SMTP-Help"><code>SMTP</code> Help</h1>
+<h1 data-id="SMTP-Help"><code>SMTP</code> Help!</h1>
 </a>
 </div>
 <div class="h_tag">
@@ -27,8 +27,8 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}b
 <p>However, there is a solution: the <code>SMTP</code> package from the Tatin server. It works out of the box; the README.md document carries information for how to send yourself an email with a single command after loading the package.</p>
 <div class="leanpub_A">
 <h3>It might not work</h3>
-<p>Some users have reported problems when trying to use <code>SendEmailExample</code> or running the test cases. It appears that Google has some AI in place that tries to figure out when somebody is using the credentials without actually being entitled to do so, and that results in stuff not working, and there is not much we can do.</p>
-<p>If this affects you then we suggest that you create your own Email account and use that; see “Using smtp.google.com” below.</p>
+<p>A few users have reported problems when trying to use <code>SendEmailExample</code> or running the test cases. It appears that Google has some AI in place that tries to figure out when somebody is using the credentials without actually being entitled to do so, and that results in stuff not working, and there is not much we can do.</p>
+<p>If this affects you then we suggest that you create your own Email account and use that; see “Using smtp.google.com yourself” below.</p>
 </div>
 
 <div class="h_tag">
@@ -74,10 +74,23 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}b
 <p><strong>Note that this is a valid description as of 2021-09.</strong> It might well change, and this recipe is not going to be updated. However, you should be able to find your way as long as the general machanism is still working.</p>
 <div class="leanpub_A">
 <h3>Create your own GMail address for SMTP</h3>
-<p>For Gmail you need a Google account, which can be set up quickly via the <a href="https://accounts.google.com/SignUp" class="external_link">Google registration page</a>.</p>
-<p>In addition you should allow access by less secure apps. To do this, click in the <a href="https://myaccount.google.com/" class="external_link">settings of the Google account</a> in the menu on the left on “Security”, then on “Access by less secure apps” and activate the switch. In this way, you can identify yourself with just a username and password, and send emails.</p>
-<p>Of course, there are security reasons why Google no longer only relies on username and password by default. Google wants developers to use the more secure OAuth method so that users can access Google services via other programs, and that's what we too recommend for productive use.</p>
-<p><a href="https://support.google.com/mail/answer/7126229?hl=en#zippy=%2Cschritt-smtp–und-andere-einstellungen-im-e-mail-client-%C3%A4ndern%2Cstep-change-smtp-other-settings-in-your-email-client" class="external_link" title="Link to a Google Support page">List with required parameters</a></p>
+<ol start="1">
+<li>When being logged on to your Gmail account, click on the avatar symbol at the top right corner.
+<p>A dialog box pops up.</p></li>
+<li>Select “Manage your Google account”.
+<p>The “Google account” page appears.</p></li>
+<li>Click on “Security” on the left site.
+<p>The “Security” page appears,</p></li>
+<li>Make sure the 2-Step Verification in the “Signing in to Google” section is ative; without this being active you cannot carry out the next step.</li>
+<li>Select “App passwords”, also in the “Signing in to Google” section.</li>
+<li>You will be prompted for you password (again).
+<p>The “App password” page pops up.</p></li>
+<li>Click on “Select app” and select “Other (custom name)” from the selection list.</li>
+<li>Enter an app name. This name is not really used for anything, its purpose is tell you what this is all about.
+<p>Don't forget that you will probably forget why you do right now what you do, so enter something that tells you enough to jog your memory in a distant future.</p></li>
+<li>Enter a device name. Same consideration as for topic number 8 applies here.</li>
+<li>Finally you get the “generated app password” page with the password — job done.</li>
+</ol>
 </div>
 
 <div class="h_tag">

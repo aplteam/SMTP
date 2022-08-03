@@ -3,7 +3,7 @@
 
 
 
-# `SMTP` Help
+# `SMTP` Help!
 
 ## Overview
 
@@ -13,9 +13,9 @@ However, there is a solution: the `SMTP` package from the Tatin server. It works
 
 A> ### It might not work
 A>
-A> Some users have reported problems when trying to use `SendEmailExample` or running the test cases. It appears that Google has some AI in place that tries to figure out when somebody is using the credentials without actually being entitled to do so, and that results in stuff not working, and there is not much we can do.
+A> A few users have reported problems when trying to use `SendEmailExample` or running the test cases. It appears that Google has some AI in place that tries to figure out when somebody is using the credentials without actually being entitled to do so, and that results in stuff not working, and there is not much we can do.
 A>
-A> If this affects you then we suggest that you create your own Email account and use that; see "Using smtp.google.com" below.
+A> If this affects you then we suggest that you create your own Email account and use that; see "Using smtp.google.com yourself" below.
 
 ## User Guide
 
@@ -41,6 +41,7 @@ You may add one or more files as attachments:
 
 This uses hard-coded credentials. The email address is only suitable for tests, don't use it for anything else!
 Be aware that the credentials might well change in case somebody abuses this, or the email address might disappear altogether.
+
 
 ### Using smtp.google.com yourself
 
@@ -70,13 +71,35 @@ In order to enable it follow these steps:
 
 A> ### Create your own GMail address for SMTP
 A>
-A> For Gmail you need a Google account, which can be set up quickly via the [Google registration page](https://accounts.google.com/SignUp).
+A> 1. When being logged on to your Gmail account, click on the avatar symbol at the top right corner.
 A>
-A> In addition you should allow access by less secure apps. To do this, click in the [settings of the Google account](https://myaccount.google.com/) in the menu on the left on "Security", then on "Access by less secure apps" and activate the switch. In this way, you can identify yourself with just a username and password, and send emails.
+A>   A dialog box pops up. 
 A>
-A> Of course, there are security reasons why Google no longer only relies on username and password by default. Google wants developers to use the more secure OAuth method so that users can access Google services via other programs, and that's what we too recommend for productive use.
+A> 2. Select "Manage your Google account".
 A>
-A> [List with required parameters](https://support.google.com/mail/answer/7126229?hl=en#zippy=%2Cschritt-smtp--und-andere-einstellungen-im-e-mail-client-%C3%A4ndern%2Cstep-change-smtp-other-settings-in-your-email-client "Link to a Google Support page" )
+A>   The "Google account" page appears. 
+A>
+A> 3. Click on "Security" on the left site.
+A>
+A>   The "Security" page appears,
+A>
+A> 4. Make sure the 2-Step Verification in the "Signing in to Google" section is ative; without this being active you cannot carry out the next step.
+A>
+A> 5. Select "App passwords", also in the "Signing in to Google" section.
+A>
+A> 6. You will be prompted for you password (again).
+A>
+A>    The "App password" page pops up.
+A>
+A> 7. Click on "Select app" and select "Other (custom name)" from the selection list.
+A>
+A> 8. Enter an app name. This name is not really used for anything, its purpose is tell you what this is all about. 
+A>
+A>    Don't forget that you will probably forget why you do right now what you do, so enter something that tells you enough to jog your memory in a distant future.
+A>
+A> 9. Enter a device name. Same consideration as for topic number 8 applies here.
+A>
+A> 10. Finally you get the "generated app password" page with the password --- job done.
 
 ### Usage
 
