@@ -69,8 +69,19 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}b
 <li>Go to the tab “Accounts and Import”</li>
 <li>Under “Change account settings” click “Other Google Account settings”</li>
 <li>On the left click “Security”</li>
-<li>Close to the bottom there is a section “Less secure app access” - you must enable this, otherwise you will always get an error 535 (Bad credentials) when you try to send an email to this address.</li>
+<li>Make sure that 2FA (two-factor authentication) is active because this is a requirements for the next step to be available.</li>
+<li>In the section “Signing in to Google” there is an option “App password” available</li>
+<li>From the “Select app” drop-down select “mail”</li>
+<li>From the “Select Device” drop-down select “Other (custom name)” and enter something meaningful, like “MyTatinServer”</li>
+<li>Click “Generate”</li>
 </ol>
+<p>A dialog box opens with a 16-character password. Make sure to copy this password into the INI file of your Tatin server in the <code>[EMAIL]</code> section and you are ready to go.</p>
+<div class="leanpub_A">
+<h3>Less secure app access</h3>
+<p>In the past it was possible to allow Apps access via the “Less secure Apps” option. This is not available anymore since March 2022.</p>
+<p>The reason is that somebody had full access to the Google account when logging on via this mechanism.</p>
+</div>
+
 <p><strong>Note that this is a valid description as of 2021-09.</strong> It might well change, and this recipe is not going to be updated. However, you should be able to find your way as long as the general machanism is still working.</p>
 <div class="leanpub_A">
 <h3>Create your own GMail address for SMTP</h3>

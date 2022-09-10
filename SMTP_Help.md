@@ -65,7 +65,24 @@ In order to enable it follow these steps:
 
 5. On the left click "Security"
 
-6. Close to the bottom there is a section "Less secure app access" - you must enable this, otherwise you will always get an error 535 (Bad credentials) when you try to send an email to this address.
+6. Make sure that 2FA (two-factor authentication) is active because this is a requirements for the next step to be available.
+
+7. In the section "Signing in to Google" there is an option "App password" available
+
+8. From the "Select app" drop-down select "mail"
+
+9. From the "Select Device" drop-down select "Other (custom name)" and enter something meaningful, like "MyTatinServer"
+
+10. Click "Generate"
+
+A dialog box opens with a 16-character password. Make sure to copy this password into the INI file of your Tatin server in the `[EMAIL]` section and you are ready to go.
+
+
+A> ### Less secure app access
+A>
+A> In the past it was possible to allow Apps access via the "Less secure Apps" option. This is not available anymore since March 2022. 
+A>
+A> The reason is that somebody had full access to the Google account when logging on via this mechanism.
 
 **Note that this is a valid description as of 2021-09.** It might well change, and this recipe is not going to be updated. However, you should be able to find your way as long as the general machanism is still working.
 
