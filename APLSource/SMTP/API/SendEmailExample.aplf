@@ -1,1 +1,1 @@
- SendEmailExample←{⍺←⊢ ⋄ ⍺ ##.SendEmailExample ⍵}
+SendEmailExample←{⍺←⊢ ⋄ ⍺ ##.SendEmailExample ⍵}
