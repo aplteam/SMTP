@@ -1,4 +1,8 @@
 (
+ '* 3.0.0 from 2025-04-09'
+ '  * Potentially breaking: `Version` now returns a simple character vector stemming from the package config file'
+ '  * "Make" improved'
+ '  * Packages updated'
  '* 2.1.0 from 2022-09-10'
  '  * Documentation needed an update because Google has replaced the "Allow access from unsafe apps" by a more'
  '    secure mechanism. The software however remaind unchanged.'
