@@ -5,7 +5,7 @@
 **Note:** `SMTP` releases are published as [Tatin](https://tatin.dev "Link to the principal Tatin Registry") packages, see there.
 
 
-1. Install the package with 
+1. To try it out, load the package into the workspace with 
 
    ```
    ]TATIN.LoadPackage [tatin]SMTP
@@ -17,15 +17,15 @@
    SMTP.SendEmailExample 'john.doe@whatever.com'
    ```
 
-Note that the example uses a particular email address and an API key that can be accessed by anybody who loads the package. Of course this means that you must not send anything remotely confidential to this email address as clear text.
+Note that the example uses a particular email address and an API key that anybody who loads the package can access. Of course this means that you must not send anything remotely confidential to this email address as clear text.
 
-This address is configured so that an application can kind of log on with that API key, and then send emails to that address; this is considered relatively unsafe, and it is not recommended by Google.
+This address is configured so that an application can kind of log on with that API key, and then send emails to that address; this is considered relatively unsafe, and it is not recommended by Google. This is also the reason why an email send via this sender address is likely to be qualified as spam by Google.
 
-It cannot be used for spam because the number of emails one can send this way is severly limited by Google, but it can be used to send a couple of emails.
+It cannot be used for spam because the number of emails one can send this way is severely limited by Google, but it can be used to send a couple of emails.
 
 Nobody is watching that email address, but the _real_ receiver is the CC anyway of course.
 
-You may create your own email address with Google and use it to send messages from a server for reporting stuff like
+You may create your own email address (and API key) with Google and use it to send messages from a server for reporting stuff like
 
 * Crashes
 * "Start" and "Shutdown" events
