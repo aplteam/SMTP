@@ -35,6 +35,9 @@ div.code-block {
     margin: 0.5em 0.5em 0.5em 0.5em;
     padding: 0.5em;
 }
+div.code-block.missing {
+    background-color: #fa605254;
+}
 div.code-block code {display: block; white-space: pre-wrap; margin:0; padding:0; word-wrap: break-word;}
 .emphasize { font-weight: 800;}
 ul li, ol li {margin: 0.7em 0.2em;}
@@ -117,71 +120,134 @@ ul li, ol li {margin: 8pt 3pt;}
 </head>
 <body>
 <h1 id="top">Coverage Report</h1>
-<p>Watched: 40 fns/opr within <code>#.WinReg.WinReg</code></p>
+<p>Watched: 107 fns/opr within <code>#.SMTP.SMTP</code></p>
 <p>The test suite was executed once:</p>
 <table>
 <thead>
 <tr><th>Executed at</th><th>APLVersion</th><th>Memory (MB)</th></tr>
 </thead>
 <tbody>
-<tr><td>2022-08-04 11:43:05</td><td>Windows-64 ⋄ 18.2.45427.0 ⋄ W ⋄ Development</td><td>54</td></tr>
+<tr><td>2025-04-09 11:50:05</td><td>Windows-64 ⋄ 19.0.51432.0 ⋄ W ⋄ Development ⋄ Unicode</td><td>114</td></tr>
 </tbody>
 </table>
-<p>Overall 89% of the testable code is covered.</p>
+<p>Overall 82% of the testable code is covered.</p>
 <p>(Comment lines, empty lines, all <code>:End</code>* lines etc. are ignored)</p>
-<p>18 of the fns/opr are 100% covered.</p>
+<p>75 of the fns/opr are 100% covered.</p>
 <div id="partly-covered" class="keep-together">
 <table id="percent">
 <thead>
 <tr><th style="text-align:left;">Function/Operator</th><th style="text-align:left;">Lines not executed</th><th style="text-align:left;">Coverage</th><th style="text-align:right;">≢</th></tr>
 </thead>
 <tbody>
-<tr class="uncovered"><td>#.WinReg.WinReg.Version</td><td>2</td><td>0</td><td>1</td></tr>
-<tr><td>#.WinReg.WinReg.CheckPath</td><td>6←≢9-13,15</td><td>57</td><td>14</td></tr>
-<tr><td>#.WinReg.WinReg.Get_HKEY_From</td><td>7←≢5,9,11,13,15,17,22</td><td>63</td><td>19</td></tr>
-<tr><td>#.WinReg.WinReg.GetAllNamesAndValues</td><td>5←≢20,34-36,38</td><td>77</td><td>22</td></tr>
-<tr><td>#.WinReg.WinReg.GetAllSubKeyNames</td><td>5←≢4-5,10,24-25</td><td>77</td><td>22</td></tr>
-<tr><td>#.WinReg.WinReg.GetTreeWithValues</td><td>12, 16, 19</td><td>82</td><td>17</td></tr>
-<tr><td>#.WinReg.WinReg.OpenAndCreateKey</td><td>12</td><td>88</td><td>8</td></tr>
-<tr><td>#.WinReg.WinReg.GetString</td><td>5←≢27,30-31,47,56</td><td>89</td><td>46</td></tr>
-<tr><td>#.WinReg.WinReg.OpenKey</td><td>14</td><td>89</td><td>9</td></tr>
-<tr><td>#.WinReg.WinReg.GetAllValueNames</td><td>38, 39</td><td>91</td><td>23</td></tr>
-<tr><td>#.WinReg.WinReg.CopyTree</td><td>16, 25</td><td>91</td><td>23</td></tr>
-<tr><td>#.WinReg.WinReg.PutValue</td><td>21, 32, 33</td><td>92</td><td>37</td></tr>
-<tr><td>#.WinReg.WinReg.DeleteValue</td><td>19</td><td>92</td><td>13</td></tr>
-<tr><td>#.WinReg.WinReg.HandleDataType</td><td>9</td><td>92</td><td>12</td></tr>
-<tr><td>#.WinReg.WinReg.GetValue</td><td>32, 33, 35</td><td>93</td><td>45</td></tr>
-<tr><td>#.WinReg.WinReg.DeleteSubKeyTree</td><td>23</td><td>93</td><td>15</td></tr>
-<tr><td>#.WinReg.WinReg.DoesValueExist</td><td>17</td><td>93</td><td>15</td></tr>
-<tr><td>#.WinReg.WinReg.GetTree</td><td>14</td><td>94</td><td>16</td></tr>
-<tr><td>#.WinReg.WinReg.DeleteSubKey</td><td>23</td><td>94</td><td>16</td></tr>
-<tr><td>#.WinReg.WinReg.PutBinary</td><td>32</td><td>95</td><td>20</td></tr>
-<tr><td>#.WinReg.WinReg.KeyInfo</td><td>19</td><td>95</td><td>19</td></tr>
-<tr><td>#.WinReg.WinReg.PutString</td><td>29</td><td>97</td><td>30</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.History</td><td></td><td>100</td><td>0</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.ListError</td><td></td><td>100</td><td>2</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.ListReg</td><td></td><td>100</td><td>2</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.GetAllValues</td><td></td><td>100</td><td>1</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.DoesKeyExist</td><td></td><td>100</td><td>4</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.GetTypeAsStringFrom</td><td></td><td>100</td><td>3</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.GetErrorAsStringFrom</td><td></td><td>100</td><td>3</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.Close</td><td></td><td>100</td><td>4</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.GetDyalogRegPath</td><td></td><td>100</td><td>5</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.GetVersion</td><td></td><td>100</td><td>4</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.ExpandEnv</td><td></td><td>100</td><td>3</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.GetAsString</td><td></td><td>100</td><td>4</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.ConvertErrorCode</td><td></td><td>100</td><td>6</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.List</td><td></td><td>100</td><td>2</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.default</td><td></td><td>100</td><td>0</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.verbose</td><td></td><td>100</td><td>0</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.depth</td><td></td><td>100</td><td>0</td></tr>
-<tr class="fullyCovered"><td>#.WinReg.WinReg.accessRights</td><td></td><td>100</td><td>0</td></tr>
+<tr class="uncovered"><td><a href="#listing_1" title="Link to listing">#.SMTP.SMTP.Help</a></td><td>4←≢1-3,5</td><td>0</td><td>4</td></tr>
+<tr class="uncovered"><td><a href="#listing_2" title="Link to listing">#.SMTP.SMTP.Connection.get_Clt  </a></td><td>1</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_3" title="Link to listing">#.SMTP.SMTP.Connection.get_Conx  </a></td><td>1</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_4" title="Link to listing">#.SMTP.SMTP.Connection.get_LoggedOn  </a></td><td>1</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_5" title="Link to listing">#.SMTP.SMTP.Connection.Config</a></td><td>3</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_6" title="Link to listing">#.SMTP.SMTP.Connection.Xmit</a></td><td>5←≢6-10</td><td>0</td><td>5</td></tr>
+<tr class="uncovered"><td><a href="#listing_7" title="Link to listing">#.SMTP.SMTP.Connection.Reset</a></td><td>2</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_8" title="Link to listing">#.SMTP.SMTP.Message.get_Text</a></td><td>1</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_9" title="Link to listing">#.SMTP.SMTP.Message.Send</a></td><td>2</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_10" title="Link to listing">#.SMTP.SMTP.Message.Config</a></td><td>3</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_11" title="Link to listing">#.SMTP.SMTP.API.Connection</a></td><td>1</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_12" title="Link to listing">#.SMTP.SMTP.API.Help</a></td><td>1</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_13" title="Link to listing">#.SMTP.SMTP.API.History</a></td><td>1</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_14" title="Link to listing">#.SMTP.SMTP.API.Message</a></td><td>1</td><td>0</td><td>1</td></tr>
+<tr class="uncovered"><td><a href="#listing_15" title="Link to listing">#.SMTP.SMTP.API.Version</a></td><td>1</td><td>0</td><td>1</td></tr>
+<tr><td><a href="#listing_16" title="Link to listing">#.SMTP.SMTP.MailParameters.PerformChecks</a></td><td>4←≢6,9,12,15</td><td>56</td><td>9</td></tr>
+<tr><td><a href="#listing_17" title="Link to listing">#.SMTP.SMTP.Version</a></td><td>4, 10</td><td>60</td><td>5</td></tr>
+<tr><td><a href="#listing_18" title="Link to listing">#.SMTP.SMTP.Connection.Init</a></td><td>15←≢7,10-13,19,23-26,28,39-40,47-48</td><td>62</td><td>39</td></tr>
+<tr><td><a href="#listing_19" title="Link to listing">#.SMTP.SMTP.Connection.ResolveCongaRef</a></td><td>7←≢11,13,17,23-26</td><td>63</td><td>19</td></tr>
+<tr><td><a href="#listing_20" title="Link to listing">#.SMTP.SMTP.Connection.Connected</a></td><td>4←≢7,14,16,19</td><td>69</td><td>13</td></tr>
+<tr><td><a href="#listing_21" title="Link to listing">#.SMTP.SMTP.Connection.Do</a></td><td>6←≢71,80-82,84,87</td><td>70</td><td>20</td></tr>
+<tr><td><a href="#listing_22" title="Link to listing">#.SMTP.SMTP.Message.chunk</a></td><td>7←≢21,24-26,31,33,45</td><td>70</td><td>23</td></tr>
+<tr><td><a href="#listing_23" title="Link to listing">#.SMTP.SMTP.Connection.Logon</a></td><td>5←≢8,12,20-21,23</td><td>71</td><td>17</td></tr>
+<tr><td><a href="#listing_24" title="Link to listing">#.SMTP.SMTP.Connection.Connect</a></td><td>6←≢24-25,28-31</td><td>74</td><td>23</td></tr>
+<tr><td><a href="#listing_25" title="Link to listing">#.SMTP.SMTP.Connection.unmake</a></td><td>5</td><td>75</td><td>4</td></tr>
+<tr><td><a href="#listing_26" title="Link to listing">#.SMTP.SMTP.Connection.EHLO</a></td><td>9</td><td>83</td><td>6</td></tr>
+<tr><td><a href="#listing_27" title="Link to listing">#.SMTP.SMTP.Message.Compose</a></td><td>5←≢6-8,40-41</td><td>86</td><td>37</td></tr>
+<tr><td><a href="#listing_28" title="Link to listing">#.SMTP.SMTP.Connection.Send</a></td><td>4←≢5,8,35-36</td><td>87</td><td>30</td></tr>
+<tr><td><a href="#listing_29" title="Link to listing">#.SMTP.SMTP.SendEmailExample</a></td><td>26, 33</td><td>89</td><td>19</td></tr>
+<tr><td><a href="#listing_30" title="Link to listing">#.SMTP.SMTP.Message.ProcessAttachment</a></td><td>7</td><td>90</td><td>10</td></tr>
+<tr><td><a href="#listing_31" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.PerformChecks</a></td><td>12</td><td>93</td><td>14</td></tr>
+<tr><td><a href="#listing_32" title="Link to listing">#.SMTP.SMTP.Message.now</a></td><td>22</td><td>94</td><td>17</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_33" title="Link to listing">#.SMTP.SMTP.Attachment.set_filename</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_34" title="Link to listing">#.SMTP.SMTP.Attachment.get_filename</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_35" title="Link to listing">#.SMTP.SMTP.Attachment.set_mimeType</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_36" title="Link to listing">#.SMTP.SMTP.Attachment.get_mimeType</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_37" title="Link to listing">#.SMTP.SMTP.Attachment.make1</a></td><td></td><td>100</td><td>4</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_38" title="Link to listing">#.SMTP.SMTP.Attachment.make2</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_39" title="Link to listing">#.SMTP.SMTP.Attachment.Init</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_40" title="Link to listing">#.SMTP.SMTP.Attachment.GetAllMimeTypes</a></td><td></td><td>100</td><td>42</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_41" title="Link to listing">#.SMTP.SMTP.Attachment.GetMimeType</a></td><td></td><td>100</td><td>5</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_42" title="Link to listing">#.SMTP.SMTP.Connection.set_EHLOResponse</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_43" title="Link to listing">#.SMTP.SMTP.Connection.get_EHLOResponse</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_44" title="Link to listing">#.SMTP.SMTP.Connection.set_Clt  </a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_45" title="Link to listing">#.SMTP.SMTP.Connection.set_Conx  </a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_46" title="Link to listing">#.SMTP.SMTP.Connection.set_LoggedOn  </a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_47" title="Link to listing">#.SMTP.SMTP.Connection.set_ConnectionParms</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_48" title="Link to listing">#.SMTP.SMTP.Connection.get_ConnectionParms</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_49" title="Link to listing">#.SMTP.SMTP.Connection.CRLF</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_50" title="Link to listing">#.SMTP.SMTP.Connection.make1</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_51" title="Link to listing">#.SMTP.SMTP.Connection.NewMessage</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_52" title="Link to listing">#.SMTP.SMTP.Connection.Logoff</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_53" title="Link to listing">#.SMTP.SMTP.Connection.Ping</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_54" title="Link to listing">#.SMTP.SMTP.Connection.logIt</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_55" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.set_Server</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_56" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.get_Server</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_57" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.set_Password</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_58" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.get_Password</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_59" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.set_Userid</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_60" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.get_Userid</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_61" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.set_Secure</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_62" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.get_Secure</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_63" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.set_Port</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_64" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.get_Port</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_65" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.set_Domain</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_66" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.get_Domain</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_67" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.set_Org</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_68" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.get_Org</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_69" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.set_ReplyTo</a></td><td></td><td>100</td><td>5</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_70" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.get_ReplyTo</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_71" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.set_XMailer</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_72" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.get_XMailer</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_73" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.set_TLSFlags</a></td><td></td><td>100</td><td>4</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_74" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.get_TLSFlags</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_75" title="Link to listing">#.SMTP.SMTP.ConnectionParameters.make</a></td><td></td><td>100</td><td>10</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_76" title="Link to listing">#.SMTP.SMTP.MailParameters.set_To</a></td><td></td><td>100</td><td>5</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_77" title="Link to listing">#.SMTP.SMTP.MailParameters.get_To</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_78" title="Link to listing">#.SMTP.SMTP.MailParameters.set_CC</a></td><td></td><td>100</td><td>5</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_79" title="Link to listing">#.SMTP.SMTP.MailParameters.get_CC</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_80" title="Link to listing">#.SMTP.SMTP.MailParameters.set_BCC</a></td><td></td><td>100</td><td>5</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_81" title="Link to listing">#.SMTP.SMTP.MailParameters.get_BCC</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_82" title="Link to listing">#.SMTP.SMTP.MailParameters.set_From</a></td><td></td><td>100</td><td>4</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_83" title="Link to listing">#.SMTP.SMTP.MailParameters.get_From</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_84" title="Link to listing">#.SMTP.SMTP.MailParameters.set_Subject</a></td><td></td><td>100</td><td>2</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_85" title="Link to listing">#.SMTP.SMTP.MailParameters.get_Subject</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_86" title="Link to listing">#.SMTP.SMTP.MailParameters.set_Body</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_87" title="Link to listing">#.SMTP.SMTP.MailParameters.get_Body</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_88" title="Link to listing">#.SMTP.SMTP.MailParameters.set_Attachments</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_89" title="Link to listing">#.SMTP.SMTP.MailParameters.get_Attachments</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_90" title="Link to listing">#.SMTP.SMTP.MailParameters.make</a></td><td></td><td>100</td><td>7</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_91" title="Link to listing">#.SMTP.SMTP.MailParameters.AddAttachment</a></td><td></td><td>100</td><td>10</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_92" title="Link to listing">#.SMTP.SMTP.Message.set_Text</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_93" title="Link to listing">#.SMTP.SMTP.Message.set_Recipients</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_94" title="Link to listing">#.SMTP.SMTP.Message.get_Recipients</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_95" title="Link to listing">#.SMTP.SMTP.Message.make1</a></td><td></td><td>100</td><td>10</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_96" title="Link to listing">#.SMTP.SMTP.Message.ReadFile</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_97" title="Link to listing">#.SMTP.SMTP.Message.CompileAllRecipients</a></td><td></td><td>100</td><td>4</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_98" title="Link to listing">#.SMTP.SMTP.Message.CRLF</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_99" title="Link to listing">#.SMTP.SMTP.Message.extractAddr</a></td><td></td><td>100</td><td>7</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_100" title="Link to listing">#.SMTP.SMTP.Message.normalizeAddr</a></td><td></td><td>100</td><td>3</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_101" title="Link to listing">#.SMTP.SMTP.Message.Base64Encoding</a></td><td></td><td>100</td><td>4</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_102" title="Link to listing">#.SMTP.SMTP.Message.addHeader</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_103" title="Link to listing">#.SMTP.SMTP.Message.stuff</a></td><td></td><td>100</td><td>0</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_104" title="Link to listing">#.SMTP.SMTP.API.Attachment</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_105" title="Link to listing">#.SMTP.SMTP.API.ConnectionParameters</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_106" title="Link to listing">#.SMTP.SMTP.API.MailParameters</a></td><td></td><td>100</td><td>1</td></tr>
+<tr class="fullyCovered"><td><a href="#listing_107" title="Link to listing">#.SMTP.SMTP.API.SendEmailExample</a></td><td></td><td>100</td><td>0</td></tr>
 </tbody>
 </table>
-</div>
-<div id="footer">
-<hr>
-<p>Created by "CodeCoverage" version 0.9.1+46 from 2021-10-29</p>
 </div>
 <script>
 $(document).ready(function() {
@@ -193,9 +259,18 @@ $(document).ready(function() {
         fixedHeader: true,
         order: [2,"asc"],
         dom: "Bft",
+        drawCallback: function( settings ) {
+             var api = this.api();
+             $('.header[id^="listing_"]').next().addBack().css("display","none");
+             api.rows( {page:"current"} ).data().each(function(data){
+              id = data[0];
+              id = id.match(/"(\#.*?)"/);
+              if (id){$(id[1]).next().addBack().css("display","block");}
+             })
+        },      
         buttons: [
         {
-            text: "Partly covered (21)",
+            text: "Partly covered (17)",
             titleAttr: "50%",
             className: "active",
             action: function ( e, dt, node, config ) {
@@ -209,7 +284,7 @@ $(document).ready(function() {
             }
         },
         {
-            text: "Uncovered (1)",
+            text: "Uncovered (15)",
             titleAttr: "0%",
             className: "active",
             action: function ( e, dt, node, config ) {
@@ -223,7 +298,7 @@ $(document).ready(function() {
             }
         },
         {
-            text: "Fully covered (18)",
+            text: "Fully covered (75)",
             titleAttr: "100%",
             className: "active",
             action: function ( e, dt, node, config ) {
@@ -237,7 +312,7 @@ $(document).ready(function() {
             }
         },
         {
-            text: "All (40)",
+            text: "All (107)",
             titleAttr: "all",
             className: "active",
             action: function ( e, dt, node, config ) {
@@ -267,6 +342,1139 @@ $(document).ready(function() {
 
 } );    
 </script>
+<h2>Listings</h2>
+<code class="header" id="listing_1">#.SMTP.SMTP.Help &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> {r}←Help</code>
+<code class="emphasize">→[1]  r←⍬</code>
+<code class="emphasize">→[2]  :If 0&lt;⎕NC'TatinVars'</code>
+<code class="emphasize">→[3]      ⎕SE.UCMD'Open ',TatinVars.GetFullPath2AssetsFolder</code>
+<code> [4]  :Else</code>
+<code class="emphasize">→[5]      ⎕SE.UCMD'Open ',##.CiderConfig.HOME,'/SMTP_Help.html'</code>
+<code> [6]  :EndIf</code>
+</div>
+<code class="header" id="listing_2">#.SMTP.SMTP.Connection.get_Clt   &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Clt</code>
+<code class="emphasize">→[1]  r←_clt</code>
+</div>
+<code class="header" id="listing_3">#.SMTP.SMTP.Connection.get_Conx   &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Conx</code>
+<code class="emphasize">→[1]  r←_conx</code>
+</div>
+<code class="header" id="listing_4">#.SMTP.SMTP.Connection.get_LoggedOn   &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_LoggedOn</code>
+<code class="emphasize">→[1]  r←_loggedOn</code>
+</div>
+<code class="header" id="listing_5">#.SMTP.SMTP.Connection.Config &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←Config</code>
+<code> [1]     ⍝ returns current service configuration</code>
+<code> [2]  :Access public</code>
+<code class="emphasize">→[3]  r←↑{⍵≡'Password':⍵'********' ⋄ ⍵(⍎⍵)}¨⎕THIS⍎'⎕NL ¯2.2 ¯2.3'</code>
+</div>
+<code class="header" id="listing_6">#.SMTP.SMTP.Connection.Xmit &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (rc msg)←{crlf}Xmit data</code>
+<code> [1]   :Access public</code>
+<code> [2]      ⍝ transmit data without waiting for a response</code>
+<code> [3]      ⍝ {crlf} is a Boolean (default=0) indicating whether to append CRLF to data</code>
+<code> [4]      ⍝ After receiving a "DATA" comment, the SMTP server does not send a response until it receives CRLF,'.',CRLF</code>
+<code> [5]      ⍝ so, the typical use of Xmit would be to send the headers and content of the message and ending with a Do CRLF,'.'</code>
+<code class="emphasize">→[6]   :If 0=⎕NC'crlf' ⋄ crlf←0 ⋄ :EndIf</code>
+<code class="emphasize">→[7]   msg←'Sent'</code>
+<code class="emphasize">→[8]   →Exit if 0=rc←⊃tmp←LDRC.Send Clt data,crlf/CRLF</code>
+<code class="emphasize">→[9]   msg←1↓∊' ',¨⍕¨(tmp,'' '')[2 3]</code>
+<code class="emphasize">→[10] Exit:</code>
+</div>
+<code class="header" id="listing_7">#.SMTP.SMTP.Connection.Reset &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> (rc msg)←Reset</code>
+<code> [1]  :Access public</code>
+<code class="emphasize">→[2]  (rc msg)←Do'RSET'</code>
+</div>
+<code class="header" id="listing_8">#.SMTP.SMTP.Message.get_Text &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Text</code>
+<code class="emphasize">→[1]  r←_text</code>
+</div>
+<code class="header" id="listing_9">#.SMTP.SMTP.Message.Send &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←Send</code>
+<code> [1]  :Access public</code>
+<code class="emphasize">→[2]  r←Client.Send ⎕THIS</code>
+</div>
+<code class="header" id="listing_10">#.SMTP.SMTP.Message.Config &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←Config</code>
+<code> [1]         ⍝ returns current message configuration</code>
+<code> [2]  :Access public</code>
+<code class="emphasize">→[3]  r←↑{⍵(⍎⍵)}¨⎕THIS⍎'⎕NL ¯2.2 ¯2.3'</code>
+</div>
+<code class="header" id="listing_11">#.SMTP.SMTP.API.Connection &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←Connection</code>
+<code class="emphasize">→[1]  r←##.Connection</code>
+</div>
+<code class="header" id="listing_12">#.SMTP.SMTP.API.Help &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> {r}←Help</code>
+<code class="emphasize">→[1]  r←##.Help</code>
+</div>
+<code class="header" id="listing_13">#.SMTP.SMTP.API.History &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←History</code>
+<code class="emphasize">→[1]  r←##.History</code>
+</div>
+<code class="header" id="listing_14">#.SMTP.SMTP.API.Message &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←Message</code>
+<code class="emphasize">→[1]  r←##.Message</code>
+</div>
+<code class="header" id="listing_15">#.SMTP.SMTP.API.Version &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←Version</code>
+<code class="emphasize">→[1]  r←##.Version</code>
+</div>
+<code class="header" id="listing_16">#.SMTP.SMTP.MailParameters.PerformChecks &mdash; 56%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  msg←PerformChecks dummy</code>
+<code> [1]      ⍝ Call this in order to check the parameters for completeness and consistency.</code>
+<code> [2]      ⍝ Checks all settings. If `msg` is empty then everything is OK.</code>
+<code> [3]   :Access Public Instance</code>
+<code> [4]   msg←''</code>
+<code> [5]   :If 0=≢_To</code>
+<code class="emphasize">→[6]       msg,←⊂'"To"'</code>
+<code> [7]   :EndIf</code>
+<code> [8]   :If 0=≢_Subject</code>
+<code class="emphasize">→[9]       msg,←⊂'"Subject"'</code>
+<code> [10]  :EndIf</code>
+<code> [11]  :If 0=≢_Body</code>
+<code class="emphasize">→[12]      msg,←⊂'"Body"'</code>
+<code> [13]  :EndIf</code>
+<code> [14]  :If 0&lt;≢msg</code>
+<code class="emphasize">→[15]      msg←'Missing: ',⊃{⍺,',',⍵}/msg</code>
+<code> [16]  :EndIf</code>
+</div>
+<code class="header" id="listing_17">#.SMTP.SMTP.Version &mdash; 60%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←Version</code>
+<code> [1]  ⍝ Returns the version number from `TatinVars` if possible.</code>
+<code> [2]  ⍝ See also `History`</code>
+<code> [3]   :If 0&lt;⎕NC'TatinVars.CONFIG'</code>
+<code class="emphasize">→[4]       r←(⎕JSON⍠('Dialect' 'JSON5')⊢TatinVars.CONFIG).version</code>
+<code> [5]   :ElseIf 0&lt;##.⎕NC'TatinVars.CONFIG'</code>
+<code> [6]       r←(⎕JSON⍠('Dialect' 'JSON5')⊢##.TatinVars.CONFIG).version</code>
+<code> [7]   :Else</code>
+<code> [8]  ⍝ When a script was not loaded with Tatin, there will be no namespace `TatinVars`.</code>
+<code> [9]  ⍝ In such cases we cannot provide a version number, so we return just ''.</code>
+<code class="emphasize">→[10]      r←''</code>
+<code> [11]  :EndIf</code>
+</div>
+<code class="header" id="listing_18">#.SMTP.SMTP.Connection.Init &mdash; 62%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (rc msg)←Init rootname</code>
+<code> [1]   (rc msg)←¯1 ''</code>
+<code> [2]        ⍝↓↓↓ Check is LDRC exists (VALUE ERROR (6) if not), and is LDRC initialized? (NONCE ERROR (16) if not)</code>
+<code> [3]   :Hold 'SMTPInit'</code>
+<code> [4]       :If {6 16 999::1 ⋄ ''≡LDRC:1 ⋄ 0⊣LDRC.Describe'.'}''</code>
+<code> [5]           LDRC←''</code>
+<code> [6]           :If 9=#.⎕NC'Conga'</code>
+<code class="emphasize">→[7]               {#.Conga.X509Cert.LDRC←''}⍬ ⍝ if #.Conga exists, reset X509Cert.LDRC reference</code>
+<code> [8]           :EndIf</code>
+<code> [9]           :If 0≠≢CongaRef  ⍝ did the user supply a reference to Conga?</code>
+<code class="emphasize">→[10]              LDRC←rootname ResolveCongaRef CongaRef</code>
+<code class="emphasize">→[11]              :If ''≡LDRC</code>
+<code class="emphasize">→[12]                  msg←'CongaRef (',(⍕CongaRef),') does not point to a valid instance of Conga'</code>
+<code class="emphasize">→[13]                  →Exit</code>
+<code> [14]              :EndIf</code>
+<code> [15]          :Else</code>
+<code> [16]              :For root :In ##.## #</code>
+<code> [17]                  ref nc←root{1↑¨⍵{(×⍵)∘/¨⍺ ⍵}⍺.⎕NC ⍵}ns←(-~0∊⍴rootname)↓'Conga' 'DRC' ⍝ if rootname is supplied, can only use Conga (no DRC)</code>
+<code> [18]                  :If 9=⊃⌊nc</code>
+<code class="emphasize">→[19]                      :Leave</code>
+<code> [20]                  :EndIf</code>
+<code> [21]              :EndFor</code>
+<code> [22]              :If 9=⊃⌊nc</code>
+<code class="emphasize">→[23]                  LDRC←rootname ResolveCongaRef root⍎∊ref</code>
+<code class="emphasize">→[24]                  :If ''≡LDRC</code>
+<code class="emphasize">→[25]                      msg←(⍕root),'.',(∊ref),' does not point to a valid instance of Conga'</code>
+<code class="emphasize">→[26]                      →Exit</code>
+<code> [27]                  :EndIf</code>
+<code class="emphasize">→[28]                  →∆COPY↓⍨{999::0 ⋄ 1⊣LDRC.Describe'.'}'' ⍝ it's possible that Conga was saved in a semi-initialized state</code>
+<code> [29]              :Else</code>
+<code> [30] ∆COPY:</code>
+<code> [31]                  class←⊃⊃⎕CLASS ⎕THIS</code>
+<code> [32]                  dyalog←{⍵,'/'↓⍨'/\'∊⍨¯1↑⍵}2 ⎕NQ'.' 'GetEnvironment' 'DYALOG'</code>
+<code> [33]                  congaCopied←0</code>
+<code> [34]                  :For n :In ns</code>
+<code> [35]                      :Trap 0</code>
+<code> [36]                          n class.⎕CY dyalog,'ws/conga'</code>
+<code> [37]                          LDRC←rootname ResolveCongaRef class⍎n</code>
+<code> [38]                          :If ''≡LDRC</code>
+<code class="emphasize">→[39]                              msg←n,' was copied from [DYALOG]/ws/conga, but is not valid'</code>
+<code class="emphasize">→[40]                              →Exit</code>
+<code> [41]                          :EndIf</code>
+<code> [42]                          congaCopied←1</code>
+<code> [43]                          :Leave</code>
+<code> [44]                      :EndTrap</code>
+<code> [45]                  :EndFor</code>
+<code> [46]                  :If ~congaCopied</code>
+<code class="emphasize">→[47]                      msg←'Neither Conga nor DRC were successfully copied from [DYALOG]/ws/conga'</code>
+<code class="emphasize">→[48]                      →Exit</code>
+<code> [49]                  :EndIf</code>
+<code> [50]              :EndIf</code>
+<code> [51]          :EndIf</code>
+<code> [52]      :EndIf</code>
+<code> [53]      rc←¯1×LDRC≢''</code>
+<code> [54] Exit:</code>
+<code> [55]  :EndHold</code>
+</div>
+<code class="header" id="listing_19">#.SMTP.SMTP.Connection.ResolveCongaRef &mdash; 63%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  LDRC←rootname ResolveCongaRef CongaRef</code>
+<code> [1]      ⍝ CongaRef could be a charvec, reference to the Conga or DRC namespaces, or reference to an iConga instance</code>
+<code> [2]      ⍝ :Access public shared  ⍝!!! testing only  - remove :Access after testing</code>
+<code> [3]   LDRC←'' ⋄ failed←0</code>
+<code> [4]   :Select ⎕NC⊂'CongaRef' ⍝ what is it?</code>
+<code> [5]   :Case 9.1 ⍝ namespace?  e.g. CongaRef←DRC or Conga</code>
+<code> [6]  Try:</code>
+<code> [7]       :Trap 0</code>
+<code> [8]           :If ∨/'.Conga'⍷⍕CongaRef ⍝ is it Conga?</code>
+<code> [9]               LDRC←CongaRef.Init rootname</code>
+<code> [10]          :ElseIf 0≡⊃CongaRef.Init'' ⍝ DRC?</code>
+<code class="emphasize">→[11]              LDRC←CongaRef</code>
+<code> [12]          :Else</code>
+<code class="emphasize">→[13]              →0⊣LDRC←''</code>
+<code> [14]          :End</code>
+<code> [15]      :Else ⍝ if HttpCommand is reloaded and re-executed in rapid succession, Conga initialization may fail, so we try twice</code>
+<code> [16]          :If failed</code>
+<code class="emphasize">→[17]              →0⊣LDRC←''</code>
+<code> [18]          :Else</code>
+<code> [19]              →Try⊣failed←1</code>
+<code> [20]          :EndIf</code>
+<code> [21]      :EndTrap</code>
+<code> [22]  :Case 9.2 ⍝ instance?  e.g. CongaRef←Conga.Init ''</code>
+<code class="emphasize">→[23]      LDRC←CongaRef ⍝ an instance is already initialized</code>
+<code class="emphasize">→[24]  :Case 2.1 ⍝ variable?  e.g. CongaRef←'#.Conga'</code>
+<code class="emphasize">→[25]      :Trap 0</code>
+<code class="emphasize">→[26]          LDRC←ResolveCongaRef(⍎∊⍕CongaRef)</code>
+<code> [27]      :EndTrap</code>
+<code> [28]  :EndSelect</code>
+</div>
+<code class="header" id="listing_20">#.SMTP.SMTP.Connection.Connected &mdash; 69%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (rc msg)←Connected</code>
+<code> [1]   :Access public</code>
+<code> [2]   msg←'SMTP server has not been connected'</code>
+<code> [3]   →0↓⍨rc←Clt≢''</code>
+<code> [4]   :Trap 0 ⍝ handle any Conga error, LDRC not defined, etc</code>
+<code> [5]       r←LDRC.Describe Clt</code>
+<code> [6]   :Else</code>
+<code class="emphasize">→[7]       →0⊣(rc msg)←0 'Conga could not query client'</code>
+<code> [8]   :EndTrap</code>
+<code> [9]   :If 0=⊃r ⍝ good Conga return code?</code>
+<code> [10]      :Select state←⎕C 2⊃3↑2⊃r</code>
+<code> [11]      :Case 'client'</code>
+<code> [12]          (rc msg)←1 'connected'</code>
+<code> [13]      :Case 'error'</code>
+<code class="emphasize">→[14]          (rc msg)←0 'not connected (possible server timeout)'</code>
+<code> [15]      :Else</code>
+<code class="emphasize">→[16]          (rc msg)←0 'unknown client state: ',∊⍕state</code>
+<code> [17]      :EndSelect</code>
+<code> [18]  :Else</code>
+<code class="emphasize">→[19]      (rc msg)←0 'non-zero Conga return code'</code>
+<code> [20]  :EndIf</code>
+</div>
+<code class="header" id="listing_21">#.SMTP.SMTP.Connection.Do &mdash; 70%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←Do cmd</code>
+<code> [1]   :Access public</code>
+<code> [2]   →go</code>
+<code> [3]      ⍝ Send a command to an smtp server and retrieve answer</code>
+<code> [4]      ⍝ cmd: smtp command, or mail body, or empty vector</code>
+<code> [5]      ⍝      If cmd is an empty vector, the function returns a pending answer</code>
+<code> [6]      ⍝      from the server</code>
+<code> [7]      ⍝ r    [1]=0 if OK (response was a 2XX) or 1 if error</code>
+<code> [8]      ⍝      [2]=status message starting with a 3-digit status number</code>
+<code> [9]      ⍝</code>
+<code> [10]     ⍝ Valid commands are:</code>
+<code> [11]     ⍝ Name Parameter      Description &amp; return codes (S=success, E=error)</code>
+<code> [12]     ⍝ ---- -------------  ------------------------------------------------</code>
+<code> [13]     ⍝ HELO &lt;domain&gt;       Make yourself known to the server</code>
+<code> [14]     ⍝                      S: 250; E: 421 500 501 504</code>
+<code> [15]     ⍝ EHLO &lt;domain&gt;       Like HELO but request extended smtp services</code>
+<code> [16]     ⍝                      S: 250; E: 421 500 501 504</code>
+<code> [17]     ⍝                      NOTE: apart from code 250, the server answers with</code>
+<code> [18]     ⍝                            a cr/lf delimited list of supported commands</code>
+<code> [19]     ⍝ MAIL FROM:&lt;sender&gt;  Start a new mail, &lt;sender&gt; is your mail address</code>
+<code> [20]     ⍝                      S: 250; E: 421 451 452 500 501 552</code>
+<code> [21]     ⍝ RCPT TO:&lt;receiver&gt;  Identify the recipients, up to 100 are allowed</code>
+<code> [22]     ⍝                      S: 250 251; E: 421 450 451 452 500 501 503 550-553</code>
+<code> [23]     ⍝ DATA                Initialize sending mail body</code>
+<code> [24]     ⍝                      S: 354; E: 451 452 552 554</code>
+<code> [25]     ⍝ &lt;maildata&gt;          Send the mail body (use smtp_stuff to prepare it)</code>
+<code> [26]     ⍝                      NOTE: there is no response until "end-of-mail" is sent.</code>
+<code> [27]     ⍝ .&lt;cr/lf&gt;            "end-of-mail" command, a line with only a dot and cr/lf</code>
+<code> [28]     ⍝                      S: 250; E: 421 451 500 501 503 554</code>
+<code> [29]     ⍝ RSET                Cancel the mail just sent</code>
+<code> [30]     ⍝                      S: 250; E: 421 500 501 504</code>
+<code> [31]     ⍝ VRFY &lt;string&gt;       Verify a recipients mail address (often disabled)</code>
+<code> [32]     ⍝                      S: 250 251; E: 421 500 501 502 504 550 551 553</code>
+<code> [33]     ⍝ EXPN &lt;string&gt;       Expand a mailing list (often disabled)</code>
+<code> [34]     ⍝                      S: 250; E: 421 500 501 502 504 550</code>
+<code> [35]     ⍝ HELP [&lt;string&gt;]     Return a help message, optionally followed by a command</code>
+<code> [36]     ⍝                      S: 211 214; E: 421 500 501 502 504</code>
+<code> [37]     ⍝ NOOP                Returns success or error</code>
+<code> [38]     ⍝                      S: 250; E: 421 500</code>
+<code> [39]     ⍝ QUIT                End the smtp session</code>
+<code> [40]     ⍝                      S: 221; E: 500</code>
+<code> [41]     ⍝ TURN                Reverse the roles of client and server (DON't USE!)</code>
+<code> [42]     ⍝                      S: 250; E: 500 502 503</code>
+<code> [43]     ⍝</code>
+<code> [44]     ⍝ Meaning of the return codes:</code>
+<code> [45]     ⍝ NOTE: If the 3-digit number is followed by "-", there is more data to follow</code>
+<code> [46]     ⍝ 211 System status, or system help reply</code>
+<code> [47]     ⍝ 214 Help message</code>
+<code> [48]     ⍝ 220 &lt;domain&gt; Service ready</code>
+<code> [49]     ⍝ 221 &lt;domain&gt; Service closing transmission channel</code>
+<code> [50]     ⍝ 250 Requested mail action okay, completed</code>
+<code> [51]     ⍝ 251 User not local; will forward to &lt;forward-path&gt; (this is not an error!)</code>
+<code> [52]     ⍝ 354 Start mail input; end with &lt;CRLF&gt;.&lt;CRLF&gt;</code>
+<code> [53]     ⍝ 421 &lt;domain&gt; Service not available, closing transmission channel</code>
+<code> [54]     ⍝ 450 Requested mail action not taken: mailbox unavailable [E.g., mailbox busy]</code>
+<code> [55]     ⍝ 451 Requested action aborted: local error in processing</code>
+<code> [56]     ⍝ 452 Requested action not taken: insufficient system storage</code>
+<code> [57]     ⍝ 500 Syntax error, command unrecognized</code>
+<code> [58]     ⍝ 501 Syntax error in parameters or arguments</code>
+<code> [59]     ⍝ 502 Command not implemented</code>
+<code> [60]     ⍝ 503 Bad sequence of commands</code>
+<code> [61]     ⍝ 504 Command parameter not implemented</code>
+<code> [62]     ⍝ 550 Requested action not taken: mailbox unavailable</code>
+<code> [63]     ⍝ 551 User not local; please try &lt;forward-path&gt;</code>
+<code> [64]     ⍝ 552 Requested mail action aborted: exceeded storage allocation</code>
+<code> [65]     ⍝ 553 Requested action not taken: mailbox name not allowed (typo?)</code>
+<code> [66]     ⍝ 555 Only used by this program to indicate a special error condition</code>
+<code> [67] go:</code>
+<code> [68]  :If ⊃c←Connected                   ⍝ if we're connected</code>
+<code> [69]      :If ~empty cmd</code>
+<code> [70]          :If 0≠⊃rc←LDRC.Send Clt(cmd,CRLF)</code>
+<code class="emphasize">→[71]              →Exit⊣r←'555 Conga error: ',,⍕2↑rc</code>
+<code> [72]          :EndIf</code>
+<code> [73]      :EndIf</code>
+<code> [74]      cnt←0</code>
+<code> [75] Try:</code>
+<code> [76]      :Select ⊃rc←LDRC.Wait Clt 2000  ⍝ wait up to 2 seconds</code>
+<code> [77]      :Case 0</code>
+<code> [78]          r←¯2↓4⊃rc                     ⍝ grab the data</code>
+<code> [79]      :Case 100                         ⍝ timeout, try up to 3 times</code>
+<code class="emphasize">→[80]          cnt+←1</code>
+<code class="emphasize">→[81]          →Try if 3&gt;cnt</code>
+<code class="emphasize">→[82]          r←'555 Conga timeout'</code>
+<code> [83]      :Else</code>
+<code class="emphasize">→[84]          r←'555 Conga error: ',,⍕2↑rc</code>
+<code> [85]      :EndSelect</code>
+<code> [86]  :Else                              ⍝ if the socket does not exist</code>
+<code class="emphasize">→[87]      r←'555 SMTP server not connected - ',2⊃c</code>
+<code> [88]  :EndIf</code>
+<code> [89] Exit:</code>
+<code> [90]  r←((⊃r)∊'45')r                    ⍝ check for error and return</code>
+</div>
+<code class="header" id="listing_22">#.SMTP.SMTP.Message.chunk &mdash; 70%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←{len}chunk content</code>
+<code> [1]          ⍝ Convert content into a vector with embedded cr/lf plus dot-stuffing</code>
+<code> [2]          ⍝ len : the maximum line length, excluding cr/lf line ends. Defaults to 72,</code>
+<code> [3]          ⍝       as 74 is a safe line length to transmit through SMTP</code>
+<code> [4]          ⍝ rc  : A string with cr/lf every len characters and dot-stuffing</code>
+<code> [5]          ⍝ NOTE: It is safe to send a Base64-encoded string through this function,</code>
+<code> [6]          ⍝       as those strings do not contain any dots. However, the function does</code>
+<code> [7]          ⍝       not work well if there are cr/lf already present in the input.</code>
+<code> [8]          ⍝ Dot-Stuffing: The end of an SMTP mail text is indicated by transmitting</code>
+<code> [9]          ⍝               a line with a single dot. This means, that the original</code>
+<code> [10]         ⍝               mail text must not contain a single dot on a line by itself.</code>
+<code> [11]         ⍝               To prevent this, every line that starts with a dot get's</code>
+<code> [12]         ⍝               preceeded with a second dot, which will be removed by the</code>
+<code> [13]         ⍝               recipients mail client. See pop3_unstuff, the reverse function.</code>
+<code> [14] </code>
+<code> [15]  stuff←{'.'=⊃⍵:'.',⍵ ⋄ ⍵}</code>
+<code> [16] </code>
+<code> [17]  :If 900⌶⍬ ⋄ len←72 ⋄ :EndIf    ⍝ default line length, if not given</code>
+<code> [18]  :If 2&gt;|≡content ⍝ simple array? otherwise, treat it as a vector of vectors</code>
+<code> [19]      :Select ≢⍴content</code>
+<code> [20]      :Case 0</code>
+<code class="emphasize">→[21]          content←,⊂,content</code>
+<code> [22]      :Case 1</code>
+<code> [23]          :If ∨/CRLF∊content         ⍝ any line breaks?</code>
+<code class="emphasize">→[24]              content,⍨←CRLF</code>
+<code class="emphasize">→[25]              breaks←CRLF∘.=content</code>
+<code class="emphasize">→[26]              content←(~∘⊂CRLF)¨content⊂⍨(∨⌿breaks)≠breaks[2;]∧¯1↓0,breaks[1;] ⍝ break on CRLF or lone CR or lone LF</code>
+<code> [27]          :Else</code>
+<code> [28]              content←,⊂content</code>
+<code> [29]          :EndIf</code>
+<code> [30]      :Case 2</code>
+<code class="emphasize">→[31]          content←↓content</code>
+<code> [32]      :Else</code>
+<code class="emphasize">→[33]          content←↓((×/¯1↓⍴content),¯1↑⍴content)⍴content</code>
+<code> [34]      :EndSelect</code>
+<code> [35]  :EndIf</code>
+<code> [36] </code>
+<code> [37]  content←{⍵↓⍨-⊥⍨' '=⍵}¨content ⍝ delete trailing blanks</code>
+<code> [38]  content←stuff¨content ⍝ dot-stuff (double leading dot)</code>
+<code> [39] </code>
+<code> [40]  :If ∨/mask←len&lt;≢¨content  ⍝ any lines longer than length?</code>
+<code> [41]      :If 1=≢content ⍝ single chunk</code>
+<code> [42]          content←{((≢⍵)⍴len↑1)⊂⍵}⊃content</code>
+<code> [43]          (1↓content)←stuff¨1↓content</code>
+<code> [44]      :Else</code>
+<code class="emphasize">→[45]          content←({⊂len∘chunk ⍵}@{mask})content</code>
+<code> [46]      :EndIf</code>
+<code> [47]  :EndIf</code>
+<code> [48]  r←∊content,¨⊂CRLF</code>
+</div>
+<code class="header" id="listing_23">#.SMTP.SMTP.Connection.Logon &mdash; 71%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (rc msg)←Logon</code>
+<code> [1]   :Access public</code>
+<code> [2]      ⍝ Log on to an SMTP mail server optionally using AUTH LOGIN or AUTH PLAIN authentication if userid and password are non-empty</code>
+<code> [3]      ⍝  Other authentication types may be added in the future</code>
+<code> [4]      ⍝  If no password is set, then authentication is not done</code>
+<code> [5]      ⍝</code>
+<code> [6]   (rc msg)←¯1 ''</code>
+<code> [7]   :If ~⊃Connected</code>
+<code class="emphasize">→[8]       →Exit if 0≠⊃(rc msg)←Connect</code>
+<code> [9]   :EndIf</code>
+<code> [10]  elho←' '(,⍨)¨(~EHLOResponse∊CRLF)⊆EHLOResponse</code>
+<code> [11]  :If 1≠≢auth←('^250.AUTH '⎕S'%')elho</code>
+<code class="emphasize">→[12]      →Exit⊣msg←'250-AUTH server response was not found or was not proper'</code>
+<code> [13]  :EndIf</code>
+<code> [14]  auth←' '(≠⊆⊢)8↓⊃auth</code>
+<code> [15]  :If (⊂'LOGIN')∊auth</code>
+<code> [16]      →Exit if 0≠⊃(rc msg)←Do'AUTH LOGIN'</code>
+<code> [17]      →Exit if 0≠⊃(rc msg)←Do(⊃⊃⎕CLASS ⎕THIS).##.Message.Base64Encoding _connectionParms.Userid</code>
+<code> [18]      (rc msg)←Do(⊃⊃⎕CLASS ⎕THIS).##.Message.Base64Encoding _connectionParms.Password</code>
+<code> [19]  :ElseIf (⊂'PLAIN')∊auth</code>
+<code class="emphasize">→[20]      →Exit if 0≠⊃(rc msg)←Do'AUTH PLAIN'</code>
+<code class="emphasize">→[21]      (rc msg)←Do(⊃⊃⎕CLASS ⎕THIS)##.Message.Base64Encoding _connectionParms.Userid,(⎕UCS 0),_connectionParms.Userid,(⎕UCS 0),_connectionParms.Password</code>
+<code> [22]  :Else</code>
+<code class="emphasize">→[23]      'Only authentication methods LOGIN and PLAIN are currently supported'⎕SIGNAL 11</code>
+<code> [24]  :EndIf</code>
+<code> [25] Exit:</code>
+<code> [26]  _loggedOn←0=rc</code>
+</div>
+<code class="header" id="listing_24">#.SMTP.SMTP.Connection.Connect &mdash; 74%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (rc msg)←Connect</code>
+<code> [1]   :Access public</code>
+<code> [2]   (rc msg)←¯1 ''</code>
+<code> [3]   _connectionParms.Secure←0⌈_connectionParms.Secure</code>
+<code> [4]  </code>
+<code> [5]   :If 0∊⍴LDRC</code>
+<code> [6]   :OrIf {0::1 ⋄ 0≠⊃LDRC.Describe'.'}''</code>
+<code> [7]       (rc msg)←Init CongaRootName</code>
+<code> [8]   :EndIf</code>
+<code> [9]  </code>
+<code> [10]  cert←⍬</code>
+<code> [11]  :If _connectionParms.Secure</code>
+<code> [12]      :If 0∊⍴LDRC.X509Cert.LDRC ⋄ LDRC.X509Cert.LDRC←LDRC ⋄ :EndIf</code>
+<code> [13]      cert←('X509'(⎕NEW LDRC.X509Cert))('SSLValidation'_connectionParms.TLSFlags)</code>
+<code> [14]  :EndIf</code>
+<code> [15] </code>
+<code> [16] </code>
+<code> [17]  :Select ⊃r←LDRC.Clt(''_connectionParms.Server _connectionParms.Port'text' 2000000,cert)</code>
+<code> [18]  :Case 0</code>
+<code> [19]      _clt←2⊃r                   ⍝ Conga client name</code>
+<code> [20]      :If 0=⊃(rc msg)←Do''       ⍝ retrieve the server response</code>
+<code> [21]          (rc msg)←EHLO _connectionParms.Domain ⍝ log on user domain</code>
+<code> [22]          _EHLOResponse←msg</code>
+<code> [23]      :Else</code>
+<code class="emphasize">→[24]          {}LDRC.Close _clt</code>
+<code class="emphasize">→[25]          _clt←''</code>
+<code> [26]      :EndIf</code>
+<code> [27]  :Case 100 ⍝ timeout</code>
+<code class="emphasize">→[28]      msg←'Conga timeout on connect'</code>
+<code class="emphasize">→[29]  :Else ⍝ some Conga error occured</code>
+<code class="emphasize">→[30]      _clt←''</code>
+<code class="emphasize">→[31]      msg←'Conga error: ',,⍕LDRC.Error⊃r</code>
+<code> [32]  :EndSelect</code>
+<code> [33] Exit:</code>
+</div>
+<code class="header" id="listing_25">#.SMTP.SMTP.Connection.unmake &mdash; 75%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> unmake</code>
+<code> [1]  :Implements destructor</code>
+<code> [2]  :Trap 0</code>
+<code> [3]      {}Logoff</code>
+<code> [4]      :If 0∊≢⎕INSTANCES base←⊃⊃⎕CLASS ⎕THIS</code>
+<code class="emphasize">→[5]          base.LDRC←''</code>
+<code> [6]      :EndIf</code>
+<code> [7]  :EndTrap</code>
+</div>
+<code class="header" id="listing_26">#.SMTP.SMTP.Connection.EHLO &mdash; 83%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (rc msg)←EHLO domain</code>
+<code> [1]   :Access public</code>
+<code> [2]      ⍝ Some SMTP servers (gmail in particular) break up the response to EHLO into multiple messages</code>
+<code> [3]   :If 0=⊃(rc msg)←Do'EHLO ',domain</code>
+<code> [4]       resp←msg splitOn CRLF</code>
+<code> [5]       :If '250 '≢4↑⊃⊢/resp  ⍝ this makes the assumption that the EHLO response is in 2 parts only</code>
+<code> [6]           :If 0=⊃(rc m)←Do''</code>
+<code> [7]               msg,←m</code>
+<code> [8]           :Else</code>
+<code class="emphasize">→[9]               msg←m</code>
+<code> [10]          :EndIf</code>
+<code> [11]      :EndIf</code>
+<code> [12]  :EndIf</code>
+</div>
+<code class="header" id="listing_27">#.SMTP.SMTP.Message.Compose &mdash; 86%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (rc msg text)←Compose mailParams</code>
+<code> [1]   :Access public</code>
+<code> [2]        ⍝ Compose email content</code>
+<code> [3]   (rc msg text)←¯1 '' ''</code>
+<code> [4]   _recipients←CompileAllRecipients mailParams</code>
+<code> [5]   addHeader←{</code>
+<code class="emphasize">→[6]       ⍵∧.=' ':''</code>
+<code class="emphasize">→[7]       128∧.&gt;⎕UCS ⍵:⍺,': ',⍵,CRLF</code>
+<code class="emphasize">→[8]       ⍺,': =?utf-8?B?',(Base64Encoding ⍵),'?=',CRLF</code>
+<code> [9]   }</code>
+<code> [10]  text←'Date'addHeader now    ⍝ Internet-conform date first</code>
+<code> [11]  text,←'From'addHeader normalizeAddr From</code>
+<code> [12]  text,←'Reply-To'addHeader normalizeAddr ReplyTo ⍝ the reply-to address</code>
+<code> [13]  text,←'Organization'addHeader Org</code>
+<code> [14]  text,←'X-Mailer'addHeader XMailer</code>
+<code> [15]  text,←'MIME-Version'addHeader'1.0'</code>
+<code> [16]  text,←∊CRLF∘(,⍨)¨('B'≠⊃¨Recipients)/Recipients ⍝ no headers for BCC recipients</code>
+<code> [17]  text,←'Subject'addHeader(⎕UCS'UTF-8'⎕UCS Subject)     ⍝ the message subject</code>
+<code> [18] </code>
+<code> [19]  :If haveAtts←0≠≢Attachments ⍝ Any attachments?</code>
+<code> [20]      boundary←'000',((⍕⎕TS)~' '),'APLTeamSMTP',CRLF ⍝ construct a boundary for attachments</code>
+<code> [21]      text,←'Content-Type'addHeader'multipart/mixed; boundary="',(¯2↓boundary),'"'</code>
+<code> [22]      text,←CRLF</code>
+<code> [23]      text,←'This is a multi-part message in MIME format.',CRLF</code>
+<code> [24]      text,←'--',boundary</code>
+<code> [25]  :EndIf</code>
+<code> [26] </code>
+<code> [27]  :If 0≠≢Body</code>
+<code> [28]      mime←(1+∨/'&lt;html'⍷⎕C Body)⊃'plain' 'html'</code>
+<code> [29]      mime←'text/',mime,'; charset="UTF-8"'</code>
+<code> [30]      text,←'Content-Type'addHeader mime</code>
+<code> [31]      text,←CRLF</code>
+<code> [32]      text,←⎕UCS'UTF-8'⎕UCS⊃,/Body,¨⊂CRLF</code>
+<code> [33]      text,←CRLF</code>
+<code> [34]  :EndIf</code>
+<code> [35] </code>
+<code> [36]  :If haveAtts</code>
+<code> [37]      text,←haveAtts/'--',boundary</code>
+<code> [38]      :For i :In ⍳n←≢Attachments</code>
+<code> [39]          :If 0∊⍴att←i ProcessAttachment i⊃,Attachments</code>
+<code class="emphasize">→[40]              msg←'Error processing attachment ',(⍕i),', file="',(1⊃i⊃Attachments),'"'</code>
+<code class="emphasize">→[41]              →Exit</code>
+<code> [42]          :EndIf</code>
+<code> [43]          text,←att</code>
+<code> [44]          text,←'--',boundary</code>
+<code> [45]      :EndFor</code>
+<code> [46]  :EndIf</code>
+<code> [47]  (rc msg)←0 ''</code>
+<code> [48] Exit:</code>
+</div>
+<code class="header" id="listing_28">#.SMTP.SMTP.Connection.Send &mdash; 87%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  (rc msg log)←Send mailParms</code>
+<code> [1]   :Access public</code>
+<code> [2]   logIt←{⍵⊣log,←⍵[2]}</code>
+<code> [3]   (rc msg log)←¯1 '' ''</code>
+<code> [4]   :If 0&lt;≢msg←_connectionParms.PerformChecks ⍬</code>
+<code class="emphasize">→[5]       :Return</code>
+<code> [6]   :EndIf</code>
+<code> [7]   :If 0&lt;≢msg←mailParms.PerformChecks ⍬</code>
+<code class="emphasize">→[8]       :Return</code>
+<code> [9]   :EndIf</code>
+<code> [10]  :If 0=≢mailParms.From</code>
+<code> [11]      mailParms.From←_connectionParms.Userid</code>
+<code> [12]  :EndIf</code>
+<code> [13]  message←NewMessage _connectionParms mailParms</code>
+<code> [14]  (rc msg text)←message.Compose mailParms</code>
+<code> [15]  →Exit if 0≠rc</code>
+<code> [16]  :If ~⊃Connected</code>
+<code> [17]      (rc msg)←Connect      ⍝ connect to SMTP server</code>
+<code> [18]      →Exit if 0≠rc</code>
+<code> [19]  :EndIf</code>
+<code> [20]  :If ~LoggedOn</code>
+<code> [21]      (rc msg)←Logon</code>
+<code> [22]      →Exit if 0≠rc</code>
+<code> [23]  :EndIf</code>
+<code> [24]  (rc msg)←Ping ⍝ ping the server to make sure it's still up</code>
+<code> [25]  →Exit if 0≠rc</code>
+<code> [26]  (rc msg)←Do'MAIL FROM: ',message.(normalizeAddr extractAddr From)</code>
+<code> [27]  →Err if 0≠rc</code>
+<code> [28]  :For rec :In message.(normalizeAddr∘extractAddr¨Recipients)</code>
+<code> [29]      {}logIt Do'RCPT TO: ',rec</code>
+<code> [30]  :EndFor</code>
+<code> [31]  (rc msg)←Do'DATA'</code>
+<code> [32]  →Err if 0≠rc</code>
+<code> [33]  (rc msg)←Do text,CRLF,'.'</code>
+<code> [34]  →Exit if 0=rc</code>
+<code class="emphasize">→[35] Err:</code>
+<code class="emphasize">→[36]  logIt(rc msg)←Do'RSET'</code>
+<code> [37] Exit:</code>
+</div>
+<code class="header" id="listing_29">#.SMTP.SMTP.SendEmailExample &mdash; 89%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←{filenames}SendEmailExample emailAddress</code>
+<code> [1]  ⍝ Use this to send a test email to `emailAddress`.</code>
+<code> [2]  ⍝ Use with care: the email address used for logging on to the SMTP server is not suitable for</code>
+<code> [3]  ⍝ anything remotely confidental; it's just for tests. Be aware that the hard-coded credentials</code>
+<code> [4]  ⍝ might get changed in case somebody uabuses this.</code>
+<code> [5]  ⍝ Note that the number of emails you may send is limited.</code>
+<code> [6]  ⍝ ⍺ is optional and may be a char vector (filename) or a vector of char vectors (filesnames).</code>
+<code> [7]  ⍝ If specified those are attached to the email. Relative filenames are expected in ./</code>
+<code> [8]  </code>
+<code> [9]   filenames←{0&lt;⎕NC ⍵:,⊆⍎⍵ ⋄ ⍬}'filenames'</code>
+<code> [10] </code>
+<code> [11]  connectionParms←⎕NEW ConnectionParameters</code>
+<code> [12]  connectionParms.Server←'smtp.gmail.com'</code>
+<code> [13]  connectionParms.Port←465</code>
+<code> [14]  connectionParms.Userid←'smtp.tatin.tests1@gmail.com'</code>
+<code> [15]  connectionParms.Password←'xjywwfkwjgeeacod'</code>
+<code> [16]  myConnection←⎕NEW Connection(,⊂connectionParms)</code>
+<code> [17] </code>
+<code> [18]  mailParms←⎕NEW MailParameters</code>
+<code> [19]  mailParms.From←'do-not-reply@aplteam.com'</code>
+<code> [20]  mailParms.To←connectionParms.Userid</code>
+<code> [21]  mailParms.CC←emailAddress</code>
+<code> [22]  mailParms.Subject←'From APLTeam SMTP'</code>
+<code> [23]  mailParms.Body←'Test E-mail' ⍝ Can also be a vector of text vectors</code>
+<code> [24] </code>
+<code> [25]  :If filenames≢⍬</code>
+<code class="emphasize">→[26]      mailParms.AddAttachment¨filenames</code>
+<code> [27]  :EndIf</code>
+<code> [28] </code>
+<code> [29]  (rc msg log)←myConnection.Send mailParms</code>
+<code> [30]  :If 0=rc</code>
+<code> [31]      r←'Email was sent successfully'</code>
+<code> [32]  :Else</code>
+<code class="emphasize">→[33]      r←'Failed with rc=',(⍕rc),'; ',¯1↓(⊆msg),¨⎕UCS 13</code>
+<code> [34]  :EndIf</code>
+</div>
+<code class="header" id="listing_30">#.SMTP.SMTP.Message.ProcessAttachment &mdash; 90%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←i ProcessAttachment attachment</code>
+<code> [1]   r←''</code>
+<code> [2]   (path mimeType)←attachment.(filename mimeType)</code>
+<code> [3]   filename←∊¯2↑⎕NPARTS path</code>
+<code> [4]   :Trap 0</code>
+<code> [5]       content←ReadFile path</code>
+<code> [6]   :Else</code>
+<code class="emphasize">→[7]       :Return</code>
+<code> [8]   :EndTrap</code>
+<code> [9]   r,←'Content-Type: ',mimeType,'; charset="US-ASCII"; name="',filename,'"',CRLF</code>
+<code> [10]  r,←'Content-Disposition: attachment; filename="',filename,'"',CRLF</code>
+<code> [11]  r,←'Content-Transfer-Encoding: base64',CRLF,CRLF</code>
+<code> [12]  r,←chunk Base64Encoding content</code>
+</div>
+<code class="header" id="listing_31">#.SMTP.SMTP.ConnectionParameters.PerformChecks &mdash; 93%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  msg←PerformChecks dummy</code>
+<code> [1]      ⍝ Call this in order to check the parameters for completeness and consistency.</code>
+<code> [2]      ⍝ Checks all settings. If `msg` is empty then everything is OK.</code>
+<code> [3]   :Access Public Instance</code>
+<code> [4]   msg←''</code>
+<code> [5]   :If 0=≢Domain</code>
+<code> [6]       msg,←⊂'"Domain"'</code>
+<code> [7]   :EndIf</code>
+<code> [8]   :If 0=≢_Server</code>
+<code> [9]       msg,←⊂'"Server"'</code>
+<code> [10]  :EndIf</code>
+<code> [11]  :If 0=≢_Port</code>
+<code class="emphasize">→[12]      msg,←⊂'"Port"'</code>
+<code> [13]  :EndIf</code>
+<code> [14]  :If _Secure</code>
+<code> [15]      :If 0=≢_Password</code>
+<code> [16]          msg,←⊂'"Password"'</code>
+<code> [17]      :EndIf</code>
+<code> [18]      :If 0=≢_Userid</code>
+<code> [19]          msg,←⊂'"Userid"'</code>
+<code> [20]      :EndIf</code>
+<code> [21]  :EndIf</code>
+<code> [22]  :If 0&lt;≢msg</code>
+<code> [23]      msg←'Missing: ',⊃{⍺,',',⍵}/msg</code>
+<code> [24]  :EndIf</code>
+</div>
+<code class="header" id="listing_32">#.SMTP.SMTP.Message.now &mdash; 94%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  rc←now</code>
+<code> [1]          ⍝ returns an internet-conforming (RFC 2822) timestamp</code>
+<code> [2]   :If 'Win'≡3↑⊃'.'⎕WG'APLVersion'</code>
+<code> [3]       isUnicode←80=⎕DR'A'</code>
+<code> [4]       twid←64 32[1+isUnicode] ⍝ set width for text elements based on unicode or not</code>
+<code> [5]       'LOCTIME'⎕NA'KERNEL32.C32|GetLocalTime &gt;{I2[8]}' ⍝ associate GetLocalTime function</code>
+<code> [6]       'TIMEZONE'⎕NA'U4 KERNEL32.C32|GetTimeZoneInformation &gt;{I4 T[',(⍕twid),'] {I2[8]} I4 T[',(⍕twid),'] {I2[8]} I4}' ⍝ associate GetTimeZone function</code>
+<code> [7]          ⍝ prepare values for time formatting</code>
+<code> [8]       day←'Sun,' 'Mon,' 'Tue,' 'Wed,' 'Thu,' 'Fri,' 'Sat,'</code>
+<code> [9]       mon←'Jan ' 'Feb ' 'Mar ' 'Apr ' 'May ' 'Jun ' 'Jul ' 'Aug ' 'Sep ' 'Oct ' 'Nov ' 'Dec '</code>
+<code> [10]         ⍝ read the local time and format to Internet standard</code>
+<code> [11]      time←⊃LOCTIME⊂8⍴1000</code>
+<code> [12]      rc←(1+time[3])⊃day</code>
+<code> [13]      rc←rc,,'&lt; &gt;,ZI2,&lt; &gt;'⎕FMT time[4]</code>
+<code> [14]      rc←rc,time[2]⊃mon</code>
+<code> [15]      rc←rc,,'I4,&lt; &gt;,ZI2,&lt;:&gt;,ZI2,&lt;:&gt;,ZI2,&lt; &gt;'⎕FMT 1 4⍴time[1 5 6 7]</code>
+<code> [16]         ⍝ call timezone function and calculate offset from GMT</code>
+<code> [17]      x←TIMEZONE⊂0(twid⍴' ')(8⍴0)0(twid⍴' ')(8⍴0)0</code>
+<code> [18]      x←(⊃x),2⊃x</code>
+<code> [19]      s←'+-'[1+0&gt;x←(-2⊃x)+-x[(5 8)[⊃x]]]</code>
+<code> [20]      rc←rc,s,,'ZI4,&lt; (GMT)&gt;'⎕FMT|100×x÷60</code>
+<code> [21]  :Else</code>
+<code class="emphasize">→[22]      rc←1⊃⎕SH'date -R' ⍝ unix - call date command</code>
+<code> [23]  :EndIf</code>
+</div>
+<code class="header" id="listing_33">#.SMTP.SMTP.Attachment.set_filename &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_34">#.SMTP.SMTP.Attachment.get_filename &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_filename</code>
+<code> [1]  r←_filename</code>
+</div>
+<code class="header" id="listing_35">#.SMTP.SMTP.Attachment.set_mimeType &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_mimeType Arg</code>
+<code> [1]  'mimeType: invalid depth'Assert(≡Arg.NewValue)∊0 1</code>
+<code> [2]  'mimeType: invalid data type'Assert' '=1↑0⍴Arg.NewValue</code>
+<code> [3]  _mimeType←Arg.NewValue</code>
+</div>
+<code class="header" id="listing_36">#.SMTP.SMTP.Attachment.get_mimeType &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_mimeType</code>
+<code> [1]  r←_mimeType</code>
+</div>
+<code class="header" id="listing_37">#.SMTP.SMTP.Attachment.make1 &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> make1(filename)</code>
+<code> [1]  :Access Public Instance</code>
+<code> [2]  :Implements Constructor</code>
+<code> [3]  Init filename</code>
+<code> [4]  :If 0=≢extension←3⊃⎕NPARTS _filename</code>
+<code> [5]      _mimeType←'application/octet-stream'</code>
+<code> [6]  :Else</code>
+<code> [7]      _mimeType←GetMimeType extension</code>
+<code> [8]  :EndIf</code>
+</div>
+<code class="header" id="listing_38">#.SMTP.SMTP.Attachment.make2 &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> make2(filename mimeType)</code>
+<code> [1]  :Access Public Instance</code>
+<code> [2]  :Implements Constructor</code>
+<code> [3]  Init filename</code>
+<code> [4]  _mimeType←mimeType</code>
+<code> [5]  'Mime type must not be empty'Assert 0&lt;≢_mimeType</code>
+</div>
+<code class="header" id="listing_39">#.SMTP.SMTP.Attachment.Init &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> Init filename</code>
+<code> [1]  'File not found'Assert ⎕NEXISTS filename</code>
+<code> [2]  _filename←filename</code>
+<code> [3]  _mimeType←''</code>
+</div>
+<code class="header" id="listing_40">#.SMTP.SMTP.Attachment.GetAllMimeTypes &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←GetAllMimeTypes</code>
+<code> [1]      ⍝ Returns a matrix with two columns: extension and Mime type</code>
+<code> [2]   :Access Public Shared</code>
+<code> [3]   r←''</code>
+<code> [4]   r,←⊂'.bin' 'application/octet-stream'</code>
+<code> [5]   r,←⊂'.bmp' 'image/bmp'</code>
+<code> [6]   r,←⊂'.css' 'text/css'</code>
+<code> [7]   r,←⊂'.csv' 'text/csv'</code>
+<code> [8]   r,←⊂'.doc' 'application/msword'</code>
+<code> [9]   r,←⊂'.docx' 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'</code>
+<code> [10]  r,←⊂'.gz' 'application/gzip'</code>
+<code> [11]  r,←⊂'.gif' 'image/gif'</code>
+<code> [12]  r,←⊂'.htm' 'text/html'</code>
+<code> [13]  r,←⊂'.html' 'text/html'</code>
+<code> [14]  r,←⊂'.ico' 'image/vnd.microsoft.ico'</code>
+<code> [15]  r,←⊂'.jpeg' 'image/jpeg'</code>
+<code> [16]  r,←⊂'.js' 'text/javascript'</code>
+<code> [17]  r,←⊂'.json' 'application/json'</code>
+<code> [18]  r,←⊂'.mp3' 'audio/mpeg'</code>
+<code> [19]  r,←⊂'.mp4' 'video/mp4'</code>
+<code> [20]  r,←⊂'.mpeg' 'video/mpeg'</code>
+<code> [21]  r,←⊂'.otf' 'font/otf'</code>
+<code> [22]  r,←⊂'.png' 'image/png'</code>
+<code> [23]  r,←⊂'.pdf' 'application/pdf'</code>
+<code> [24]  r,←⊂'.ppt' 'application/vnd.ms-powerpoint'</code>
+<code> [25]  r,←⊂'.pptx' 'application/vnd.openxmlformats-officedocument.presentationml.presentation'</code>
+<code> [26]  r,←⊂'.rar' 'application/vnd.rar'</code>
+<code> [27]  r,←⊂'.rtf' 'application/rtf'</code>
+<code> [28]  r,←⊂'.sh' 'application/x-sh'</code>
+<code> [29]  r,←⊂'.svg' 'image/svg+xml'</code>
+<code> [30]  r,←⊂'.tar' 'application/x-tar'</code>
+<code> [31]  r,←⊂'.tif' 'image/tiff'</code>
+<code> [32]  r,←⊂'.ttf' 'font/ttf'</code>
+<code> [33]  r,←⊂'.txt' 'text/plain'</code>
+<code> [34]  r,←⊂'.vsd' 'application/vnd.visio'</code>
+<code> [35]  r,←⊂'.wav' 'audio/wav'</code>
+<code> [36]  r,←⊂'.woff' 'font/woff'</code>
+<code> [37]  r,←⊂'.woff2' 'font/woff2'</code>
+<code> [38]  r,←⊂'.xhtml' 'application/xhtml+xml'</code>
+<code> [39]  r,←⊂'.xls' 'application/vnd.ms-excel'</code>
+<code> [40]  r,←⊂'.xlsx' 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'</code>
+<code> [41]  r,←⊂'.xml' 'text/xml'</code>
+<code> [42]  r,←⊂'.zip' 'application/zip'</code>
+<code> [43]  r,←⊂'.7z' 'application/x-7z-compresses'</code>
+<code> [44]  r←↑r</code>
+</div>
+<code class="header" id="listing_41">#.SMTP.SMTP.Attachment.GetMimeType &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←GetMimeType extension</code>
+<code> [1]  :Access Public Shared</code>
+<code> [2]  extension←⎕C(('.'≠1⍴extension)/'.'),extension</code>
+<code> [3]  mat←GetAllMimeTypes</code>
+<code> [4]  :If (≢mat)≥row←mat[;1]⍳⊂extension</code>
+<code> [5]      r←2⊃mat[row;]</code>
+<code> [6]  :Else</code>
+<code> [7]      r←'application/octet-stream'  ⍝ Kind of most general MIME type</code>
+<code> [8]  :EndIf</code>
+</div>
+<code class="header" id="listing_42">#.SMTP.SMTP.Connection.set_EHLOResponse &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_43">#.SMTP.SMTP.Connection.get_EHLOResponse &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_EHLOResponse</code>
+<code> [1]  r←_EHLOResponse</code>
+</div>
+<code class="header" id="listing_44">#.SMTP.SMTP.Connection.set_Clt   &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_45">#.SMTP.SMTP.Connection.set_Conx   &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_46">#.SMTP.SMTP.Connection.set_LoggedOn   &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_47">#.SMTP.SMTP.Connection.set_ConnectionParms &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_48">#.SMTP.SMTP.Connection.get_ConnectionParms &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_ConnectionParms</code>
+<code> [1]  r←_connectionParms</code>
+</div>
+<code class="header" id="listing_49">#.SMTP.SMTP.Connection.CRLF &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←CRLF</code>
+<code> [1]  r←⎕UCS 13 10</code>
+</div>
+<code class="header" id="listing_50">#.SMTP.SMTP.Connection.make1 &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> make1(connectionParms)</code>
+<code> [1]  :Access public</code>
+<code> [2]  :Implements constructor</code>
+<code> [3]       ⍝ `connectionParms` must be an instance of the `ConnectionParameters` class</code>
+<code> [4]  'Right argument is not an instance of "ConnectionParameters"'Assert(⊃⊃⎕CLASS connectionParms)≡(⊃⊃⎕CLASS ⎕THIS).##.ConnectionParameters</code>
+<code> [5]  msg Assert 0=≢msg←connectionParms.PerformChecks ⍬</code>
+<code> [6]  _connectionParms←connectionParms</code>
+</div>
+<code class="header" id="listing_51">#.SMTP.SMTP.Connection.NewMessage &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←NewMessage(connectionParms mailParms)</code>
+<code> [1]  :Access public shared</code>
+<code> [2]     ⍝ Create a new message instance</code>
+<code> [3]  r←⎕NEW(⊃⊃⎕CLASS ⎕THIS).##.Message(⎕THIS connectionParms mailParms)</code>
+</div>
+<code class="header" id="listing_52">#.SMTP.SMTP.Connection.Logoff &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> (rc msg)←Logoff</code>
+<code> [1]  :Access public</code>
+<code> [2]     ⍝ Log out from an SMTP mail server</code>
+<code> [3]  :If 0=⊃(rc msg)←Do'QUIT'</code>
+<code> [4]      rc←⊃LDRC.Close Clt</code>
+<code> [5]  :EndIf</code>
+<code> [6]  _loggedOn←0</code>
+</div>
+<code class="header" id="listing_53">#.SMTP.SMTP.Connection.Ping &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> (rc msg)←Ping</code>
+<code> [1]  :Access public</code>
+<code> [2]  (rc msg)←Do'NOOP'</code>
+</div>
+<code class="header" id="listing_54">#.SMTP.SMTP.Connection.logIt &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_55">#.SMTP.SMTP.ConnectionParameters.set_Server &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_Server arg</code>
+<code> [1]  'Server: not a simple character vector'Assert 80=⎕DR arg.NewValue</code>
+<code> [2]  _Server←arg.NewValue</code>
+</div>
+<code class="header" id="listing_56">#.SMTP.SMTP.ConnectionParameters.get_Server &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Server</code>
+<code> [1]  r←_Server</code>
+</div>
+<code class="header" id="listing_57">#.SMTP.SMTP.ConnectionParameters.set_Password &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_Password arg</code>
+<code> [1]  'Password: not a simple character vector'Assert 80=⎕DR arg.NewValue</code>
+<code> [2]  _Password←arg.NewValue</code>
+</div>
+<code class="header" id="listing_58">#.SMTP.SMTP.ConnectionParameters.get_Password &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Password</code>
+<code> [1]  r←_Password</code>
+</div>
+<code class="header" id="listing_59">#.SMTP.SMTP.ConnectionParameters.set_Userid &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_Userid arg</code>
+<code> [1]  'Userid: not a simple character vector'Assert 80=⎕DR arg.NewValue</code>
+<code> [2]  _Userid←arg.NewValue</code>
+</div>
+<code class="header" id="listing_60">#.SMTP.SMTP.ConnectionParameters.get_Userid &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Userid</code>
+<code> [1]  r←_Userid</code>
+</div>
+<code class="header" id="listing_61">#.SMTP.SMTP.ConnectionParameters.set_Secure &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_Secure arg</code>
+<code> [1]  'Secure: not a Boolean'Assert(⊂arg.NewValue)∊0 1</code>
+<code> [2]  _Secure←arg.NewValue</code>
+</div>
+<code class="header" id="listing_62">#.SMTP.SMTP.ConnectionParameters.get_Secure &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Secure</code>
+<code> [1]  r←_Secure</code>
+</div>
+<code class="header" id="listing_63">#.SMTP.SMTP.ConnectionParameters.set_Port &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_Port arg</code>
+<code> [1]  'Port: not an integer between 1 and 65535'Assert(⎕DR arg.NewValue)∊83 163 323</code>
+<code> [2]  'Port: not an integer between 1 and 65535'Assert arg.NewValue∊⍳65535</code>
+<code> [3]  _Port←arg.NewValue</code>
+</div>
+<code class="header" id="listing_64">#.SMTP.SMTP.ConnectionParameters.get_Port &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Port</code>
+<code> [1]  r←_Port</code>
+</div>
+<code class="header" id="listing_65">#.SMTP.SMTP.ConnectionParameters.set_Domain &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_Domain arg</code>
+<code> [1]  'Domain: not a simple character vector'Assert 80=⎕DR arg.NewValue</code>
+<code> [2]  _Domain←arg.NewValue</code>
+</div>
+<code class="header" id="listing_66">#.SMTP.SMTP.ConnectionParameters.get_Domain &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Domain</code>
+<code> [1]  :If 0=≢_Domain</code>
+<code> [2]      _Domain←{⍵↓⍨⍵⍳'@'}_Userid</code>
+<code> [3]  :EndIf</code>
+<code> [4]  r←_Domain</code>
+</div>
+<code class="header" id="listing_67">#.SMTP.SMTP.ConnectionParameters.set_Org &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_Org arg</code>
+<code> [1]  'Org: not a simple character vector'Assert 80=⎕DR arg.NewValue</code>
+<code> [2]  _Org←arg.NewValue</code>
+</div>
+<code class="header" id="listing_68">#.SMTP.SMTP.ConnectionParameters.get_Org &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Org</code>
+<code> [1]  r←_Org</code>
+</div>
+<code class="header" id="listing_69">#.SMTP.SMTP.ConnectionParameters.set_ReplyTo &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_ReplyTo arg</code>
+<code> [1]  'ReplyTo: not a simple character vector'Assert 80=⎕DR arg.NewValue</code>
+<code> [2]  :If 0&lt;≢arg.NewValue</code>
+<code> [3]      'ReplyTo: does not carry an @'Assert'@'∊arg.NewValue</code>
+<code> [4]      'ReplyTo: not a valid email address'Assert 5&lt;≢arg.NewValue</code>
+<code> [5]  :EndIf</code>
+<code> [6]  _ReplyTo←arg.NewValue</code>
+</div>
+<code class="header" id="listing_70">#.SMTP.SMTP.ConnectionParameters.get_ReplyTo &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_ReplyTo</code>
+<code> [1]  r←_ReplyTo</code>
+</div>
+<code class="header" id="listing_71">#.SMTP.SMTP.ConnectionParameters.set_XMailer &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_XMailer arg</code>
+<code> [1]  'XMailer: not a simple character vector'Assert 80=⎕DR arg.NewValue</code>
+<code> [2]  _XMailer←arg.NewValue</code>
+</div>
+<code class="header" id="listing_72">#.SMTP.SMTP.ConnectionParameters.get_XMailer &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_XMailer</code>
+<code> [1]  r←_XMailer</code>
+</div>
+<code class="header" id="listing_73">#.SMTP.SMTP.ConnectionParameters.set_TLSFlags &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_TLSFlags arg</code>
+<code> [1]  'TLSFlags: invalid data type'Assert(⎕DR arg.NewValue)∊83 163</code>
+<code> [2]  'TLSFlags: not a single integer in 1,2*⍳7 'Assert 1=≢arg.NewValue</code>
+<code> [3]  'TLSFlags: not a single integer in 1,2*⍳7'Assert(⊂arg.NewValue)∊1,2*⍳7</code>
+<code> [4]  _TLSFlags←⊃arg.NewValue</code>
+</div>
+<code class="header" id="listing_74">#.SMTP.SMTP.ConnectionParameters.get_TLSFlags &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_TLSFlags</code>
+<code> [1]  r←_TLSFlags</code>
+</div>
+<code class="header" id="listing_75">#.SMTP.SMTP.ConnectionParameters.make &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  make</code>
+<code> [1]   :Implements Constructor</code>
+<code> [2]   :Access Public</code>
+<code> [3]   _Server←''                    ⍝ server address</code>
+<code> [4]   _Password←''                  ⍝ optional password (if server requires authentication)</code>
+<code> [5]   _Userid←''                    ⍝ userid for authentication (defaults to `From`)</code>
+<code> [6]   _Secure←1                     ⍝ 1=SSL/TLS, 0 = not secure</code>
+<code> [7]   _Port←465                     ⍝ server port (465 for secure, 578 otherwise)</code>
+<code> [8]   _Domain←''                    ⍝ fully qualified domain name for logging on with `Userid` and `Password`</code>
+<code> [9]   _Org←''                       ⍝ optional organization</code>
+<code> [10]  _ReplyTo←''                   ⍝ optional reply to email address</code>
+<code> [11]  _XMailer←'APLTeam SMTP Client ',2⊃(⊃⊃⎕CLASS ⎕THIS).##.Version  ⍝ client identifier</code>
+<code> [12]  _TLSFlags←32                  ⍝ Default: accept server certificate without validating (see Conga User Guide Appendix C)</code>
+</div>
+<code class="header" id="listing_76">#.SMTP.SMTP.MailParameters.set_To &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_To arg</code>
+<code> [1]  'To: not a simple character vector'Assert 80=⎕DR arg.NewValue</code>
+<code> [2]  'To: does not contain an @ symbol'Assert'@'∊arg.NewValue</code>
+<code> [3]  'To: invalid email address'Assert 5&lt;≢arg.NewValue</code>
+<code> [4]  'To: you must not specify more than one email address'Assert~','∊arg.NewValue</code>
+<code> [5]  _To←arg.NewValue</code>
+</div>
+<code class="header" id="listing_77">#.SMTP.SMTP.MailParameters.get_To &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_To</code>
+<code> [1]  r←_To</code>
+</div>
+<code class="header" id="listing_78">#.SMTP.SMTP.MailParameters.set_CC &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_CC arg</code>
+<code> [1]  val←','(≠⊆⊢)arg.NewValue</code>
+<code> [2]  'CC: not a simple character vector'Assert∧/{80=⎕DR ⍵}¨val</code>
+<code> [3]  'CC: invalid email address'Assert 5∧.&lt;≢¨val</code>
+<code> [4]  'CC: invalid email address; no ampersand found'Assert∧/'@'∊¨val</code>
+<code> [5]  _CC←val</code>
+</div>
+<code class="header" id="listing_79">#.SMTP.SMTP.MailParameters.get_CC &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_CC</code>
+<code> [1]  r←_CC</code>
+</div>
+<code class="header" id="listing_80">#.SMTP.SMTP.MailParameters.set_BCC &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_BCC arg</code>
+<code> [1]  val←','(≠⊆⊢)arg.NewValue</code>
+<code> [2]  'BCC: not a simple character vector'Assert∧/{80=⎕DR ⍵}¨val</code>
+<code> [3]  'BCC: invalid email address'Assert 5∧.&lt;≢¨val</code>
+<code> [4]  'BCC: no ampersand found'Assert∧/'@'∊¨val</code>
+<code> [5]  _BCC←val</code>
+</div>
+<code class="header" id="listing_81">#.SMTP.SMTP.MailParameters.get_BCC &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_BCC</code>
+<code> [1]  r←_BCC</code>
+</div>
+<code class="header" id="listing_82">#.SMTP.SMTP.MailParameters.set_From &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_From arg</code>
+<code> [1]  'From: not a simple character vector'Assert 80=⎕DR arg.NewValue</code>
+<code> [2]  'From: invalid email address'Assert 5&lt;≢arg.NewValue</code>
+<code> [3]  'From: no ampersand found'Assert'@'∊arg.NewValue</code>
+<code> [4]  _From←arg.NewValue</code>
+</div>
+<code class="header" id="listing_83">#.SMTP.SMTP.MailParameters.get_From &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_From</code>
+<code> [1]  r←_From</code>
+</div>
+<code class="header" id="listing_84">#.SMTP.SMTP.MailParameters.set_Subject &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_Subject arg</code>
+<code> [1]  'Subject: not a simple character vector'Assert(⎕DR arg.NewValue)∊80 160</code>
+<code> [2]  _Subject←arg.NewValue</code>
+</div>
+<code class="header" id="listing_85">#.SMTP.SMTP.MailParameters.get_Subject &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Subject</code>
+<code> [1]  r←_Subject</code>
+</div>
+<code class="header" id="listing_86">#.SMTP.SMTP.MailParameters.set_Body &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_Body arg</code>
+<code> [1]  val←,⊆arg.NewValue</code>
+<code> [2]  'Body: neither a simple character vector nor a vector of character vectors'Assert∧/{(⎕DR ⍵)∊80 160}¨val</code>
+<code> [3]  _Body←val</code>
+</div>
+<code class="header" id="listing_87">#.SMTP.SMTP.MailParameters.get_Body &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Body</code>
+<code> [1]  r←_Body</code>
+</div>
+<code class="header" id="listing_88">#.SMTP.SMTP.MailParameters.set_Attachments &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> set_Attachments arg</code>
+<code> [1]  :If 0=≢arg.NewValue</code>
+<code> [2]      _Attachments←''</code>
+<code> [3]  :Else</code>
+<code> [4]      'Use the AddAttachment method'Assert 0</code>
+<code> [5]  :EndIf</code>
+</div>
+<code class="header" id="listing_89">#.SMTP.SMTP.MailParameters.get_Attachments &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Attachments</code>
+<code> [1]  r←_Attachments</code>
+</div>
+<code class="header" id="listing_90">#.SMTP.SMTP.MailParameters.make &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  make</code>
+<code> [1]   :Implements Constructor</code>
+<code> [2]   :Access Public</code>
+<code> [3]   _To←''</code>
+<code> [4]   _CC←''</code>
+<code> [5]   _BCC←''</code>
+<code> [6]   _From←''</code>
+<code> [7]   _Subject←''</code>
+<code> [8]   _Body←''</code>
+<code> [9]   _Attachments←''</code>
+</div>
+<code class="header" id="listing_91">#.SMTP.SMTP.MailParameters.AddAttachment &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  {r}←AddAttachment y</code>
+<code> [1]      ⍝ Used to add attachments.</code>
+<code> [2]      ⍝ `y` may be one of:</code>
+<code> [3]      ⍝ * An instance of the `Attachment` class</code>
+<code> [4]      ⍝ * A simple character vector interpreted as a filename</code>
+<code> [5]      ⍝ * A vector of two simple character vectors interpreted as filename and mime type</code>
+<code> [6]   :Access public instance</code>
+<code> [7]   :If 80=⎕DR y</code>
+<code> [8]       _Attachments,←⎕NEW(⊃⊃⎕CLASS ⎕THIS).##.Attachment(,⊂y)</code>
+<code> [9]   :ElseIf 2=≡y</code>
+<code> [10]  :AndIf 2=≢y</code>
+<code> [11]  :AndIf 80∧.=⎕DR¨y</code>
+<code> [12]      _Attachments,←⎕NEW(⊃⊃⎕CLASS ⎕THIS).##.Attachment y</code>
+<code> [13]  :ElseIf 1=≢y</code>
+<code> [14]  :AndIf (⊃⊃⎕CLASS ⎕THIS).##.Attachment≡⊃⊃⎕CLASS y</code>
+<code> [15]      _Attachments,←y</code>
+<code> [16]  :Else</code>
+<code> [17]      'Neither a filename nor a filename plus a mime type nor an instance of the "Attachment" class'Assert 0</code>
+<code> [18]  :EndIf</code>
+</div>
+<code class="header" id="listing_92">#.SMTP.SMTP.Message.set_Text &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_93">#.SMTP.SMTP.Message.set_Recipients &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_94">#.SMTP.SMTP.Message.get_Recipients &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←get_Recipients</code>
+<code> [1]  r←_recipients</code>
+</div>
+<code class="header" id="listing_95">#.SMTP.SMTP.Message.make1 &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  make1(_Client connectionParams mailParams)</code>
+<code> [1]   :Access public</code>
+<code> [2]   :Implements constructor</code>
+<code> [3]   Client←_Client</code>
+<code> [4]   XMailer←connectionParams.XMailer</code>
+<code> [5]   ReplyTo←connectionParams.ReplyTo</code>
+<code> [6]   Org←connectionParams.Org</code>
+<code> [7]   From←mailParams.From</code>
+<code> [8]   Subject←mailParams.Subject</code>
+<code> [9]   Body←mailParams.Body</code>
+<code> [10]  CC←mailParams.CC</code>
+<code> [11]  BCC←mailParams.BCC</code>
+<code> [12]  Attachments←mailParams.Attachments</code>
+</div>
+<code class="header" id="listing_96">#.SMTP.SMTP.Message.ReadFile &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←ReadFile file</code>
+<code> [1]      ⍝ We don't trap errors here because we don't want to pretend sending emails with attachments when we don't</code>
+<code> [2]  tno←file ⎕NTIE 0</code>
+<code> [3]  r←⎕NREAD tno,(⎕DR' '),¯1 0</code>
+<code> [4]  ⎕NUNTIE tno</code>
+</div>
+<code class="header" id="listing_97">#.SMTP.SMTP.Message.CompileAllRecipients &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←CompileAllRecipients mailParams</code>
+<code> [1]  r←''</code>
+<code> [2]  r,←⊂'To: ',normalizeAddr mailParams.To</code>
+<code> [3]  r,←{0=≢⍵:⍵ ⋄ 'CC: '∘,¨normalizeAddr¨⍵}mailParams.CC</code>
+<code> [4]  r,←{0=≢⍵:⍵ ⋄ 'BCC: '∘,¨normalizeAddr¨⍵}mailParams.BCC</code>
+</div>
+<code class="header" id="listing_98">#.SMTP.SMTP.Message.CRLF &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←CRLF</code>
+<code> [1]  r←⎕UCS 13 10</code>
+</div>
+<code class="header" id="listing_99">#.SMTP.SMTP.Message.extractAddr &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←extractAddr addr</code>
+<code> [1]   :Access Public Shared</code>
+<code> [2]          ⍝ extract the mail address from a string</code>
+<code> [3]          ⍝ perform very cursory validation on the address</code>
+<code> [4]          ⍝ addr - the string to be validated (can be in form "Fred Bloggs" fred@bloggs.com)</code>
+<code> [5]          ⍝ r    - the email address or empty if not valid</code>
+<code> [6]   r←''</code>
+<code> [7]   quotes←(⊢∨≠\)'"'=addr ⍝ mask out quoted material e.g. "fred@work" fred@bloggs.com</code>
+<code> [8]   ind←⊃⍸quotes&lt;addr='@'</code>
+<code> [9]   :If ind≠0</code>
+<code> [10]      del←0,(1+≢addr),⍨⍸quotes&lt;' '=addr ⍝ break on space</code>
+<code> [11]      r←addr{⍵[1]↓(¯1+⍵[2])↑⍺}del[0 1+del⍸ind]</code>
+<code> [12]      r←⊃('.+@[^.].+\..+'⎕S'%')r</code>
+<code> [13]  :EndIf</code>
+</div>
+<code class="header" id="listing_100">#.SMTP.SMTP.Message.normalizeAddr &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> addr←normalizeAddr addr</code>
+<code> [1]  :Access Public Shared</code>
+<code> [2]  :If 0&lt;≢addr~' '  ⍝ MB: avoid issues when addr is a 0/ManyAddrs</code>
+<code> [3]      :If '&lt;&gt;'≢(⊣/,⊢/)a←extractAddr addr</code>
+<code> [4]          addr←(addr/⍨~∨\⌽&lt;\⌽a⍷addr),'&lt;',a,'&gt;'</code>
+<code> [5]      :EndIf</code>
+<code> [6]  :EndIf</code>
+</div>
+<code class="header" id="listing_101">#.SMTP.SMTP.Message.Base64Encoding &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←Base64Encoding txt</code>
+<code> [1]  :Access Public Shared</code>
+<code> [2]         ⍝ ⍵ byte string: 256∧.&gt;⎕ucs ⍵</code>
+<code> [3]         ⍝ ← longer (4:3) string in A-Z,a-z,0-9,+/= only</code>
+<code> [4]  ⎕IO←0</code>
+<code> [5]  A←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'</code>
+<code> [6]  ed←{⊃⍵{⍺{2⊥⍉((⌈(⍴⍵)÷⍺),⍺){⍺⍴(×/⍺)↑⍵}⍵},⍉(⍵⍴2)⊤⍺⍺}/⍺}</code>
+<code> [7]  r←{⍵,'='⍴⍨4|-⍴⍵}(⊂6 8 ed ⎕UCS txt)⌷A</code>
+</div>
+<code class="header" id="listing_102">#.SMTP.SMTP.Message.addHeader &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_103">#.SMTP.SMTP.Message.stuff &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block missing">Could not get canonical representation.</div>
+<code class="header" id="listing_104">#.SMTP.SMTP.API.Attachment &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←Attachment</code>
+<code> [1]  r←##.Attachment</code>
+</div>
+<code class="header" id="listing_105">#.SMTP.SMTP.API.ConnectionParameters &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←ConnectionParameters</code>
+<code> [1]  r←##.ConnectionParameters</code>
+</div>
+<code class="header" id="listing_106">#.SMTP.SMTP.API.MailParameters &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> r←MailParameters</code>
+<code> [1]  r←##.MailParameters</code>
+</div>
+<code class="header" id="listing_107">#.SMTP.SMTP.API.SendEmailExample &mdash; 100%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code> SendEmailExample←{⍺←⊢ ⋄ ⍺ ##.SendEmailExample ⍵}</code>
+</div>
+<div id="footer">
+<hr>
+<p>Created by "CodeCoverage" version 0.10.7+52 from 2024-06-05</p>
+</div>
 
 </body>
 </html>
