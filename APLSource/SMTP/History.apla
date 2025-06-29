@@ -1,4 +1,6 @@
 (
+ '* 3.0.1 from 2025-06-29'
+ '  * HTML emails were not recognized as such'
  '* 3.0.0 from 2025-04-09'
  '  * Potentially breaking: `Version` now returns a simple character vector stemming from the package config file'
  '  * "Make" improved'
