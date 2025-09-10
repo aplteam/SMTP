@@ -1,4 +1,7 @@
 (
+ '* 3.1.0 from 2025-09-10'
+ '  * LICENSE updated'
+ '  * Bug fix: when `Version` was called an empty vector was returned.'
  '* 3.0.1 from 2025-06-29'
  '  * HTML emails were not recognized as such'
  '* 3.0.0 from 2025-04-09'

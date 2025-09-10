@@ -2,11 +2,11 @@
  r←0
  cfg←##.CiderConfig.USER
  SMTP←##.SMTP.API
- parms←⎕NEW SMTP.ConnectionParameters
+ parms←⎕NEW SMTP.##.ConnectionParameters
  parms.Server←cfg.SMTP_Server
  parms.Port←cfg.Port
  parms.Userid←cfg.EmailAddress
  parms.Password←cfg.EmailPassword
- ∆CONNECTION←⎕NEW SMTP.Connection(,⊂parms)
+ ∆CONNECTION←⎕NEW SMTP.##.Connection(,⊂parms)
  r←1
 ⍝Done
