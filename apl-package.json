@@ -19,5 +19,5 @@
   source: "APLSource/SMTP",
   tags: "smtp,email",
   userCommandScript: "",
-  version: "3.1.0+21",
+  version: "3.1.1+23",
 }
