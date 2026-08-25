@@ -1,6 +1,7 @@
 {
   api: "API",
   assets: "SMTP_Help.html",
+  checkLICENSEfile: 1,
   description: "SMTP client for sending emails from within Dyalog APL",
   documentation: "",
   files: "",
@@ -19,5 +20,5 @@
   source: "APLSource/SMTP",
   tags: "smtp,email",
   userCommandScript: "",
-  version: "3.1.1+23",
+  version: "3.1.2-beta-1+24",
 }

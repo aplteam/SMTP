@@ -153,7 +153,7 @@
       (rc msg)←Do text,CRLF,'.'
       →Exit if 0=rc
      Err:
-      logIt(rc msg)←Do'RSET'
+      {}logIt(rc msg)←Do'RSET'
      Exit:
     ∇
 
