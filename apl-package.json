@@ -20,5 +20,5 @@
   source: "APLSource/SMTP",
   tags: "smtp,email",
   userCommandScript: "",
-  version: "3.1.2-beta-1+24",
+  version: "3.1.2+26",
 }
