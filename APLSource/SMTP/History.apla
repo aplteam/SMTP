@@ -1,4 +1,6 @@
 (
+ '* 3.1.3 from 2026-08-??'
+ '  * Documentation of `SendEmailExample` fixed and added to `Help`.'
  '* 3.1.2 from 2026-08-25'
  '  * When more than one CC: was specified, some servers rejected because more than one "RCPT TO:" was specified'
  '  * `Connection.Send` printed a 0 to the session when an error ocurred.'

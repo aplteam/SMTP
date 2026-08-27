@@ -1,4 +1,5 @@
  {r}←Help
+⍝ Prints an `]Open` statement to the session for the HTML file that carries SMTP's documentation.
  r←⍬
  :If 0<⎕NC'TatinVars'
      ⎕SE.UCMD'Open ',TatinVars.GetFullPath2AssetsFolder
