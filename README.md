@@ -1,36 +1,36 @@
 # SMTP
 
-`SMTP` allows you to send emails from within Dyalog APL. It comes with a ready-to-go example that works out of the box.
+`SMTP` allows you to send emails from within Dyalog APL: plain text or HTML, with or without attachments, through an SMTP server of your choice.
 
 **Note:** `SMTP` releases are published as [Tatin](https://tatin.dev "Link to the principal Tatin Registry") packages, see there.
 
+You need an account with an SMTP server that offers SSL/TLS (usually on port 465) or an unencrypted connection. STARTTLS (usually port 587) is not supported yet. Earlier versions came with a shared Gmail account for trying things out; that account no longer exists.
 
-1. To try it out, load the package into the workspace with 
+1. Load the package into the workspace with
 
    ```
    ]TATIN.LoadPackage [tatin]SMTP
    ```
 
-2. Send an email with 
+2. Send yourself a test email with your own credentials:
 
    ```
-   SMTP.SendEmailExample 'john.doe@whatever.com'
+   cp←⎕NEW SMTP.ConnectionParameters
+   cp.Server←'smtp.example.com'
+   cp.Userid←'me@example.com'
+   cp.Password←'my-app-password'
+   cp SMTP.SendEmailExample 'john.doe@whatever.com'
    ```
 
-Note that the example uses a particular email address and an API key that anybody who loads the package can access. Of course this means that you must not send anything remotely confidential to this email address as clear text.
+With Gmail, for example, the server is `smtp.gmail.com`, and the password is an "app password" that you can create in the security settings of a Google account with 2-Step Verification switched on.
 
-This address is configured so that an application can kind of log on with that API key, and then send emails to that address; this is considered relatively unsafe, and it is not recommended by Google. This is also the reason why an email send via this sender address is likely to be qualified as spam by Google.
+Do not put the password into a file that is under version control, and do not hard-code it into code you distribute: anybody who finds it can send email in your name.
 
-It cannot be used for spam because the number of emails one can send this way is severely limited by Google, but it can be used to send a couple of emails.
-
-Nobody is watching that email address, but the _real_ receiver is the CC anyway of course.
-
-You may create your own email address (and API key) with Google and use it to send messages from a server for reporting stuff like
+`SMTP` is well suited for sending notifications from a server application, for example about
 
 * Crashes
 * "Start" and "Shutdown" events
 
-If you need to make sure that nobody can decipher any mail you are going to send this way then you must first encrypt the body and possibly any attachments as well.
+Email is not end-to-end encrypted, so if nobody but the recipient may read what you send, encrypt the body, and any attachments, before sending them.
 
 Further information is available by loading the package and then calling the `Help` method.
-
