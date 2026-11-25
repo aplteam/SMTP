@@ -1,0 +1,20 @@
+ R←Test_Compose_02(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;text;headers
+⍝ Header lines: no empty CC header, and an X-Mailer header with the version number
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ parms←∆NewMail'Header test'
+ parms.From←'tester@aplteam.test'
+ (rc msg text)←∆Compose parms
+ →T.PassesIf 0=rc
+ headers←∆HeaderLines text
+ →T.PassesIf~∨/'CC:'∘≡¨3↑¨headers
+ →T.PassesIf~∨/'BCC:'∘≡¨4↑¨headers
+ →T.PassesIf('APLTeam SMTP Client',{0=≢⍵:'' ⋄ ' ',⍵}SMTP.Version)≡text ∆Header'X-Mailer'
+ →T.PassesIf'<tester@aplteam.test>'≡text ∆Header'From'
+ →T.PassesIf'1.0'≡text ∆Header'MIME-Version'
+ →T.PassesIf'text/plain; charset="UTF-8"'≡text ∆Header'Content-Type'
+
+ R←T._OK
+⍝Done

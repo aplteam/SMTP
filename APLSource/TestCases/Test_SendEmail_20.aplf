@@ -1,10 +1,21 @@
- R←Test_SendEmail_20(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;res
-⍝ Exercise the SendEmailExample function
+ R←Test_SendEmail_20(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;res;parts
+⍝ Exercise the SendEmailExample function, with and without an attachment
  ⎕IO←1 ⋄ ⎕ML←1
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- res←SMTP.SendEmailExample ∆TO
+ ∆SERVER.Clear
+ res←∆NewParms SMTP.SendEmailExample'john.doe@example.com'
  →T.PassesIf'Email was sent successfully'≡res
+ →T.PassesIf 1=≢∆SERVER.Messages
+ →T.PassesIf(⊂'RCPT TO: <john.doe@example.com>')∊∆SERVER.Commands
 
+ ∆SERVER.Clear
+ res←∆NewParms SMTP.SendEmailExample'john.doe@example.com' './Test-Files/sample.txt'
+ →T.PassesIf'Email was sent successfully'≡res
+ parts←∆MimeParts ∆Unstuff⊃∆SERVER.Messages
+ →T.PassesIf 2=≢parts
+ →T.PassesIf(∆ReadBytes'./Test-Files/sample.txt')≡∆PartBytes 2⊃parts
+
+ R←T._OK
 ⍝Done

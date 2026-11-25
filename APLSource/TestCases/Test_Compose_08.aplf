@@ -1,0 +1,31 @@
+ R←Test_Compose_08(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;cp;parms;rc;msg;text;smiley;subject;from;addr
+⍝ Any Unicode character, including those above ⎕UCS 65535, in names, Organization, Subject and Body
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ smiley←⎕UCS 128512
+ cp←∆OfflineParms
+ cp.Org←'Łódź Software ',smiley
+ cp.ReplyTo←'Łukasz Nowak <reply@example.com>'
+ subject←'Greetings from Łódź ',smiley,' ⍵ Ωμέγα Привет 你好'
+ parms←∆NewMail subject
+ parms.From←'Łukasz Nowak <lukasz@example.com>'
+ parms.To←'Ωμέγα <omega@example.com>'
+ parms.Body←('Hello ',smiley)('Привет 你好 ',smiley)
+ (rc msg text)←cp ∆Compose parms
+ →T.PassesIf 0=rc
+ →T.PassesIf∧/78≥≢¨∆HeaderLines text
+ →T.PassesIf∧/127≥⎕UCS∊∆HeaderLines text
+ →T.PassesIf subject≡∆DecodeWords text ∆Header'Subject'
+ →T.PassesIf cp.Org≡∆DecodeWords text ∆Header'Organization'
+ from←text ∆Header'From'
+ addr←' <lukasz@example.com>'
+ →T.PassesIf addr≡(-≢addr)↑from
+ →T.PassesIf'Łukasz Nowak'≡∆DecodeWords(-≢addr)↓from
+ →T.PassesIf'Łukasz Nowak'≡∆DecodeWords{⍵↑⍨¯1+⍵⍳'<'}text ∆Header'Reply-To'
+ →T.PassesIf'Ωμέγα'≡∆DecodeWords{⍵↑⍨¯1+⍵⍳'<'}text ∆Header'To'
+ →T.PassesIf∧/parms.Body∊{'UTF-8'⎕UCS ⎕UCS ⍵}¨SMTP.Message.SplitLines text
+
+ R←T._OK
+⍝Done

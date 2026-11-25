@@ -1,0 +1,19 @@
+ R←Test_SendEmail_41(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log;text;body;lines
+⍝ Lines starting with a dot are dot-stuffed, so a single dot cannot end the message early
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ parms←∆NewMail'Created by SMTP''s ',⊃⎕SI
+ body←'Line one'(,'.')'MAIL FROM:<evil@example.com>' 'RCPT TO:<victim@example.com>' 'DATA' '.leading dot' 'last line'
+ parms.Body←body
+ (rc msg log text)←∆Send parms
+ →T.PassesIf 0=rc
+ →T.PassesIf 1=+/'MAIL FROM'∘≡¨9↑¨∆SERVER.Commands
+ →T.PassesIf 1=≢∆SERVER.Messages
+ lines←SMTP.Message.SplitLines text
+ →T.PassesIf∧/'..' '..leading dot'∊lines
+ →T.PassesIf∨/body⍷SMTP.Message.SplitLines ∆Unstuff text
+
+ R←T._OK
+⍝Done

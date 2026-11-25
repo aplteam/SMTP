@@ -1,0 +1,58 @@
+ R←Test_ConnectionParms_12(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;myParams;qdmx
+⍝ CR and LF are refused in every property that ends up in a header or an SMTP command
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ myParams←⎕NEW SMTP.ConnectionParameters
+
+ :Trap 11
+     myParams.Server←'x@y.com',(⎕UCS 13 10),'Bcc: evil@example.com'
+     →T.PassesIf 0
+ :Else
+     qdmx←⎕DMX
+     →T.PassesIf'Server: must not contain CR or LF'≡qdmx.EM
+ :EndTrap
+
+ :Trap 11
+     myParams.Userid←'x@y.com',(⎕UCS 13 10),'Bcc: evil@example.com'
+     →T.PassesIf 0
+ :Else
+     qdmx←⎕DMX
+     →T.PassesIf'Userid: must not contain CR or LF'≡qdmx.EM
+ :EndTrap
+
+ :Trap 11
+     myParams.Domain←'x@y.com',(⎕UCS 13 10),'Bcc: evil@example.com'
+     →T.PassesIf 0
+ :Else
+     qdmx←⎕DMX
+     →T.PassesIf'Domain: must not contain CR or LF'≡qdmx.EM
+ :EndTrap
+
+ :Trap 11
+     myParams.Org←'x@y.com',(⎕UCS 13 10),'Bcc: evil@example.com'
+     →T.PassesIf 0
+ :Else
+     qdmx←⎕DMX
+     →T.PassesIf'Org: must not contain CR or LF'≡qdmx.EM
+ :EndTrap
+
+ :Trap 11
+     myParams.ReplyTo←'x@y.com',(⎕UCS 13 10),'Bcc: evil@example.com'
+     →T.PassesIf 0
+ :Else
+     qdmx←⎕DMX
+     →T.PassesIf'ReplyTo: must not contain CR or LF'≡qdmx.EM
+ :EndTrap
+
+ :Trap 11
+     myParams.XMailer←'x@y.com',(⎕UCS 13 10),'Bcc: evil@example.com'
+     →T.PassesIf 0
+ :Else
+     qdmx←⎕DMX
+     →T.PassesIf'XMailer: must not contain CR or LF'≡qdmx.EM
+ :EndTrap
+
+ R←T._OK
+⍝Done

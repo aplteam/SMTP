@@ -1,6 +1,0 @@
- r←{add}∆ConfirmEmailOkay caption
- :If 0=⎕NC'add'
-     r←1 CommTools.YesOrNo'Check ',∆TO,' - did you receive an email? ',caption
- :Else
-     r←1 CommTools.YesOrNo'Check ',∆TO,' - did you receive an email ',add,'? ',caption
- :EndIf

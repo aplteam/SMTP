@@ -1,0 +1,17 @@
+ R←Test_SendEmail_43(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log;connection
+⍝ A wrong password is reported with the server's answer
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ parms←∆NewParms
+ parms.Password←'wrong'
+ connection←⎕NEW SMTP.Connection(,⊂parms)
+ ∆SERVER.Clear
+ (rc msg log)←connection.Send ∆NewMail'Created by SMTP''s ',⊃⎕SI
+ →T.PassesIf 1=rc
+ →T.PassesIf'535'≡3↑msg
+ →T.PassesIf 0=≢∆SERVER.Messages
+
+ R←T._OK
+⍝Done

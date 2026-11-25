@@ -1,0 +1,26 @@
+ R←Test_Compose_04(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;cp;parms;rc;msg;text;subject;from;addr
+⍝ Header values with characters above ⎕UCS 127 are UTF-8 encoded words; the address itself stays as it is
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ cp←∆OfflineParms
+ cp.Org←'Jäger GmbH'
+ subject←(30⍴'Łódź ⍵ '),'end'
+ parms←∆NewMail subject
+ parms.From←'Kai Jäger <kai@aplteam.com>'
+ parms.CC←'Grüße an Łukasz <lukasz@example.com>'
+ (rc msg text)←cp ∆Compose parms
+ →T.PassesIf 0=rc
+ →T.PassesIf∧/78≥≢¨∆HeaderLines text
+ →T.PassesIf∧/127≥⎕UCS∊∆HeaderLines text
+ →T.PassesIf'Jäger GmbH'≡∆DecodeWords text ∆Header'Organization'
+ →T.PassesIf subject≡∆DecodeWords text ∆Header'Subject'
+ from←text ∆Header'From'
+ addr←' <kai@aplteam.com>'
+ →T.PassesIf addr≡(-≢addr)↑from
+ →T.PassesIf'Kai Jäger'≡∆DecodeWords(-≢addr)↓from
+ →T.PassesIf'Grüße an Łukasz'≡∆DecodeWords{⍵↑⍨¯1+⍵⍳'<'}text ∆Header'CC'
+
+ R←T._OK
+⍝Done

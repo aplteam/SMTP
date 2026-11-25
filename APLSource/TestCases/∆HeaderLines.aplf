@@ -1,0 +1,4 @@
+ r←∆HeaderLines text;lines
+⍝ Returns the header lines of the message `text` as they are, folded lines not unfolded
+ lines←SMTP.Message.SplitLines text
+ r←(¯1+lines⍳⊂'')↑lines

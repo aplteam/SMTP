@@ -1,0 +1,6 @@
+ Cleanup_SendEmail
+⍝ Stops the fake SMTP server
+ :If 9=⎕NC'∆SERVER'
+     ∆SERVER.Stop
+ :EndIf
+ ⎕EX'∆SERVER'

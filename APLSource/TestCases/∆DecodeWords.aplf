@@ -1,0 +1,9 @@
+ r←∆DecodeWords value;words
+⍝ Decodes a header value that consists of RFC 2047 encoded words (UTF-8, base64).
+⍝ Any other value is returned unchanged.
+ words←' '(≠⊆⊢)value
+ :If ∧/(⊂'=?utf-8?B?')≡¨10↑¨words
+     r←'UTF-8'⎕UCS⊃,/{FakeSMTPServer.Base64Decode ¯2↓10↓⍵}¨words
+ :Else
+     r←value
+ :EndIf

@@ -1,0 +1,6 @@
+ r←∆NewMail subject
+⍝ Returns an instance of `MailParameters` with a recipient, the given subject and a one-line body
+ r←⎕NEW SMTP.MailParameters
+ r.To←'john.doe@example.com'
+ r.Subject←subject
+ r.Body←'Test mail'

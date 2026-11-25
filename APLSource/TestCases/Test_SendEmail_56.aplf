@@ -1,0 +1,19 @@
+ R←Test_SendEmail_56(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;other;port;cp;connection;rc;msg;log
+⍝ Nobody listens on the port
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ other←⎕NEW FakeSMTPServer
+ port←other.Start Conga
+ other.Stop
+ ⎕EX'other'
+ cp←∆NewParms
+ cp.Port←port
+ connection←⎕NEW SMTP.Connection(,⊂cp)
+ (rc msg log)←connection.Send ∆NewMail'Created by SMTP''s ',⊃⎕SI
+ →T.PassesIf ¯1=rc
+ →T.PassesIf'Conga error: '≡13↑msg
+
+ R←T._OK
+⍝Done

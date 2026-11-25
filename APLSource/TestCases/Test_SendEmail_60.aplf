@@ -1,0 +1,22 @@
+ R←Test_SendEmail_60(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log;text
+⍝ A recipient refused by the server: nothing is sent, the transaction is reset with RSET,
+⍝ and `log` holds the answers to RCPT TO and RSET
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ ∆SERVER.Defaults
+ ∆SERVER.Refuse←,⊂'nobody@example.com'
+ parms←∆NewMail'Created by SMTP''s ',⊃⎕SI
+ parms.CC←'jane.doe@example.com,nobody@example.com,joe@example.com'
+ (rc msg log text)←∆Send parms
+ ∆SERVER.Defaults
+ →T.PassesIf 1=rc
+ →T.PassesIf'550 5.1.1 No such user'≡msg
+ →T.PassesIf'250 2.1.5 OK' '250 2.1.5 OK' '550 5.1.1 No such user' '250 2.0.0 OK'≡log
+ →T.PassesIf(⊂'RSET')∊∆SERVER.Commands
+ →T.PassesIf~(⊂'DATA')∊∆SERVER.Commands
+ →T.PassesIf 0=≢∆SERVER.Messages
+
+ R←T._OK
+⍝Done

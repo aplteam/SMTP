@@ -1,11 +1,10 @@
- r←Initial_SendEmail;flag
- r←flag←0
- ⎕←'Please enter your email address (empty=quit without sending emails) :'
- :Repeat
-     ∆TO←⍞
-     :If 0=≢∆TO
-         :Return
-     :EndIf
-     flag←('@'∊∆TO)∧~∨/',;'∊∆TO
- :Until flag
+ r←Initial_SendEmail
+⍝ Starts the fake SMTP server that all test cases of the group "SendEmail" talk to.
+⍝ No email leaves the machine: the server listens on 127.0.0.1 and only records what it receives.
+ r←0
+ :If 9≠⎕NC'Conga'
+     'Conga'⎕CY(2 ⎕NQ'.' 'GetEnvironment' 'DYALOG'),'/ws/conga'
+ :EndIf
+ ∆SERVER←⎕NEW FakeSMTPServer
+ {}∆SERVER.Start Conga
  r←1

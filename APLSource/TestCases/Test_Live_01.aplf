@@ -1,0 +1,41 @@
+ R←Test_Live_01(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;filename;cfg;cp;mp;connection;rc;msg;log
+⍝ Optional: sends a real email through a real SMTP server.
+⍝ Runs only when the environment variable SMTP_TEST_CONFIG holds the name of a JSON5 file like this:
+⍝ ```
+⍝ {Server: "smtp.example.com", Port: 465, Secure: 1, Userid: "me@example.com", Password: "…", To: "me@example.com"}
+⍝ ```
+⍝ `From` is optional and defaults to `Userid`. Keep that file outside the repository: it holds a password.
+⍝ In batch mode the test checks the return code only; otherwise it asks whether the email arrived.
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._NotApplicable
+ filename←2 ⎕NQ'.' 'GetEnvironment' 'SMTP_TEST_CONFIG'
+ :If 0=≢filename
+     :Return
+ :EndIf
+ R←T._Failed
+
+ cfg←⎕JSON⍠('Dialect' 'JSON5')⊢⊃⎕NGET filename
+ cp←⎕NEW SMTP.ConnectionParameters
+ cp.Server←cfg.Server
+ cp.Port←cfg.Port
+ cp.Secure←cfg.Secure
+ cp.Userid←cfg.Userid
+ cp.Password←cfg.Password
+ mp←⎕NEW SMTP.MailParameters
+ mp.To←cfg.To
+ :If 0<cfg.⎕NC'From'
+     mp.From←cfg.From
+ :EndIf
+ mp.Subject←'Live test from SMTP''s ',(⊃⎕SI),': Jäger, Łódź, {⍵/⍨2=+⌿0=⍵∘.|⍵}'
+ mp.Body←'Line one' '.' '.leading dot' 'APL: Prim←{⍵/⍨2=+⌿0=⍵∘.|⍵}'
+ mp.AddAttachment'./Test-Files/CrashReport.html'
+ connection←⎕NEW SMTP.Connection(,⊂cp)
+ (rc msg log)←connection.Send mp
+ →T.PassesIf 0=rc
+ :If ~batchFlag
+     →T.PassesIf 1 CommTools.YesOrNo'Did ',cfg.To,' receive an email with APL characters in subject and body, the lines "." and ".leading dot", and an HTML attachment?'
+ :EndIf
+
+ R←T._OK
+⍝Done

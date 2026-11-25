@@ -1,20 +1,17 @@
- R←Test_SendEmail_30(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log
-⍝ Send emails to a lot of CCs
+ R←Test_SendEmail_30(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log;text;addresses
+⍝ Send an email to a dozen CCs: one RCPT TO each, and a folded CC header
  ⎕IO←1 ⋄ ⎕ML←1
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- parms←⎕NEW SMTP.MailParameters
- parms.To←∆CONNECTION.ConnectionParms.Userid
- ⍝ We take advantage of the fact that Google ignores everything from the + onwards to the "@", and many others followed
- parms.CC←⊃{⍺,',',⍵}/5{⍺←1 ⋄ (a b)←'@'(≠⊆⊢)⍵ ⋄ (a∘{⍺,'+',⍕⍵}¨⍳⍺),¨⊂'@',b}∆TO
- ⍝ It will send only a single message, but all return codes will be checked internally
- parms.Subject←'Created by SMTP''s ',⊃⎕SI
- parms.Body←'Test mail'
- (rc msg log)←∆CONNECTION.Send parms
- Assert 0=rc
+ parms←∆NewMail'Created by SMTP''s ',⊃⎕SI
+ addresses←{'john.doe+',(⍕⍵),'@example.com'}¨⍳12
+ parms.CC←⊃{⍺,',',⍵}/addresses
+ (rc msg log text)←∆Send parms
+ →T.PassesIf 0=rc
+ →T.PassesIf 13=+/'RCPT TO:'∘≡¨8↑¨∆SERVER.Commands
+ →T.PassesIf∧/78≥≢¨∆HeaderLines text
+ →T.PassesIf(⊃{⍺,', ',⍵}/'<',¨addresses,¨'>')≡text ∆Header'CC'
 
- :If ∆ConfirmEmailOkay''
-     R←T._OK
- :EndIf
+ R←T._OK
 ⍝Done

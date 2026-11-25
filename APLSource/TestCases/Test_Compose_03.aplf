@@ -1,0 +1,19 @@
+ R←Test_Compose_03(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;text;subject;addresses
+⍝ Long headers are folded: no header line exceeds 78 characters, and unfolding restores the value
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ subject←'A long subject ',(∊{'word',(⍕⍵),' '}¨⍳30),'end'
+ parms←∆NewMail subject
+ parms.From←'tester@aplteam.test'
+ addresses←{'john.doe+',(⍕⍵),'@example.com'}¨⍳10
+ parms.CC←⊃{⍺,',',⍵}/addresses
+ (rc msg text)←∆Compose parms
+ →T.PassesIf 0=rc
+ →T.PassesIf∧/78≥≢¨∆HeaderLines text
+ →T.PassesIf subject≡text ∆Header'Subject'
+ →T.PassesIf(⊃{⍺,', ',⍵}/'<',¨addresses,¨'>')≡text ∆Header'CC'
+
+ R←T._OK
+⍝Done

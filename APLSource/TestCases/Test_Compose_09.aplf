@@ -1,0 +1,21 @@
+ R←Test_Compose_09(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;text
+⍝ An email address (not the display name) with characters above ⎕UCS 127 is refused
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ parms←∆NewMail'Address test'
+ parms.From←'tester@aplteam.test'
+ parms.To←'Jürgen <jürgen@example.com>'
+ (rc msg text)←∆Compose parms
+ →T.PassesIf ¯1=rc
+ →T.PassesIf'Email address with characters other than ASCII (not supported): Jürgen <jürgen@example.com>'≡msg
+
+ parms.To←'john.doe@example.com'
+ parms.CC←'ok@example.com,łukasz@example.pl'
+ (rc msg text)←∆Compose parms
+ →T.PassesIf ¯1=rc
+ →T.PassesIf'Email address with characters other than ASCII (not supported): łukasz@example.pl'≡msg
+
+ R←T._OK
+⍝Done

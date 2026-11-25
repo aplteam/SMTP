@@ -1,0 +1,17 @@
+ R←Test_SendEmail_52(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log;text
+⍝ A server that offers neither AUTH LOGIN nor AUTH PLAIN: `Send` returns an error instead of crashing
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ ∆SERVER.Defaults
+ ∆SERVER.AuthMethods←'CRAM-MD5 XOAUTH2'
+ parms←∆NewMail'Created by SMTP''s ',⊃⎕SI
+ (rc msg log text)←∆Send parms
+ ∆SERVER.Defaults
+ →T.PassesIf ¯1=rc
+ →T.PassesIf'The server offers neither AUTH LOGIN nor AUTH PLAIN, only: CRAM-MD5 XOAUTH2'≡msg
+ →T.PassesIf 0=≢∆SERVER.Messages
+
+ R←T._OK
+⍝Done

@@ -1,0 +1,8 @@
+ (rc msg log text)←∆Send mailParms;connection
+⍝ Sends `mailParms` to the fake SMTP server through a new connection.
+⍝ Returns the result of `Connection.Send` plus the message text the server received (still
+⍝ dot-stuffed), or '' when it received none. Clears what the server has recorded before.
+ ∆SERVER.Clear
+ connection←⎕NEW SMTP.Connection(,⊂∆NewParms)
+ (rc msg log)←connection.Send mailParms
+ text←{0=≢⍵:'' ⋄ ⊃⌽⍵}∆SERVER.Messages

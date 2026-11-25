@@ -1,22 +1,20 @@
- R←Test_SendEmail_06(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;ref
-⍝ Send an email with a two attachments without mime type: an HTML file and a PDF file
+ R←Test_SendEmail_06(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log;text;parts
+⍝ Send an email with two attachments without mime type, and a body with a line break of its own
  ⎕IO←1 ⋄ ⎕ML←1
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- parms←⎕NEW SMTP.MailParameters
- parms.To←∆CONNECTION.ConnectionParms.Userid
- parms.CC←∆TO
- parms.Subject←'Subject from APL Team SMTP: ',⊃⎕SI
- parms.Body←'Simple text'
- parms.Body,←⎕UCS 13 10
+ parms←∆NewMail'Subject from APL Team SMTP: ',⊃⎕SI
+ parms.Body←'Simple text',(⎕UCS 13 10),'Second line'
  parms.AddAttachment'./Test-Files/APL-Code.pdf'
  parms.AddAttachment'./Test-Files/CrashReport.html'
+ (rc msg log text)←∆Send parms
+ →T.PassesIf 0=rc
+ parts←∆MimeParts ∆Unstuff text
+ →T.PassesIf 3=≢parts
+ →T.PassesIf∨/'Simple text' 'Second line'⍷1⊃parts
+ →T.PassesIf'Content-Type: application/pdf;'≡30↑⊃2⊃parts
+ →T.PassesIf'Content-Type: text/html;'≡24↑⊃3⊃parts
 
- (rc msg ref)←∆CONNECTION.Send parms
- Assert 0=rc
-
- :If ∆ConfirmEmailOkay'(check the attachments: an HTML file and a PDF)'
-     R←T._OK
- :EndIf
+ R←T._OK
 ⍝Done

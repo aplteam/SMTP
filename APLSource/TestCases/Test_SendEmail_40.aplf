@@ -1,0 +1,15 @@
+ R←Test_SendEmail_40(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log;text
+⍝ A server that offers AUTH PLAIN only
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ ∆SERVER.AuthMethods←'PLAIN'
+ parms←∆NewMail'Created by SMTP''s ',⊃⎕SI
+ (rc msg log text)←∆Send parms
+ ∆SERVER.AuthMethods←'LOGIN PLAIN'
+ →T.PassesIf 0=rc
+ →T.PassesIf(,⊂'PLAIN' 'tester@aplteam.test' 'secret')≡∆SERVER.Logons
+
+ R←T._OK
+⍝Done

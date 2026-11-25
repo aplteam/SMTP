@@ -1,0 +1,21 @@
+ R←Test_SendEmail_51(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;cp;connection;rc;msg;log
+⍝ Without a password there is no authentication, as for a relay in an internal network
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ ∆SERVER.Defaults
+ ∆SERVER.Clear
+ ∆SERVER.AuthMethods←''
+ cp←∆NewParms
+ cp.Password←''
+ connection←⎕NEW SMTP.Connection(,⊂cp)
+ (rc msg log)←connection.Send ∆NewMail'Created by SMTP''s ',⊃⎕SI
+ ∆SERVER.Defaults
+ →T.PassesIf 0=rc
+ →T.PassesIf 1=≢∆SERVER.Messages
+ →T.PassesIf 0=≢∆SERVER.Logons
+ →T.PassesIf~∨/'AUTH'∘≡¨4↑¨∆SERVER.Commands
+
+ R←T._OK
+⍝Done

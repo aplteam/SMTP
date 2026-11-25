@@ -1,0 +1,20 @@
+ R←Test_Compose_01(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;text;date
+⍝ The Date header: format, day of the week and UTC offset, including half-hour zones
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ →T.PassesIf'Wed, 25 Nov 2026 14:46:52 +0530'≡SMTP.Message.FormatDate(2026 11 25 14 46 52 0)330
+ →T.PassesIf'Wed, 25 Nov 2026 14:46:52 -0500'≡SMTP.Message.FormatDate(2026 11 25 14 46 52)¯300
+ →T.PassesIf'Sun, 1 Mar 2026 09:05:07 -0330'≡SMTP.Message.FormatDate(2026 3 1 9 5 7)¯210
+ →T.PassesIf'Tue, 29 Feb 2028 00:00:00 +0000'≡SMTP.Message.FormatDate(2028 2 29 0 0 0)0
+
+ parms←∆NewMail'Date test'
+ parms.From←'tester@aplteam.test'
+ (rc msg text)←∆Compose parms
+ →T.PassesIf 0=rc
+ date←text ∆Header'Date'
+ →T.PassesIf 1=≢('^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{1,2} [A-Z][a-z]{2} \d{4} \d\d:\d\d:\d\d [+-]\d{4}$'⎕S 0)date
+
+ R←T._OK
+⍝Done

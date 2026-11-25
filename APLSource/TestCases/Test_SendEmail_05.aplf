@@ -1,23 +1,24 @@
- R←Test_SendEmail_05(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;ref;filename
-⍝ Send an email with a two attachments: an HTML file and a PDF file
+ R←Test_SendEmail_05(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log;text;filename1;filename2;parts;lines
+⍝ Send an email with two attachments: a PDF file and an HTML file; check the closing boundary
  ⎕IO←1 ⋄ ⎕ML←1
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- parms←⎕NEW SMTP.MailParameters
- parms.To←∆CONNECTION.ConnectionParms.Userid
- parms.CC←∆TO
- parms.Subject←'Subject from APL Team SMTP: ',⊃⎕SI
+ parms←∆NewMail'Subject from APL Team SMTP: ',⊃⎕SI
  parms.Body←'Simple text'
- filename←'./Test-Files/APL-Code.pdf'
- parms.AddAttachment filename'application/pdf'
- filename←'./Test-Files/CrashReport.html'
- parms.AddAttachment filename'text/html'
+ filename1←'./Test-Files/APL-Code.pdf'
+ parms.AddAttachment filename1'application/pdf'
+ filename2←'./Test-Files/CrashReport.html'
+ parms.AddAttachment filename2'text/html'
+ (rc msg log text)←∆Send parms
+ →T.PassesIf 0=rc
+ parts←∆MimeParts ∆Unstuff text                  ⍝ Fails without a closing boundary
+ →T.PassesIf 3=≢parts
+ →T.PassesIf(∆ReadBytes filename1)≡∆PartBytes 2⊃parts
+ →T.PassesIf(∆ReadBytes filename2)≡∆PartBytes 3⊃parts
+ lines←SMTP.Message.SplitLines text
+ lines←lines/⍨0<≢¨lines
+ →T.PassesIf'--'≡¯2↑⊃⌽lines                       ⍝ The closing boundary is the last line
 
- (rc msg ref)←∆CONNECTION.Send parms
- Assert 0=rc
-
- :If ∆ConfirmEmailOkay'(check for two attachments: a PDF and an HTML file)'
-     R←T._OK
- :EndIf
+ R←T._OK
 ⍝Done

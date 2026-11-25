@@ -1,0 +1,4 @@
+ r←∆OfflineParms
+⍝ Returns an instance of `ConnectionParameters` good enough for composing a message without sending it
+ r←⎕NEW SMTP.ConnectionParameters
+ r.Userid←'tester@aplteam.test'

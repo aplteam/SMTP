@@ -1,0 +1,5 @@
+ r←∆ReadBytes filename;tno
+⍝ Returns the content of `filename` as bytes (integers 0-255)
+ tno←filename ⎕NTIE 0
+ r←256|⎕NREAD tno 83 ¯1 0
+ ⎕NUNTIE tno

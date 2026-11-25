@@ -1,0 +1,5 @@
+ r←∆Unstuff text;lines
+⍝ Undoes dot-stuffing: removes the first dot from every line that starts with two dots
+ lines←SMTP.Message.SplitLines text
+ lines←{'..'≡2↑⍵:1↓⍵ ⋄ ⍵}¨lines
+ r←¯2↓∊lines,¨⊂⎕UCS 13 10

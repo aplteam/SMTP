@@ -1,0 +1,8 @@
+ (rc msg text)←{connectionParms}∆Compose mailParms;message
+⍝ Composes `mailParms` without sending anything and returns the result of `Message.Compose`.
+⍝ `connectionParms` defaults to `∆OfflineParms`.
+ :If 0=⎕NC'connectionParms'
+     connectionParms←∆OfflineParms
+ :EndIf
+ message←⎕NEW SMTP.Message(⍬ connectionParms mailParms)
+ (rc msg text)←message.Compose mailParms

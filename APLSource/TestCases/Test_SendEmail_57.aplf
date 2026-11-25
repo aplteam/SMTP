@@ -1,0 +1,17 @@
+ R←Test_SendEmail_57(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log;text
+⍝ A server that sends its response to EHLO in two parts, as Gmail does
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ ∆SERVER.Defaults
+ ∆SERVER.SplitEHLO←1
+ parms←∆NewMail'Created by SMTP''s ',⊃⎕SI
+ (rc msg log text)←∆Send parms
+ ∆SERVER.Defaults
+ →T.PassesIf 0=rc
+ →T.PassesIf 1=≢∆SERVER.Logons
+ →T.PassesIf 1=≢∆SERVER.Messages
+
+ R←T._OK
+⍝Done

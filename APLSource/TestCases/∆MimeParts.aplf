@@ -1,0 +1,9 @@
+ r←∆MimeParts text;boundary;lines;contentType
+⍝ Returns the parts of the multipart message `text`: a vector with one vector of lines per part.
+⍝ Signals an error when the closing boundary is missing.
+ contentType←text ∆Header'Content-Type'
+ boundary←{⍵↑⍨¯1+⍵⍳'"'}contentType↓⍨9+⊃⍸'boundary="'⍷contentType
+ lines←SMTP.Message.SplitLines text
+ 'Closing boundary is missing'⎕SIGNAL 11/⍨~(⊂'--',boundary,'--')∊lines
+ lines←(¯1+lines⍳⊂'--',boundary,'--')↑lines
+ r←1↓¨(lines≡¨⊂'--',boundary)⊂lines

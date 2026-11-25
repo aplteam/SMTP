@@ -1,0 +1,275 @@
+:Class FakeSMTPServer
+⍝ A minimal SMTP server for the test cases. It runs in a thread of the test workspace, listens on
+⍝ 127.0.0.1 only, and records everything it receives, so no email ever leaves the machine.
+⍝ It understands EHLO, HELO, AUTH LOGIN, AUTH PLAIN, MAIL FROM, RCPT TO, DATA, NOOP, RSET and QUIT.
+⍝ It accepts any sender and any recipient, but authentication only for `Userid` and `Password`.
+⍝ `Greeting`, `SplitEHLO`, `Ignore`, `Refuse` and `DropAll` let test cases provoke what real servers do now and then;
+⍝ `Defaults` restores the settings.
+⍝ Usage:
+⍝ ```
+⍝ server←⎕NEW FakeSMTPServer
+⍝ server.Start congaRef      ⍝ A reference to a copy of the Conga namespace
+⍝ ...                        ⍝ Connect to 127.0.0.1 on server.Port, without encryption
+⍝ server.Stop
+⍝ ```
+
+    (⎕IO ⎕ML)←1
+
+    :Field Public Port←0
+    :Field Public AuthMethods←'LOGIN PLAIN'   ⍝ Offered in the EHLO response; empty means no AUTH line at all
+    :Field Public Userid←'tester@aplteam.test'
+    :Field Public Password←'secret'
+    :Field Public Commands←''                 ⍝ Every line received outside DATA and AUTH, in order
+    :Field Public Messages←''                 ⍝ What was received between DATA and the final dot, still dot-stuffed
+    :Field Public Logons←''                   ⍝ (method userid password) for every authentication attempt
+    :Field Public Greeting←''                 ⍝ What the server says when a client connects; set by `Defaults`
+    :Field Public SplitEHLO←0                 ⍝ 1: send the EHLO response in two parts, with a short delay in between
+    :Field Public Ignore←''                   ⍝ Commands (first four characters, lowercase) the server does not answer
+    :Field Public Refuse←''                   ⍝ Addresses (lowercase) that RCPT TO is refused for with 550
+    :Field _conga←''
+    :Field _srv←''
+    :Field _tid←¯1
+    :Field _stop←0
+    :Field _names←''                          ⍝ Conga names of the connections seen so far
+    :Field _states←''                         ⍝ One namespace per connection: buffer, mode, data, user
+
+    ∇ make
+      :Access Public
+      :Implements Constructor
+      Defaults
+    ∇
+
+    ∇ Defaults
+    ⍝ Restores the settings a test case may have changed
+      :Access Public
+      AuthMethods←'LOGIN PLAIN'
+      Userid←'tester@aplteam.test'
+      Password←'secret'
+      Greeting←'220 fake.smtp.test ESMTP FakeSMTPServer'
+      SplitEHLO←0
+      Ignore←''
+      Refuse←''
+    ∇
+
+    ∇ DropAll;name
+    ⍝ Closes all connections, as a server does after a connection has been idle for a while
+      :Access Public
+      :For name :In _names
+          {}_conga.Close name
+      :EndFor
+    ∇
+
+    ∇ unmake
+      :Implements Destructor
+      Stop
+    ∇
+
+    ∇ {r}←Start congaRef;rc;port
+    ⍝ Starts the server on the first free port in the range 52525-52544 and returns that port.
+    ⍝ `congaRef` is a reference to a copy of the Conga namespace (not DRC).
+      :Access Public
+      _conga←congaRef.Init'FakeSMTPServer'
+      :For port :In 52524+⍳20
+          :If 0=⊃rc←_conga.Srv'' '127.0.0.1'port'Text' 1000000
+              _srv←2⊃rc
+              Port←port
+              :Leave
+          :EndIf
+      :EndFor
+      'Could not start the fake SMTP server: no free port'⎕SIGNAL 11/⍨0=≢_srv
+      _stop←0
+      _tid←Loop&0
+      r←Port
+    ∇
+
+    ∇ Stop
+    ⍝ Stops the server thread and closes the server
+      :Access Public
+      _stop←1
+      :If _tid∊⎕TNUMS
+          {}⎕TSYNC _tid
+      :EndIf
+      _tid←¯1
+      :If 0<≢_srv
+          {}_conga.Close _srv
+          _srv←''
+      :EndIf
+    ∇
+
+    ∇ Clear
+    ⍝ Forgets everything received so far
+      :Access Public
+      Commands←''
+      Messages←''
+      Logons←''
+    ∇
+
+    ∇ r←Loop dummy;rc;obj;evt;data
+    ⍝ The server thread: waits for Conga events until `_stop` is set
+      r←0
+      :While ~_stop
+          (rc obj evt data)←4↑_conga.Wait _srv 200
+          :If 0=rc
+              :Select evt
+              :Case 'Connect'
+                  obj Reply Greeting
+              :CaseList 'Block' 'BlockLast'
+                  obj Receive data
+              :EndSelect
+          :EndIf
+      :EndWhile
+    ∇
+
+    ∇ obj Receive data;state;i;line
+    ⍝ Adds `data` to the buffer of connection `obj` and handles every complete line
+      state←StateOf obj
+      state.buffer,←data
+      :While 0<i←⊃⍸CRLF⍷state.buffer
+          line←(i-1)↑state.buffer
+          state.buffer←(i+1)↓state.buffer
+          obj HandleLine line
+      :EndWhile
+    ∇
+
+    ∇ r←StateOf obj;ind
+    ⍝ Returns the namespace that holds the state of connection `obj`; creates it for a new connection
+      :If (≢_names)≥ind←_names⍳⊂obj
+          r←ind⊃_states
+      :Else
+          r←⎕NS''
+          r.(buffer mode data user)←'' 'cmd' '' ''
+          _names,←⊂obj
+          _states,←r
+      :EndIf
+    ∇
+
+    ∇ obj HandleLine line;state;parts
+      state←StateOf obj
+      :Select state.mode
+      :Case 'data'
+          :If line≡,'.'
+              Messages,←⊂state.data
+              state.data←''
+              state.mode←'cmd'
+              obj Reply'250 2.0.0 OK: queued'
+          :Else
+              state.data,←line,CRLF
+          :EndIf
+      :Case 'loginUser'
+          state.user←DecodeText line
+          state.mode←'loginPass'
+          obj Reply'334 UGFzc3dvcmQ6'
+      :Case 'loginPass'
+          state.mode←'cmd'
+          obj Reply'LOGIN'Authenticate state.user(DecodeText line)
+      :Case 'plain'
+          state.mode←'cmd'
+          obj Reply AuthenticatePlain line
+      :Else
+          Commands,←⊂line
+          :If (⊂⎕C 4↑line)∊Ignore
+              :Return
+          :EndIf
+          parts←' '(≠⊆⊢)line
+          :Select ⎕C 4↑line
+          :Case 'ehlo'
+              :If SplitEHLO
+                  obj Reply⊃EHLOResponse
+                  ⎕DL 0.5
+                  obj Reply⊃{⍺,CRLF,⍵}/1↓EHLOResponse
+              :Else
+                  obj Reply⊃{⍺,CRLF,⍵}/EHLOResponse
+              :EndIf
+          :Case 'helo'
+              obj Reply'250 fake.smtp.test'
+          :Case 'auth'
+              :Select ⎕C 2⊃parts,⊂''
+              :Case 'login'
+                  state.mode←'loginUser'
+                  obj Reply'334 VXNlcm5hbWU6'
+              :Case 'plain'
+                  :If 3≤≢parts
+                      obj Reply AuthenticatePlain 3⊃parts
+                  :Else
+                      state.mode←'plain'
+                      obj Reply'334 '
+                  :EndIf
+              :Else
+                  obj Reply'504 5.5.4 Unrecognized authentication type'
+              :EndSelect
+          :Case 'mail'
+              obj Reply'250 2.1.0 OK'
+          :Case 'rcpt'
+              :If ∨/{∨/('<',⍵,'>')⍷⎕C line}¨Refuse
+                  obj Reply'550 5.1.1 No such user'
+              :Else
+                  obj Reply'250 2.1.5 OK'
+              :EndIf
+          :Case 'data'
+              state.mode←'data'
+              obj Reply'354 Go ahead'
+          :CaseList 'noop' 'rset'
+              obj Reply'250 2.0.0 OK'
+          :Case 'quit'
+              obj Reply'221 2.0.0 Bye'
+              {}_conga.Close obj
+          :Else
+              obj Reply'500 5.5.2 Command not recognized'
+          :EndSelect
+      :EndSelect
+    ∇
+
+    ∇ r←EHLOResponse
+    ⍝ Returns the lines of the response to EHLO
+      r←⊂'250-fake.smtp.test'
+      :If 0<≢AuthMethods
+          r,←⊂'250-AUTH ',AuthMethods
+      :EndIf
+      r,←⊂'250 8BITMIME'
+    ∇
+
+    ∇ r←method Authenticate(user pass)
+      Logons,←⊂method user pass
+      :If (user pass)≡Userid Password
+          r←'235 2.7.0 Authentication successful'
+      :Else
+          r←'535 5.7.8 Authentication credentials invalid'
+      :EndIf
+    ∇
+
+    ∇ r←AuthenticatePlain line;text;fields
+    ⍝ RFC 4616: authorization identity, NUL, authentication identity, NUL, password
+      text←DecodeText line
+      fields←1↓¨((⎕UCS 0)=(⎕UCS 0),text)⊂(⎕UCS 0),text
+      :If 3=≢fields
+          r←'PLAIN'Authenticate 1↓fields
+      :Else
+          Logons,←⊂'PLAIN'text''
+          r←'501 5.5.2 Cannot decode AUTH PLAIN response'
+      :EndIf
+    ∇
+
+    ∇ obj Reply text
+      {}_conga.Send obj(text,CRLF)
+    ∇
+
+    ∇ r←CRLF
+      r←⎕UCS 13 10
+    ∇
+
+    ∇ r←DecodeText base64
+    ⍝ Decodes `base64` and interprets the bytes as UTF-8
+      r←'UTF-8'⎕UCS Base64Decode base64
+    ∇
+
+    ∇ r←Base64Decode base64;A;bits
+    ⍝ Returns the bytes (integers) encoded in the character vector `base64`
+      :Access Public Shared
+      A←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+      base64←(base64∊A)/base64
+      bits←,⍉(6⍴2)⊤¯1+A⍳base64
+      bits←(8×⌊(≢bits)÷8)↑bits
+      r←2⊥⍉((≢bits)÷8)8⍴bits
+    ∇
+
+:EndClass

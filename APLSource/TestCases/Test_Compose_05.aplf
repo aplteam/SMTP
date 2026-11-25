@@ -1,0 +1,19 @@
+ R←Test_Compose_05(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;cr;lf;crlf
+⍝ DotStuff and SplitLines
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ cr←⎕UCS 13
+ lf←⎕UCS 10
+ crlf←cr,lf
+ →T.PassesIf('a',crlf,'..',crlf,'b')≡SMTP.Message.DotStuff'a',crlf,'.',crlf,'b'
+ →T.PassesIf('..x',crlf,'y.z',crlf,'...')≡SMTP.Message.DotStuff'.x',crlf,'y.z',crlf,'..'
+ →T.PassesIf'abc'≡SMTP.Message.DotStuff'abc'
+ →T.PassesIf(,¨'a' '' 'b')≡SMTP.Message.SplitLines'a',crlf,crlf,'b'
+ →T.PassesIf(,¨'abcd')≡SMTP.Message.SplitLines'a',cr,'b',lf,'c',crlf,'d'
+ →T.PassesIf((,'a')'')≡SMTP.Message.SplitLines'a',crlf
+ →T.PassesIf(,⊂'')≡SMTP.Message.SplitLines''
+
+ R←T._OK
+⍝Done

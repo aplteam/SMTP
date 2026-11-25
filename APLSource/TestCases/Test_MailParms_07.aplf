@@ -1,0 +1,50 @@
+ R←Test_MailParms_07(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;myParams;qdmx
+⍝ CR and LF are refused in every property that ends up in a header or an SMTP command, also in text with characters above ⎕UCS 255
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ myParams←⎕NEW SMTP.MailParameters
+
+ :Trap 11
+     myParams.To←'Łukasz <x@y.com>',(⎕UCS 13 10),'Bcc: evil@example.com'
+     →T.PassesIf 0
+ :Else
+     qdmx←⎕DMX
+     →T.PassesIf'To: must not contain CR or LF'≡qdmx.EM
+ :EndTrap
+
+ :Trap 11
+     myParams.CC←'Łukasz <x@y.com>',(⎕UCS 13 10),'Bcc: evil@example.com'
+     →T.PassesIf 0
+ :Else
+     qdmx←⎕DMX
+     →T.PassesIf'CC: must not contain CR or LF'≡qdmx.EM
+ :EndTrap
+
+ :Trap 11
+     myParams.BCC←'Łukasz <x@y.com>',(⎕UCS 13 10),'Bcc: evil@example.com'
+     →T.PassesIf 0
+ :Else
+     qdmx←⎕DMX
+     →T.PassesIf'BCC: must not contain CR or LF'≡qdmx.EM
+ :EndTrap
+
+ :Trap 11
+     myParams.From←'Łukasz <x@y.com>',(⎕UCS 13 10),'Bcc: evil@example.com'
+     →T.PassesIf 0
+ :Else
+     qdmx←⎕DMX
+     →T.PassesIf'From: must not contain CR or LF'≡qdmx.EM
+ :EndTrap
+
+ :Trap 11
+     myParams.Subject←'Łukasz <x@y.com>',(⎕UCS 13 10),'Bcc: evil@example.com'
+     →T.PassesIf 0
+ :Else
+     qdmx←⎕DMX
+     →T.PassesIf'Subject: must not contain CR or LF'≡qdmx.EM
+ :EndTrap
+
+ R←T._OK
+⍝Done

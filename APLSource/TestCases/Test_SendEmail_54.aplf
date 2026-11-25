@@ -1,0 +1,36 @@
+ R←Test_SendEmail_54(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;cp;connection;rc;msg;config;message
+⍝ The methods of `Connection` that `Send` does not need: `Ping` before connecting, `Logon`, `Reset`, `Config`,
+⍝ `ConnectionParms` and `Logoff`; and `Message.Config`
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ ∆SERVER.Defaults
+ ∆SERVER.Clear
+ cp←∆NewParms
+ connection←⎕NEW SMTP.Connection(,⊂cp)
+ (rc msg)←connection.Ping
+ →T.PassesIf 1=rc
+ →T.PassesIf'555 SMTP server not connected'≡29↑msg
+ →T.PassesIf cp≡connection.ConnectionParms
+ (rc msg)←connection.Logon
+ →T.PassesIf 0=rc
+ →T.PassesIf connection.LoggedOn
+ →T.PassesIf 1=≢∆SERVER.Logons
+ (rc msg)←connection.Reset
+ →T.PassesIf 0=rc
+ →T.PassesIf'RSET'≡⊃⌽∆SERVER.Commands
+ config←connection.Config
+ →T.PassesIf 2=≢⍴config
+ →T.PassesIf(⊂'CongaRootName')∊config[;1]
+ (rc msg)←connection.Logoff
+ →T.PassesIf 0=rc
+ →T.PassesIf~connection.LoggedOn
+ →T.PassesIf~⊃connection.Connected
+ message←⎕NEW SMTP.Message(⍬ cp(∆NewMail'Config'))
+ config←message.Config
+ →T.PassesIf 2=≢⍴config
+ →T.PassesIf(⊂'Text')∊config[;1]
+
+ R←T._OK
+⍝Done

@@ -1,0 +1,10 @@
+ R←Test_Misc_01(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP
+⍝ `History` returns the version history
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ →T.PassesIf 0<≢SMTP.History
+
+ R←T._OK
+⍝Done

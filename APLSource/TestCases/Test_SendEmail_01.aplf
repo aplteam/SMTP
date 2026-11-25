@@ -1,18 +1,19 @@
- R←Test_SendEmail_01(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log
-⍝ Send the most simple email
+ R←Test_SendEmail_01(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log;text
+⍝ Send the most simple email and check the SMTP dialogue
  ⎕IO←1 ⋄ ⎕ML←1
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- parms←⎕NEW SMTP.MailParameters
- parms.To←∆CONNECTION.ConnectionParms.Userid
- parms.CC←∆TO
- parms.Subject←'Created by SMTP''s ',⊃⎕SI
- parms.Body←'Test mail'
- (rc msg log)←∆CONNECTION.Send parms
- Assert 0=rc
+ parms←∆NewMail'Created by SMTP''s ',⊃⎕SI
+ (rc msg log text)←∆Send parms
+ →T.PassesIf 0=rc
+ →T.PassesIf(⊂'MAIL FROM: <tester@aplteam.test>')∊∆SERVER.Commands
+ →T.PassesIf(⊂'RCPT TO: <john.doe@example.com>')∊∆SERVER.Commands
+ →T.PassesIf(⊂'LOGIN' 'tester@aplteam.test' 'secret')∊∆SERVER.Logons
+ →T.PassesIf parms.Subject≡text ∆Header'Subject'
+ →T.PassesIf'<john.doe@example.com>'≡text ∆Header'To'
+ →T.PassesIf'<tester@aplteam.test>'≡text ∆Header'From'
+ →T.PassesIf(⊂'Test mail')∊SMTP.Message.SplitLines text
 
- :If ∆ConfirmEmailOkay''
-     R←T._OK
- :EndIf
+ R←T._OK
 ⍝Done

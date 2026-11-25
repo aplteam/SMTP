@@ -1,0 +1,11 @@
+ r←text ∆Header name;lines;ind
+⍝ Returns the value of the header `name` in the message `text`, with folded lines unfolded,
+⍝ or '' when there is no such header
+ lines←∆HeaderLines text
+ lines←∊¨(' '≠⊃¨lines)⊂lines              ⍝ A line starting with a blank continues the previous one
+ ind←⊃⍸(⊂⎕C name,':')≡¨⎕C(1+≢name)↑¨lines
+ :If 0=ind
+     r←''
+ :Else
+     r←(2+≢name)↓ind⊃lines
+ :EndIf

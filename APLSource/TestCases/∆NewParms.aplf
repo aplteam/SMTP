@@ -1,0 +1,8 @@
+ r←∆NewParms
+⍝ Returns an instance of `ConnectionParameters` for the fake SMTP server
+ r←⎕NEW SMTP.ConnectionParameters
+ r.Server←'127.0.0.1'
+ r.Port←∆SERVER.Port
+ r.Secure←0
+ r.Userid←∆SERVER.Userid
+ r.Password←∆SERVER.Password

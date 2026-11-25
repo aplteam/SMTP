@@ -1,0 +1,14 @@
+ R←Test_SendEmail_53(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;rc;msg;log;text
+⍝ Missing "To", "Subject" and "Body": nothing is sent
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ ∆SERVER.Defaults
+ (rc msg log text)←∆Send ⎕NEW SMTP.MailParameters
+ →T.PassesIf ¯1=rc
+ →T.PassesIf'Missing: "To","Subject","Body"'≡msg
+ →T.PassesIf 0=≢∆SERVER.Commands
+
+ R←T._OK
+⍝Done

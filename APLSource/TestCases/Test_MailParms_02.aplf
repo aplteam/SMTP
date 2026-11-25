@@ -24,7 +24,7 @@
      →T.PassesIf 0
  :Else
      dmx←⎕DMX
-     →T.PassesIf'CC: invalid email address; no ampersand found'≡dmx.EM
+     →T.PassesIf'CC: invalid email address; no @ found'≡dmx.EM
  :EndTrap
 
  :Trap 0

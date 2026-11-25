@@ -1,10 +1,15 @@
  R←Test_ConnectionParms_01(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;myParams;dmx;buff
-⍝ Check the "Domain" property
+⍝ Check the "Domain" property; as long as it is not set, it follows "Userid"
  ⎕IO←1 ⋄ ⎕ML←1
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
  myParams←⎕NEW SMTP.ConnectionParameters
+
+ myParams.Userid←'a@first.com'
+ →T.PassesIf'first.com'≡myParams.Domain
+ myParams.Userid←'b@second.org'
+ →T.PassesIf'second.org'≡myParams.Domain
 
  myParams.Domain←buff←'smtp.google.com'
  →T.PassesIf buff≡myParams.Domain

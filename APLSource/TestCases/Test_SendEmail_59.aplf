@@ -1,0 +1,21 @@
+ R←Test_SendEmail_59(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;class;ref;results;rc;msg;log;text
+⍝ `Connection.CongaRef` pointing to a Conga namespace, by name and by reference
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ ∆SERVER.Defaults
+ class←SMTP.Connection
+ results←⍬
+ :For ref :In (⍕Conga)Conga
+     class.LDRC←''
+     class.CongaRef←ref
+     (rc msg log text)←∆Send ∆NewMail'Created by SMTP''s ',⊃⎕SI
+     results,←rc
+ :EndFor
+ class.LDRC←''
+ class.CongaRef←''
+ →T.PassesIf 0 0≡results
+
+ R←T._OK
+⍝Done

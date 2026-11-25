@@ -1,0 +1,21 @@
+ R←Test_Compose_06(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;text
+⍝ Addresses: one without a dot in the domain is fine, an invalid one is reported instead of crashing
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ parms←∆NewMail'Address test'
+ parms.From←'Kai <kai@localhost>'
+ parms.To←'admin@intranet'
+ (rc msg text)←∆Compose parms
+ →T.PassesIf 0=rc
+ →T.PassesIf'<admin@intranet>'≡text ∆Header'To'
+ →T.PassesIf'Kai <kai@localhost>'≡text ∆Header'From'
+
+ parms.CC←'good@example.com,bad@one@two.com'
+ (rc msg text)←∆Compose parms
+ →T.PassesIf ¯1=rc
+ →T.PassesIf'Invalid email address: bad@one@two.com'≡msg
+
+ R←T._OK
+⍝Done

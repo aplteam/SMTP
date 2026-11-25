@@ -1,0 +1,19 @@
+ R←Test_Compose_07(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;text;tempFile
+⍝ An attachment whose file has gone before the email is composed is reported as an error
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ tempFile←(FilesAndDirs.GetTempPath),'SMTP-Test-',(⍕⎕TS[7]),'.txt'
+ (⊂'Some text')⎕NPUT tempFile
+ parms←∆NewMail'Attachment test'
+ parms.From←'tester@aplteam.test'
+ parms.AddAttachment tempFile
+ ⎕NDELETE tempFile
+ (rc msg text)←∆Compose parms
+ →T.PassesIf ¯1=rc
+ →T.PassesIf'Error processing attachment 1: cannot read file "'≡49↑msg
+ →T.PassesIf∨/tempFile⍷msg
+
+ R←T._OK
+⍝Done

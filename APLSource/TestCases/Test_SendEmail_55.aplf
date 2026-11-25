@@ -1,0 +1,17 @@
+ R←Test_SendEmail_55(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;connection;rc;msg;log
+⍝ A server that refuses service right away
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ ∆SERVER.Defaults
+ ∆SERVER.Greeting←'554 5.3.2 No service'
+ connection←⎕NEW SMTP.Connection(,⊂∆NewParms)
+ (rc msg log)←connection.Send ∆NewMail'Created by SMTP''s ',⊃⎕SI
+ ∆SERVER.Defaults
+ →T.PassesIf 1=rc
+ →T.PassesIf'554 5.3.2 No service'≡msg
+ →T.PassesIf~⊃connection.Connected
+
+ R←T._OK
+⍝Done

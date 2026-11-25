@@ -1,0 +1,16 @@
+ R←Test_SendEmail_44(stopFlag batchFlag);⎕IO;⎕ML;⎕TRAP;parms;rc;msg;log;text;password
+⍝ A password with characters above ⎕UCS 255 is sent as UTF-8
+ ⎕IO←1 ⋄ ⎕ML←1
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ password←'Pässwört€',⎕UCS 128512
+ ∆SERVER.Password←password
+ parms←∆NewMail'Created by SMTP''s ',⊃⎕SI
+ (rc msg log text)←∆Send parms
+ ∆SERVER.Password←'secret'
+ →T.PassesIf 0=rc
+ →T.PassesIf(⊂'LOGIN' 'tester@aplteam.test'password)∊∆SERVER.Logons
+
+ R←T._OK
+⍝Done
