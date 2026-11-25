@@ -2,30 +2,30 @@
 ⍝ Create an instance with all the properties required for a connection to an SMTP server.
 ⍝ Pass an instance of this class as argument to `⎕NEW Connection`.
 
-    ∇ make;v
+    ∇ make
       :Implements Constructor
       :Access Public
       _Server←''                        ⍝ server address
       _Password←''                      ⍝ optional password (if server requires authentication)
-      _Userid←''                        ⍝ userid for authentication (defaults to `From`)
+      _Userid←''                        ⍝ userid for authentication; an empty `MailParameters.From` defaults to this
       _Secure←1                         ⍝ 1=SSL/TLS, 0 = not secure
-      _Port←465                         ⍝ server port (465 for secure, 578 otherwise)
-      _Domain←''                        ⍝ fully qualified domain name for logging on with `Userid` and `Password`
+      _Port←465                         ⍝ server port (465 for SSL/TLS; 25 or 587 for an unencrypted connection)
+      _Domain←''                        ⍝ the client's domain, sent with EHLO; defaults to the part of `Userid` after the @
       _Org←''                           ⍝ optional organization
       _ReplyTo←''                       ⍝ optional reply to email address
-      v←{3 6::'' ⋄ ' ',2⊃(⊃⊃⎕CLASS ⍵).##.Version}⎕THIS
-      _XMailer←'APLTeam SMTP Client',v  ⍝ client identifier
-      _TLSFlags←32                      ⍝ Default: accept server certificate without validating (see Conga User Guide Appendix C)
+      _XMailer←'APLTeam SMTP Client',VersionSuffix  ⍝ client identifier
+      _TLSFlags←32                      ⍝ Default: accept server certificate without validating it (insecure; see Conga User Guide Appendix C)
     ∇
 
     :Property Server
-    ⍝ URL of an SMTP server, for example smtp.gmail.com'
+    ⍝ Host name or IP address of an SMTP server, for example 'smtp.gmail.com'
     :Access public Instance
         ∇ r←get
           r←_Server
         ∇
         ∇ set arg
           'Server: not a simple character vector'Assert 80=⎕DR arg.NewValue
+          'Server: must not contain CR or LF'Assert NoLineBreaks arg.NewValue
           _Server←arg.NewValue
         ∇
     :EndProperty
@@ -37,19 +37,21 @@
           r←_Password
         ∇
         ∇ set arg;val
-          'Password: not a simple character vector'Assert 80=⎕DR arg.NewValue
+          'Password: not a simple character vector'Assert (⎕DR arg.NewValue)∊80 160 320
           _Password←arg.NewValue
         ∇
     :EndProperty
 
     :Property Userid
-    ⍝ Simple character vector that is going to be the subject line of the email
+    ⍝ Simple character vector: the user ID for logging on to `Server`, often an email address.
+    ⍝ An empty `MailParameters.From` defaults to this.
     :Access public Instance
         ∇ r←get
           r←_Userid
         ∇
         ∇ set arg
           'Userid: not a simple character vector'Assert 80=⎕DR arg.NewValue
+          'Userid: must not contain CR or LF'Assert NoLineBreaks arg.NewValue
           _Userid←arg.NewValue
         ∇
     :EndProperty
@@ -80,16 +82,19 @@
     :EndProperty
 
     :Property Domain
-    ⍝ URL of the SMTP server
+    ⍝ The client's domain, sent to the server with EHLO.
+    ⍝ As long as it is not set, it is the part of `Userid` after the @, so it follows changes of `Userid`.
     :Access public Instance
         ∇ r←get
           :If 0=≢_Domain
-              _Domain←{⍵↓⍨⍵⍳'@'}_Userid
+              r←{⍵↓⍨⍵⍳'@'}_Userid
+          :Else
+              r←_Domain
           :EndIf
-          r←_Domain
         ∇
         ∇ set arg
           'Domain: not a simple character vector'Assert 80=⎕DR arg.NewValue
+          'Domain: must not contain CR or LF'Assert NoLineBreaks arg.NewValue
           _Domain←arg.NewValue
         ∇
     :EndProperty
@@ -101,7 +106,8 @@
           r←_Org
         ∇
         ∇ set arg
-          'Org: not a simple character vector'Assert 80=⎕DR arg.NewValue
+          'Org: not a simple character vector'Assert (⎕DR arg.NewValue)∊80 160 320
+          'Org: must not contain CR or LF'Assert NoLineBreaks arg.NewValue
           _Org←arg.NewValue
         ∇
     :EndProperty
@@ -113,7 +119,8 @@
           r←_ReplyTo
         ∇
         ∇ set arg
-          'ReplyTo: not a simple character vector'Assert 80=⎕DR arg.NewValue
+          'ReplyTo: not a simple character vector'Assert (⎕DR arg.NewValue)∊80 160 320
+          'ReplyTo: must not contain CR or LF'Assert NoLineBreaks arg.NewValue
           :If 0<≢arg.NewValue
               'ReplyTo: does not carry an @'Assert'@'∊arg.NewValue
               'ReplyTo: not a valid email address'Assert 5<≢arg.NewValue
@@ -130,12 +137,15 @@
         ∇
         ∇ set arg
           'XMailer: not a simple character vector'Assert 80=⎕DR arg.NewValue
+          'XMailer: must not contain CR or LF'Assert NoLineBreaks arg.NewValue
           _XMailer←arg.NewValue
         ∇
     :EndProperty
 
     :Property TLSFlags
-    ⍝
+    ⍝ Certificate validation flags for Conga, see Conga User Guide Appendix C.
+    ⍝ The default, 32, accepts the server certificate without validating it: the connection is encrypted,
+    ⍝ but nothing makes sure that the other end really is the server you asked for.
     :Access public Instance
         ∇ r←get
           r←_TLSFlags
@@ -150,6 +160,21 @@
 
     Assert←{⍺←'' ⋄ (,1)≡,⍵:r←1 ⋄ ⎕ML←1 ⋄ ⍺ ⎕SIGNAL 1↓(⊃∊⍵),11}
 
+    ∇ r←VersionSuffix
+    ⍝ Returns a blank followed by the package's version number, or '' when no version number is available
+      r←''
+      :Trap 6
+          r←(⊃⊃⎕CLASS ⎕THIS).##.Version
+      :EndTrap
+      r←(0<≢r)/' ',r
+    ∇
+
+    ∇ r←NoLineBreaks text
+    ⍝ Returns 1 when `text` contains neither CR nor LF. A line break in a header or an SMTP command
+    ⍝ would allow injecting headers or commands.
+      r←~∨/(⎕UCS 10 13)∊text
+    ∇
+
     ∇ msg←PerformChecks dummy
     ⍝ Call this in order to check the parameters for completeness and consistency.
     ⍝ Checks all settings. If `msg` is empty then everything is OK.
@@ -160,9 +185,6 @@
       :EndIf
       :If 0=≢_Server
           msg,←⊂'"Server"'
-      :EndIf
-      :If 0=≢_Port
-          msg,←⊂'"Port"'
       :EndIf
       :If _Secure
           :If 0=≢_Password

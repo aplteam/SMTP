@@ -1,4 +1,6 @@
 :Class Message
+⍝ Composes the text of an email from an instance of `ConnectionParameters` and an instance of `MailParameters`.
+⍝ Instances are created by `Connection.Send`; there is usually no need to create one yourself.
     :Field public From←''
     :Field public Subject←''
     :Field public ReplyTo←''
@@ -44,70 +46,76 @@
       Attachments←mailParams.Attachments
     ∇
 
-    ∇ (rc msg text)←Compose mailParams;addHeader;haveAtts;boundary;mime;body;atts;i;n;att;⎕TRAP
+    ∇ (rc msg text)←Compose mailParams;haveAtts;boundary;mime;i;att;invalid;nonASCII
+    ⍝ Composes the email: headers, body and attachments.
+    ⍝ Returns `rc` (0 for success, ¯1 otherwise), an error message (empty for success) and the composed text.
+    ⍝ The text consists of characters in the range 0-255 (UTF-8 bytes) with CRLF line ends.
+    ⍝ It is not dot-stuffed yet; `Connection.Send` does that with `DotStuff` right before sending it.
       :Access public
-      ⍝ Compose email content
       (rc msg text)←¯1 '' ''
       _recipients←CompileAllRecipients mailParams
-      addHeader←{
-          ⍵∧.=' ':''
-          128∧.>⎕UCS ⍵:⍺,': ',⍵,CRLF
-          ⍺,': =?utf-8?B?',(Base64Encoding ⍵),'?=',CRLF
-      }
-      text←'Date'addHeader now    ⍝ Internet-conform date first
-      text,←'From'addHeader normalizeAddr From
-      text,←'Reply-To'addHeader normalizeAddr ReplyTo ⍝ the reply-to address
-      text,←'Organization'addHeader Org
-      text,←'X-Mailer'addHeader XMailer
-      text,←'MIME-Version'addHeader'1.0'
-      text,←CRLF,⍨'To:'CompileRecipients Recipients
-      text,←CRLF,⍨'CC:'CompileRecipients Recipients
-      text,←'Subject'addHeader(⎕UCS'UTF-8'⎕UCS Subject)     ⍝ the message subject
-     
-      :If haveAtts←0≠≢Attachments ⍝ Any attachments?
-          boundary←'000',((⍕⎕TS)~' '),'APLTeamSMTP',CRLF ⍝ construct a boundary for attachments
-          text,←'Content-Type'addHeader'multipart/mixed; boundary="',(¯2↓boundary),'"'
+      :If 0<≢invalid←InvalidAddresses mailParams
+          msg←'Invalid email address: ',⊃{⍺,', ',⍵}/invalid
+          →Exit
+      :EndIf
+      :If 0<≢nonASCII←NonASCIIAddresses mailParams
+          msg←'Email address with characters other than ASCII (not supported): ',⊃{⍺,', ',⍵}/nonASCII
+          →Exit
+      :EndIf
+      text←'Date: ',now,CRLF
+      text,←'From'AddressHeader From
+      text,←'Reply-To'AddressHeader ReplyTo
+      text,←'Organization'TextHeader Org
+      text,←'X-Mailer'TextHeader XMailer
+      text,←'MIME-Version: 1.0',CRLF
+      text,←'To:'CompileRecipients Recipients
+      text,←'CC:'CompileRecipients Recipients
+      text,←'Subject'TextHeader Subject
+
+      :If haveAtts←0≠≢Attachments
+          boundary←'000',((⍕⎕TS)~' '),'APLTeamSMTP'
+          text,←'Content-Type: multipart/mixed; boundary="',boundary,'"',CRLF
           text,←CRLF
           text,←'This is a multi-part message in MIME format.',CRLF
-          text,←'--',boundary
+          text,←'--',boundary,CRLF
       :EndIf
-     
+
       :If 0≠≢Body
           mime←(1+∨/'<html'⍷⎕C⊃Body)⊃'plain' 'html'
-          mime←'text/',mime,'; charset="UTF-8"'
-          text,←'Content-Type'addHeader mime
+          text,←'Content-Type: text/',mime,'; charset="UTF-8"',CRLF
           text,←CRLF
-          text,←⎕UCS'UTF-8'⎕UCS⊃,/Body,¨⊂CRLF
+          text,←EncodeBody Body
           text,←CRLF
       :EndIf
-     
+
       :If haveAtts
-          text,←haveAtts/'--',boundary
-          :For i :In ⍳n←≢Attachments
-              :If 0∊⍴att←i ProcessAttachment i⊃,Attachments
-                  msg←'Error processing attachment ',(⍕i),', file="',(1⊃i⊃Attachments),'"'
+          :For i :In ⍳≢Attachments
+              (msg att)←ProcessAttachment i⊃Attachments
+              :If 0<≢msg
+                  msg←'Error processing attachment ',(⍕i),': ',msg
                   →Exit
               :EndIf
+              text,←'--',boundary,CRLF
               text,←att
-              text,←'--',boundary
           :EndFor
+          text,←'--',boundary,'--',CRLF
       :EndIf
       (rc msg)←0 ''
+      _text←text
      Exit:
     ∇
 
-    ∇ r←Send
-      :Access public
-      r←Client.Send ⎕THIS
-    ∇
-
-    ∇ r←i ProcessAttachment attachment;mimeType;content;filename;⎕TRAP;path
-      r←''
+    ∇ (msg r)←ProcessAttachment attachment;mimeType;content;filename;path;qdmx
+    ⍝ Returns the MIME part for `attachment`, an instance of the `Attachment` class.
+    ⍝ `msg` is empty for success; otherwise it says why the file could not be read, and `r` is empty.
+      (msg r)←'' ''
       (path mimeType)←attachment.(filename mimeType)
-      filename←∊¯2↑⎕NPARTS path
-      :Trap 0
+      filename←⎕UCS'UTF-8'⎕UCS(∊¯2↑⎕NPARTS path)~⎕UCS 10 13 34   ⍝ No line breaks and no double quotes in a header
+      :Trap 19 22
           content←ReadFile path
       :Else
+          qdmx←⎕DMX
+          msg←'cannot read file "',path,'": ',qdmx.EM,{0=≢⍵:'' ⋄ ' (',⍵,')'}3⊃qdmx.OSError
           :Return
       :EndTrap
       r,←'Content-Type: ',mimeType,'; charset="US-ASCII"; name="',filename,'"',CRLF
@@ -130,59 +138,62 @@
       r,←{0=≢⍵:⍵ ⋄ 'BCC: '∘,¨normalizeAddr¨⍵}mailParams.BCC
     ∇
 
+    ∇ r←InvalidAddresses mailParams
+    ⍝ Returns those of From, Reply-To, To, CC and BCC that `extractAddr` cannot find an email address in.
+      r←(From ReplyTo),(⊂mailParams.To),mailParams.CC,mailParams.BCC
+      r←r/⍨0<≢¨r~¨' '
+      r←r/⍨0=≢¨extractAddr¨r
+    ∇
+
+    ∇ r←NonASCIIAddresses mailParams
+    ⍝ Returns those of From, Reply-To, To, CC and BCC whose email address (not the display name) has
+    ⍝ characters above ⎕UCS 127. Such an address would need the SMTPUTF8 extension, which is not supported.
+      r←(From ReplyTo),(⊂mailParams.To),mailParams.CC,mailParams.BCC
+      r←r/⍨0<≢¨r~¨' '
+      r←r/⍨{∨/127<⎕UCS extractAddr ⍵}¨r
+    ∇
+
     ∇ r←CRLF
       r←⎕UCS 13 10
     ∇
 
-    ∇ r←{len}chunk content;breaks;mask;stuff
-        ⍝ Convert content into a vector with embedded cr/lf plus dot-stuffing
-        ⍝ len : the maximum line length, excluding cr/lf line ends. Defaults to 72,
-        ⍝       as 74 is a safe line length to transmit through SMTP
-        ⍝ rc  : A string with cr/lf every len characters and dot-stuffing
-        ⍝ NOTE: It is safe to send a Base64-encoded string through this function,
-        ⍝       as those strings do not contain any dots. However, the function does
-        ⍝       not work well if there are cr/lf already present in the input.
-        ⍝ Dot-Stuffing: The end of an SMTP mail text is indicated by transmitting
-        ⍝               a line with a single dot. This means, that the original
-        ⍝               mail text must not contain a single dot on a line by itself.
-        ⍝               To prevent this, every line that starts with a dot get's
-        ⍝               preceeded with a second dot, which will be removed by the
-        ⍝               recipients mail client. See pop3_unstuff, the reverse function.
-     
-      stuff←{'.'=⊃⍵:'.',⍵ ⋄ ⍵}
-     
-      :If 900⌶⍬ ⋄ len←72 ⋄ :EndIf    ⍝ default line length, if not given
-      :If 2>|≡content ⍝ simple array? otherwise, treat it as a vector of vectors
-          :Select ≢⍴content
-          :Case 0
-              content←,⊂,content
-          :Case 1
-              :If ∨/CRLF∊content         ⍝ any line breaks?
-                  content,⍨←CRLF
-                  breaks←CRLF∘.=content
-                  content←(~∘⊂CRLF)¨content⊂⍨(∨⌿breaks)≠breaks[2;]∧¯1↓0,breaks[1;] ⍝ break on CRLF or lone CR or lone LF
-              :Else
-                  content←,⊂content
-              :EndIf
-          :Case 2
-              content←↓content
-          :Else
-              content←↓((×/¯1↓⍴content),¯1↑⍴content)⍴content
-          :EndSelect
+    ∇ r←EncodeBody body;lines
+    ⍝ `body` is a vector of character vectors, each of which may contain line breaks itself.
+    ⍝ Returns the body as UTF-8 bytes (as characters), every line ending with CRLF.
+    ⍝ A lone CR or a lone LF is turned into CRLF as well: SMTP knows no other line end, and some servers
+    ⍝ treat a lone LF as one, which would make dot-stuffing incomplete.
+      lines←⊃,/SplitLines¨body
+      r←⎕UCS'UTF-8'⎕UCS∊lines,¨⊂CRLF
+    ∇
+
+    ∇ r←SplitLines text;cr;lf
+      :Access Public Shared
+    ⍝ Splits the character vector `text` at CRLF, at a lone CR and at a lone LF.
+    ⍝ Empty lines are kept, so 'a',CRLF,CRLF,'b' results in 'a' '' 'b'.
+      cr←⎕UCS 13
+      lf←⎕UCS 10
+      text←(~(cr=text)∧1↓(lf=text),0)/text   ⍝ CRLF → LF
+      ((cr=text)/text)←lf                     ⍝ Lone CR → LF
+      r←1↓¨(lf=lf,text)⊂lf,text
+    ∇
+
+    ∇ r←DotStuff text;mask
+      :Access Public Shared
+    ⍝ `text` is the composed message: lines separated by CRLF.
+    ⍝ Doubles the dot at the start of every line that starts with a dot (RFC 5321, section 4.5.2).
+    ⍝ Without this, a line consisting of a single dot would end the message early, and the server would
+    ⍝ take whatever follows for SMTP commands. The receiving server removes the extra dots again.
+      mask←('.'=text)∧¯1↓1,(⎕UCS 10)=text
+      r←(1+mask)/text
+    ∇
+
+    ∇ r←chunk base64
+    ⍝ Returns the base64-encoded text `base64` as lines of at most 72 characters, each one ending with CRLF.
+    ⍝ RFC 2045 allows up to 76 characters. base64 has no dots, so no line needs dot-stuffing.
+      r←CRLF
+      :If 0<≢base64
+          r←∊(base64⊂⍨(≢base64)⍴72↑1),¨⊂CRLF
       :EndIf
-     
-      content←{⍵↓⍨-⊥⍨' '=⍵}¨content ⍝ delete trailing blanks
-      content←stuff¨content ⍝ dot-stuff (double leading dot)
-     
-      :If ∨/mask←len<≢¨content  ⍝ any lines longer than length?
-          :If 1=≢content ⍝ single chunk
-              content←{((≢⍵)⍴len↑1)⊂⍵}⊃content
-              (1↓content)←stuff¨1↓content
-          :Else
-              content←({⊂len∘chunk ⍵}@{mask})content
-          :EndIf
-      :EndIf
-      r←∊content,¨⊂CRLF
     ∇
 
     ∇ r←extractAddr addr;quotes;ind;del
@@ -191,20 +202,24 @@
         ⍝ perform very cursory validation on the address
         ⍝ addr - the string to be validated (can be in form "Fred Bloggs" fred@bloggs.com)
         ⍝ r    - the email address or empty if not valid
+        ⍝ The domain part does not need a dot, so an internal address like `kai@localhost` is accepted.
       r←''
       quotes←(⊢∨≠\)'"'=addr ⍝ mask out quoted material e.g. "fred@work" fred@bloggs.com
       ind←⊃⍸quotes<addr='@'
       :If ind≠0
           del←0,(1+≢addr),⍨⍸quotes<' '=addr ⍝ break on space
           r←addr{⍵[1]↓(¯1+⍵[2])↑⍺}del[0 1+del⍸ind]
-          r←⊃('.+@[^.].+\..+'⎕S'%')r
+          r←⊃('^<?[^<>@\s]+@[^<>@\s.][^<>@\s]*>?$'⎕S'%')r
       :EndIf
     ∇
 
     ∇ addr←normalizeAddr addr;a
       :Access Public Shared
+    ⍝ Returns `addr` with the email address in angle brackets: 'Fred fred@b.com' becomes 'Fred <fred@b.com>'.
+    ⍝ An `addr` that `extractAddr` finds no email address in is returned unchanged.
       :If 0<≢addr~' '  ⍝ MB: avoid issues when addr is a 0/ManyAddrs
-          :If '<>'≢(⊣/,⊢/)a←extractAddr addr
+      :AndIf 0<≢a←extractAddr addr
+          :If '<>'≢(⊣/,⊢/)a
               addr←(addr/⍨~∨\⌽<\⌽a⍷addr),'<',a,'>'
           :EndIf
       :EndIf
@@ -214,36 +229,109 @@
       :Access Public Shared
         ⍝ ⍵ byte string: 256∧.>⎕ucs ⍵
         ⍝ ← longer (4:3) string in A-Z,a-z,0-9,+/= only
+        ⍝ Text that may contain characters above ⎕UCS 127 must be converted to UTF-8 first.
       ⎕IO←0
       A←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
       ed←{⊃⍵{⍺{2⊥⍉((⌈(⍴⍵)÷⍺),⍺){⍺⍴(×/⍺)↑⍵}⍵},⍉(⍵⍴2)⊤⍺⍺}/⍺}
       r←{⍵,'='⍴⍨4|-⍴⍵}(⊂6 8 ed ⎕UCS txt)⌷A
     ∇
 
-    ∇ rc←now;time;day;mon;s;x;LOCTIME;TIMEZONE;isUnicode;twid
-        ⍝ returns an internet-conforming (RFC 2822) timestamp
-      :If 'Win'≡3↑⊃'.'⎕WG'APLVersion'
-          isUnicode←80=⎕DR'A'
-          twid←64 32[1+isUnicode] ⍝ set width for text elements based on unicode or not
-          'LOCTIME'⎕NA'KERNEL32.C32|GetLocalTime >{I2[8]}' ⍝ associate GetLocalTime function
-          'TIMEZONE'⎕NA'U4 KERNEL32.C32|GetTimeZoneInformation >{I4 T[',(⍕twid),'] {I2[8]} I4 T[',(⍕twid),'] {I2[8]} I4}' ⍝ associate GetTimeZone function
-        ⍝ prepare values for time formatting
-          day←'Sun,' 'Mon,' 'Tue,' 'Wed,' 'Thu,' 'Fri,' 'Sat,'
-          mon←'Jan ' 'Feb ' 'Mar ' 'Apr ' 'May ' 'Jun ' 'Jul ' 'Aug ' 'Sep ' 'Oct ' 'Nov ' 'Dec '
-        ⍝ read the local time and format to Internet standard
-          time←⊃LOCTIME⊂8⍴1000
-          rc←(1+time[3])⊃day
-          rc←rc,,'< >,ZI2,< >'⎕FMT time[4]
-          rc←rc,time[2]⊃mon
-          rc←rc,,'I4,< >,ZI2,<:>,ZI2,<:>,ZI2,< >'⎕FMT 1 4⍴time[1 5 6 7]
-        ⍝ call timezone function and calculate offset from GMT
-          x←TIMEZONE⊂0(twid⍴' ')(8⍴0)0(twid⍴' ')(8⍴0)0
-          x←(⊃x),2⊃x
-          s←'+-'[1+0>x←(-2⊃x)+-x[(5 8)[⊃x]]]
-          rc←rc,s,,'ZI4,< (GMT)>'⎕FMT|100×x÷60
-      :Else
-          rc←1⊃⎕SH'date -R' ⍝ unix - call date command
+    ∇ r←EncodedWords text;word;c
+      :Access Public Shared
+    ⍝ Returns `text` as a vector of RFC 2047 encoded words (UTF-8, base64).
+    ⍝ Each word holds at most 39 bytes of UTF-8, so it is at most 64 characters long and fits on a header
+    ⍝ line together with the header name. Characters are never split across two words.
+      r←''
+      word←''
+      :For c :In text
+          :If 39<≢'UTF-8'⎕UCS word,c
+              r,←⊂word
+              word←''
+          :EndIf
+          word,←c
+      :EndFor
+      r,←⊂word
+      r←{'=?utf-8?B?',(Base64Encoding ⎕UCS'UTF-8'⎕UCS ⍵),'?='}¨r
+    ∇
+
+    ∇ r←name TextHeader value
+      :Access Public Shared
+    ⍝ Returns a header line for an unstructured header like "Subject", ending with CRLF, or '' when `value` is empty.
+    ⍝ A value with characters above ⎕UCS 127 is sent as RFC 2047 encoded words, one per line.
+    ⍝ An ASCII value that would make the line longer than 78 characters is folded at blanks (RFC 5322, section 2.2.3).
+      r←''
+      :If 0<≢value~' '
+          :If ∨/127<⎕UCS value
+              r←name,': ',⊃{⍺,CRLF,' ',⍵}/EncodedWords value
+          :Else
+              r←name,': ',value
+              :If 78<≢r
+              :AndIf ' '∊value
+                  r←name FoldAtBlanks value
+              :EndIf
+          :EndIf
+          r,←CRLF
       :EndIf
+    ∇
+
+    ∇ r←name FoldAtBlanks value;line;w
+    ⍝ Returns "name: value" with CRLF inserted in front of blanks so that no line exceeds 78 characters,
+    ⍝ unless a single word is longer than that. Consecutive blanks are reduced to one.
+      r←''
+      line←name,':'
+      :For w :In ' '(≠⊆⊢)value
+          :If 78<(≢line)+1+≢w
+          :AndIf ' '∊line                             ⍝ At least one word on this line already
+              r,←line,CRLF
+              line←''
+          :EndIf
+          line,←' ',w
+      :EndFor
+      r,←line
+    ∇
+
+    ∇ r←EncodeAddress addr;ind;name;a
+      :Access Public Shared
+    ⍝ `addr` is an address as returned by `normalizeAddr`, for example 'Kai Jäger <kai@aplteam.com>'.
+    ⍝ A display name with characters above ⎕UCS 127 is sent as RFC 2047 encoded words.
+    ⍝ The address itself is never encoded that way: mail servers would not recognise it anymore.
+      ind←1+(≢addr)-(⌽addr)⍳'<'
+      :If ind>≢addr                                 ⍝ No angle brackets: a bare address
+          r←⎕UCS'UTF-8'⎕UCS addr
+      :Else
+          name←{(+/∧\' '=⍵)↓⍵}{(-+/∧\' '=⌽⍵)↓⍵}(ind-1)↑addr
+          a←⎕UCS'UTF-8'⎕UCS(ind-1)↓addr
+          :If ∨/127<⎕UCS name
+              name←{'""'≡(⊣/,⊢/)⍵:¯1↓1↓⍵ ⋄ ⍵}name
+              name←⊃{⍺,CRLF,' ',⍵}/EncodedWords name
+          :EndIf
+          r←name,((0<≢name)/' '),a
+      :EndIf
+    ∇
+
+    ∇ r←name AddressHeader addr
+    ⍝ Returns a header line for a header like "From" that carries a single address, or '' when `addr` is empty.
+      r←''
+      :If 0<≢addr~' '
+          r←name,': ',(EncodeAddress normalizeAddr addr),CRLF
+      :EndIf
+    ∇
+
+    ∇ r←now
+    ⍝ Returns the current local time as an RFC 5322 date, for example "Wed, 25 Nov 2026 14:46:52 +0100".
+    ⍝ The offset from UTC is rounded to full minutes, so zones like India (+0530) come out right.
+      r←FormatDate ⎕TS(⌊0.5+1440×(1 ⎕DT'J')-1 ⎕DT'Z')
+    ∇
+
+    ∇ r←FormatDate(ts offset);two
+      :Access Public Shared
+    ⍝ `ts` is a timestamp in `⎕TS` format (at least 6 items), `offset` the number of minutes east of UTC.
+    ⍝ Returns an RFC 5322 date, for example "Wed, 25 Nov 2026 14:46:52 +0100".
+      two←{¯2↑'0',⍕⍵}
+      r←(1+7|⊃1 ⎕DT⊂3↑ts)⊃'Sun' 'Mon' 'Tue' 'Wed' 'Thu' 'Fri' 'Sat'
+      r,←', ',(⍕ts[3]),' ',(ts[2]⊃'Jan' 'Feb' 'Mar' 'Apr' 'May' 'Jun' 'Jul' 'Aug' 'Sep' 'Oct' 'Nov' 'Dec')
+      r,←' ',(⍕ts[1]),' ',(two ts[4]),':',(two ts[5]),':',(two ts[6])
+      r,←' ',('+-'[1+offset<0]),(two⌊(|offset)÷60),two 60||offset
     ∇
 
     ∇ r←Config
@@ -252,21 +340,32 @@
       r←↑{⍵(⍎⍵)}¨⎕THIS⍎'⎕NL ¯2.2 ¯2.3'
     ∇
 
-    beginsWith←{⍵≡(≢⍵)↑⍺}
-
-    ∇ r←type CompileRecipients from
-    ⍝ type must be either "To:" "CC:"
-    ⍝ `from` is expected to be a vector of email addresses, for example:
-    ⍝ 'CC:info@tatin.dev,john-doe@myserver.com' ←→ 'C' CompileRecipients 'To: kai@aplteam.com' 'CC: info@tatin.dev' 'CC: john-doe@myserver.com'
-    ⍝ Splits at commas when the result exceeds (a multiple of) 78.
-      '⍺ is invalid: must be tither "To:" or "CC:"'⎕SIGNAL 11/⍨~(⊂type)∊'To:' 'CC:'
-      r←{1=≢⍵:⊂{⍵↓⍨⍵⍳' '}1⊃⍵ ⋄ {⍵↓⍨¨⍵⍳¨' '}⍵}{⍵/⍨(⊃type)=⊃¨⍵}from
-      ⍝ Max length is 78: +1 for the ",", +4 for type
-      r←type,1↓4{⍺←0
-          0=≢⍵:⍵
-          n←1⌈+/79>⍺++\1+≢¨⍵
-          (', ',⊃{⍺,',',⍵}/n↑⍵),∇ n↓⍵
-      }r
+    ∇ r←type CompileRecipients recipients;addrs;len;i;a
+    ⍝ Returns the header line for `type` ("To:" or "CC:"), ending with CRLF, or '' when there is no such recipient.
+    ⍝ `recipients` is what `CompileAllRecipients` returns, for example:
+    ⍝ 'CC:'CompileRecipients 'To: <kai@aplteam.com>' 'CC: <info@tatin.dev>' 'CC: <john-doe@myserver.com>'
+    ⍝ ←→ 'CC: <info@tatin.dev>, <john-doe@myserver.com>',CRLF
+    ⍝ A line that would get longer than 78 characters is folded after a comma (RFC 5322, section 2.2.3).
+      'Left argument is invalid: must be either "To:" or "CC:"'⎕SIGNAL 11/⍨~(⊂type)∊'To:' 'CC:'
+      addrs←recipients/⍨(⊂type)≡¨(≢type)↑¨recipients
+      addrs←{⍵↓⍨⍵⍳' '}¨addrs
+      addrs←addrs/⍨0<≢¨addrs~¨' '
+      r←''
+      :If 0<≢addrs
+          addrs←EncodeAddress¨addrs
+          r←type
+          len←≢r
+          :For i :In ⍳≢addrs
+              a←(i⊃addrs),(i<≢addrs)/','
+              :If (1<i)∧78<len+1+≢a
+                  r,←CRLF
+                  len←0
+              :EndIf
+              r,←' ',a
+              len+←1+≢a
+          :EndFor
+          r,←CRLF
+      :EndIf
     ∇
 
 :EndClass

@@ -21,7 +21,8 @@
           r←_To
         ∇
         ∇ set arg
-          'To: not a simple character vector'Assert 80=⎕DR arg.NewValue
+          'To: not a simple character vector'Assert (⎕DR arg.NewValue)∊80 160 320
+          'To: must not contain CR or LF'Assert NoLineBreaks arg.NewValue
           'To: does not contain an @ symbol'Assert'@'∊arg.NewValue
           'To: invalid email address'Assert 5<≢arg.NewValue
           'To: you must not specify more than one email address'Assert~','∊arg.NewValue
@@ -37,9 +38,10 @@
         ∇
         ∇ set arg;val
           val←','(≠⊆⊢)arg.NewValue
-          'CC: not a simple character vector'Assert∧/{80=⎕DR ⍵}¨val
+          'CC: not a simple character vector'Assert∧/{(⎕DR ⍵)∊80 160 320}¨val
+          'CC: must not contain CR or LF'Assert NoLineBreaks arg.NewValue
           'CC: invalid email address'Assert 5∧.<≢¨val
-          'CC: invalid email address; no ampersand found'Assert∧/'@'∊¨val
+          'CC: invalid email address; no @ found'Assert∧/'@'∊¨val
           _CC←val
         ∇
     :EndProperty
@@ -52,51 +54,58 @@
         ∇
         ∇ set arg;val
           val←','(≠⊆⊢)arg.NewValue
-          'BCC: not a simple character vector'Assert∧/{80=⎕DR ⍵}¨val
+          'BCC: not a simple character vector'Assert∧/{(⎕DR ⍵)∊80 160 320}¨val
+          'BCC: must not contain CR or LF'Assert NoLineBreaks arg.NewValue
           'BCC: invalid email address'Assert 5∧.<≢¨val
-          'BCC: no ampersand found'Assert∧/'@'∊¨val
+          'BCC: no @ found'Assert∧/'@'∊¨val
           _BCC←val
         ∇
     :EndProperty
 
     :Property From
-    ⍝ Something like <john Doe) john.doe@wherever.com or just an email address.
+    ⍝ Something like 'John Doe <john.doe@wherever.com>' or just an email address.
+    ⍝ The display name may contain any Unicode character, the email address itself only ASCII characters.
     ⍝ If this is left empty it falls back to `Userid` of the connection instance.
-    ⍝ This is a good idea in most scenarios these days because otherwise you mail 
-    ⍝ is very likely to end up in the Spam folder.
+    ⍝ That is a good idea in most scenarios these days, because many servers accept only their own
+    ⍝ addresses as sender, and others are likely to put your mail into the spam folder.
     :Access public Instance
         ∇ r←get
           r←_From
         ∇
         ∇ set arg
-          'From: not a simple character vector'Assert 80=⎕DR arg.NewValue
+          'From: not a simple character vector'Assert (⎕DR arg.NewValue)∊80 160 320
+          'From: must not contain CR or LF'Assert NoLineBreaks arg.NewValue
           'From: invalid email address'Assert 5<≢arg.NewValue
-          'From: no ampersand found'Assert'@'∊arg.NewValue
+          'From: no @ found'Assert'@'∊arg.NewValue
           _From←arg.NewValue
         ∇
     :EndProperty
 
     :Property Subject
-    ⍝ Simple character vector that is going to be the subject line of the email
+    ⍝ Simple character vector that is going to be the subject line of the email.
+    ⍝ Any Unicode character is fine; it is encoded as required (RFC 2047).
     :Access public Instance
         ∇ r←get
           r←_Subject
         ∇
         ∇ set arg
-          'Subject: not a simple character vector'Assert (⎕DR arg.NewValue)∊80 160
+          'Subject: not a simple character vector'Assert (⎕DR arg.NewValue)∊80 160 320
+          'Subject: must not contain CR or LF'Assert NoLineBreaks arg.NewValue
           _Subject←arg.NewValue
         ∇
     :EndProperty
 
     :Property Body
-    ⍝ Simple character vector that is going to be the subject line of the email
+    ⍝ The text of the email: a simple character vector or a vector of character vectors (lines).
+    ⍝ Any Unicode character is fine; the body is sent as UTF-8.
+    ⍝ A body that contains "<html" in its first line is sent as HTML, otherwise as plain text.
     :Access public Instance
         ∇ r←get
           r←_Body
         ∇
         ∇ set arg;val
           val←,⊆arg.NewValue
-          'Body: neither a simple character vector nor a vector of character vectors'Assert∧/{(⎕DR ⍵)∊80 160}¨val
+          'Body: neither a simple character vector nor a vector of character vectors'Assert∧/{(⎕DR ⍵)∊80 160 320}¨val
           _Body←val
         ∇
     :EndProperty
@@ -123,11 +132,11 @@
     ⍝ * A simple character vector interpreted as a filename
     ⍝ * A vector of two simple character vectors interpreted as filename and mime type
       :Access public instance
-      :If 80=⎕DR y
+      :If (⎕DR y)∊80 160 320
           _Attachments,←⎕NEW(⊃⊃⎕CLASS ⎕THIS).##.Attachment(,⊂y)
       :ElseIf 2=≡y
       :AndIf 2=≢y
-      :AndIf 80∧.=⎕DR¨y
+      :AndIf ∧/(⎕DR¨y)∊80 160 320
           _Attachments,←⎕NEW(⊃⊃⎕CLASS ⎕THIS).##.Attachment y
       :ElseIf 1=≢y
       :AndIf (⊃⊃⎕CLASS ⎕THIS).##.Attachment≡⊃⊃⎕CLASS y
@@ -138,6 +147,12 @@
     ∇
 
     Assert←{⍺←'' ⋄ (,1)≡,⍵:r←1 ⋄ ⎕ML←1 ⋄ ⍺ ⎕SIGNAL 1↓(⊃∊⍵),11}
+
+    ∇ r←NoLineBreaks text
+    ⍝ Returns 1 when `text` contains neither CR nor LF. A line break in a header or an SMTP command
+    ⍝ would allow injecting headers or commands.
+      r←~∨/(⎕UCS 10 13)∊text
+    ∇
 
     ∇ msg←PerformChecks dummy
     ⍝ Call this in order to check the parameters for completeness and consistency.

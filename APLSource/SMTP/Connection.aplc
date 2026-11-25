@@ -13,7 +13,6 @@
     :Field _clt←''             ⍝ Conga client id
     :Field _loggedOn←0
     :Field _EHLOResponse←''
-    :Field _conx←''            ⍝ Conga connection id
 
 
     :Property EHLOResponse
@@ -27,13 +26,6 @@
     :Access public
         ∇ r←get
           r←_clt
-        ∇
-    :EndProperty
-
-    :Property Conx  ⍝ client connection
-    :Access public
-        ∇ r←get
-          r←_conx
         ∇
     :EndProperty
 
@@ -117,7 +109,7 @@
       r←⎕NEW(⊃⊃⎕CLASS ⎕THIS).##.Message(⎕THIS connectionParms mailParms)
     ∇
 
-    ∇ (rc msg log)←Send mailParms;logIt;message;text;rec
+    ∇ (rc msg log)←Send mailParms;logIt;message;text;rec;wasConnected
       :Access public
       logIt←{⍵⊣log,←⍵[2]}
       (rc msg log)←¯1 '' ''
@@ -133,15 +125,12 @@
       message←NewMessage _connectionParms mailParms
       (rc msg text)←message.Compose mailParms
       →Exit if 0≠rc
-      :If ~⊃Connected
-          (rc msg)←Connect      ⍝ connect to SMTP server
-          →Exit if 0≠rc
+      wasConnected←⊃Connected
+      (rc msg)←Session
+      :If 0≠rc
+      :AndIf wasConnected∧~⊃Connected   ⍝ The server has closed the connection, after a timeout for example
+          (rc msg)←Session
       :EndIf
-      :If ~LoggedOn
-          (rc msg)←Logon
-          →Exit if 0≠rc
-      :EndIf
-      (rc msg)←Ping ⍝ ping the server to make sure it's still up
       →Exit if 0≠rc
       (rc msg)←Do'MAIL FROM: ',message.(normalizeAddr extractAddr From)
       →Err if 0≠rc
@@ -151,29 +140,28 @@
       :EndFor
       (rc msg)←Do'DATA'
       →Err if 0≠rc
-      (rc msg)←Do text,CRLF,'.'
+      (rc msg)←Do(message.DotStuff text),CRLF,'.'
       →Exit if 0=rc
      Err:
       {}logIt Do'RSET'
      Exit:
     ∇
 
-    ∇ (rc msg)←{crlf}Xmit data;tmp
-      :Access public
-    ⍝ transmit data without waiting for a response
-    ⍝ {crlf} is a Boolean (default=0) indicating whether to append CRLF to data
-    ⍝ After receiving a "DATA" comment, the SMTP server does not send a response until it receives CRLF,'.',CRLF
-    ⍝ so, the typical use of Xmit would be to send the headers and content of the message and ending with a Do CRLF,'.'
-      :If 0=⎕NC'crlf' ⋄ crlf←0 ⋄ :EndIf
-      msg←'Sent'
-      →Exit if 0=rc←⊃tmp←LDRC.Send Clt data,crlf/CRLF
-      msg←1↓∊' ',¨⍕¨(tmp,'' '')[2 3]
-     Exit:
+    ∇ (rc msg)←Session
+    ⍝ Makes sure that there is a connection, that the user is logged on, and that the server answers
+      :If ~⊃Connected
+          →0 if 0≠⊃(rc msg)←Connect
+      :EndIf
+      :If ~LoggedOn
+          →0 if 0≠⊃(rc msg)←Logon
+      :EndIf
+      (rc msg)←Ping
     ∇
 
     ∇ (rc msg)←Connect;r;uid;cert
       :Access public
       (rc msg)←¯1 ''
+      ForgetConnection                ⍝ A connection that still exists is replaced, and a new one needs a logon
       _connectionParms.Secure←0⌈_connectionParms.Secure
      
       :If 0∊⍴LDRC
@@ -195,8 +183,7 @@
               (rc msg)←EHLO _connectionParms.Domain ⍝ log on user domain
               _EHLOResponse←msg
           :Else
-              {}LDRC.Close _clt
-              _clt←''
+              ForgetConnection
           :EndIf
       :Case 100 ⍝ timeout
           msg←'Conga timeout on connect'
@@ -207,30 +194,33 @@
      Exit:
     ∇
 
-    ∇ (rc msg)←EHLO domain;resp;m
+    ∇ (rc msg)←EHLO domain;m
       :Access public
-    ⍝ Some SMTP servers (gmail in particular) break up the response to EHLO into multiple messages
+    ⍝ Some SMTP servers (Gmail in particular) send the response to EHLO in several parts.
+    ⍝ The last line of the response starts with "250 ", all others with "250-".
       :If 0=⊃(rc msg)←Do'EHLO ',domain
-          resp←msg splitOn CRLF
-          :If '250 '≢4↑⊃⊢/resp  ⍝ this makes the assumption that the EHLO response is in 2 parts only
-              :If 0=⊃(rc m)←Do''
-                  msg,←m
-              :Else
+          :While '250 '≢4↑⊃⊢/msg splitOn CRLF
+              :If 0≠⊃(rc m)←Do''
                   msg←m
+                  :Leave
               :EndIf
-          :EndIf
+              msg,←CRLF,m
+          :EndWhile
       :EndIf
     ∇
 
     ∇ (rc msg)←Logon;email;rc;dom;elho;auth
       :Access public
-    ⍝ Log on to an SMTP mail server optionally using AUTH LOGIN or AUTH PLAIN authentication if userid and password are non-empty
-    ⍝  Other authentication types may be added in the future
-    ⍝  If no password is set, then authentication is not done
-    ⍝
+    ⍝ Log on to an SMTP mail server with AUTH LOGIN or AUTH PLAIN, whichever the server offers.
+    ⍝ Without a password there is no authentication at all, as for a relay in an internal network.
+    ⍝ Other authentication methods may be added in the future.
       (rc msg)←¯1 ''
       :If ~⊃Connected
           →Exit if 0≠⊃(rc msg)←Connect
+      :EndIf
+      :If 0=≢_connectionParms.Password
+          (rc msg)←0 ''
+          →Exit
       :EndIf
       elho←' '(,⍨)¨(~EHLOResponse∊CRLF)⊆EHLOResponse
       :If 1≠≢auth←('^250.AUTH '⎕S'%')elho
@@ -239,16 +229,22 @@
       auth←' '(≠⊆⊢)8↓⊃auth
       :If (⊂'LOGIN')∊auth
           →Exit if 0≠⊃(rc msg)←Do'AUTH LOGIN'
-          →Exit if 0≠⊃(rc msg)←Do(⊃⊃⎕CLASS ⎕THIS).##.Message.Base64Encoding _connectionParms.Userid
-          (rc msg)←Do(⊃⊃⎕CLASS ⎕THIS).##.Message.Base64Encoding _connectionParms.Password
+          →Exit if 0≠⊃(rc msg)←Do Base64UTF8 _connectionParms.Userid
+          (rc msg)←Do Base64UTF8 _connectionParms.Password
       :ElseIf (⊂'PLAIN')∊auth
           →Exit if 0≠⊃(rc msg)←Do'AUTH PLAIN'
-          (rc msg)←Do(⊃⊃⎕CLASS ⎕THIS)##.Message.Base64Encoding _connectionParms.Userid,(⎕UCS 0),_connectionParms.Userid,(⎕UCS 0),_connectionParms.Password
+          ⍝ RFC 4616: authorization identity (empty: same as the authentication identity), user, password
+          (rc msg)←Do Base64UTF8(⎕UCS 0),_connectionParms.Userid,(⎕UCS 0),_connectionParms.Password
       :Else
-          'Only authentication methods LOGIN and PLAIN are currently supported'⎕SIGNAL 11
+          (rc msg)←¯1('The server offers neither AUTH LOGIN nor AUTH PLAIN, only: ',1↓∊' ',¨auth)
       :EndIf
      Exit:
       _loggedOn←0=rc
+    ∇
+
+    ∇ r←Base64UTF8 text
+    ⍝ Returns `text` converted to UTF-8 and then base64-encoded, as required for AUTH LOGIN and AUTH PLAIN
+      r←(⊃⊃⎕CLASS ⎕THIS).##.Message.Base64Encoding ⎕UCS'UTF-8'⎕UCS text
     ∇
 
     ∇ (rc msg)←Logoff
@@ -270,9 +266,17 @@
       (rc msg)←Do'RSET'
     ∇
 
+    ∇ ForgetConnection
+    ⍝ Closes the Conga client, if there is one, and forgets about it and about the logon
+      :If 0<≢_clt
+          {}LDRC.Close _clt
+      :EndIf
+      _clt←''
+      _loggedOn←0
+      _EHLOResponse←''
+    ∇
+
     ∇ r←Do cmd;cnt;rc;c
-      :Access public
-      →go
     ⍝ Send a command to an smtp server and retrieve answer
     ⍝ cmd: smtp command, or mail body, or empty vector
     ⍝      If cmd is an empty vector, the function returns a pending answer
@@ -295,7 +299,7 @@
     ⍝                      S: 250 251; E: 421 450 451 452 500 501 503 550-553
     ⍝ DATA                Initialize sending mail body
     ⍝                      S: 354; E: 451 452 552 554
-    ⍝ <maildata>          Send the mail body (use smtp_stuff to prepare it)
+    ⍝ <maildata>          Send the mail body (dot-stuffed with `Message.DotStuff`)
     ⍝                      NOTE: there is no response until "end-of-mail" is sent.
     ⍝ .<cr/lf>            "end-of-mail" command, a line with only a dot and cr/lf
     ⍝                      S: 250; E: 421 451 500 501 503 554
@@ -337,24 +341,36 @@
     ⍝ 552 Requested mail action aborted: exceeded storage allocation
     ⍝ 553 Requested action not taken: mailbox name not allowed (typo?)
     ⍝ 555 Only used by this program to indicate a special error condition
-     go:
+      :Access public
+    ⍝ After a Conga error, a timeout, or when the server has closed the connection, the connection
+    ⍝ is forgotten, so that the next `Send` connects and logs on again.
       :If ⊃c←Connected                   ⍝ if we're connected
           :If ~empty cmd
               :If 0≠⊃rc←LDRC.Send Clt(cmd,CRLF)
-                  →Exit⊣r←'555 Conga error: ',,⍕2↑rc
+                  r←'555 Conga error: ',,⍕2↑rc
+                  ForgetConnection
+                  →Exit
               :EndIf
           :EndIf
           cnt←0
      Try:
-          :Select ⊃rc←LDRC.Wait Clt 2000  ⍝ wait up to 2 seconds
+          rc←LDRC.Wait Clt 2000             ⍝ wait up to 2 seconds
+          :Select ⊃rc
           :Case 0
-              r←¯2↓4⊃rc                     ⍝ grab the data
+              :If (⊂3⊃rc)∊'Block' 'BlockLast'
+                  r←¯2↓4⊃rc                 ⍝ grab the data
+              :Else                         ⍝ "Closed" or "Error"
+                  r←'555 The server has closed the connection'
+                  ForgetConnection
+              :EndIf
           :Case 100                         ⍝ timeout, try up to 3 times
               cnt+←1
               →Try if 3>cnt
               r←'555 Conga timeout'
+              ForgetConnection
           :Else
               r←'555 Conga error: ',,⍕2↑rc
+              ForgetConnection
           :EndSelect
       :Else                              ⍝ if the socket does not exist
           r←'555 SMTP server not connected - ',2⊃c
@@ -423,8 +439,7 @@
     ∇
 
     ∇ LDRC←rootname ResolveCongaRef CongaRef;z;failed
-    ⍝ CongaRef could be a charvec, reference to the Conga or DRC namespaces, or reference to an iConga instance
-    ⍝ :Access public shared  ⍝!!! testing only  - remove :Access after testing
+    ⍝ CongaRef could be the name of the Conga or DRC namespace, a reference to it, or a reference to an initialised Conga instance
       LDRC←'' ⋄ failed←0
       :Select ⎕NC⊂'CongaRef' ⍝ what is it?
       :Case 9.1 ⍝ namespace?  e.g. CongaRef←DRC or Conga
@@ -437,7 +452,7 @@
               :Else
                   →0⊣LDRC←''
               :End
-          :Else ⍝ if HttpCommand is reloaded and re-executed in rapid succession, Conga initialization may fail, so we try twice
+          :Else ⍝ if Conga is initialised in rapid succession, initialization may fail, so we try twice
               :If failed
                   →0⊣LDRC←''
               :Else
@@ -448,7 +463,7 @@
           LDRC←CongaRef ⍝ an instance is already initialized
       :Case 2.1 ⍝ variable?  e.g. CongaRef←'#.Conga'
           :Trap 0
-              LDRC←ResolveCongaRef(⍎∊⍕CongaRef)
+              LDRC←rootname ResolveCongaRef(⍎∊⍕CongaRef)
           :EndTrap
       :EndSelect
     ∇

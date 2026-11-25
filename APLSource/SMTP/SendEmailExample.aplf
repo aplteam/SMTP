@@ -1,29 +1,40 @@
- r←{filenames}SendEmailExample emailAddress;connectionParms;myConnection;mailParms;rc;msg;log
-⍝ Use this to send a test email to `emailAddress`.\\
-⍝ Use with care: the email address used for logging on to the SMTP server is not suitable for
-⍝ anything remotely confidental; it's just for tests. Be aware that the hard-coded credentials
-⍝ might get changed in case somebody uabuses this.\\
-⍝ Note that the number of emails you may send is limited.\\
-⍝ `⍺` is optional and may be a char vector (filename) or a vector of char vectors (filesnames).
-⍝ If specified those are attached to the email. Relative filenames are expected in `./`.
+ r←{connectionParms}SendEmailExample y;emailAddress;filenames;myConnection;mailParms;rc;msg;log
+⍝ Sends a test email to an email address, using your own SMTP account.\\
+⍝ `⍺` must be an instance of `ConnectionParameters` with at least `Server`, `Userid` and `Password` set,
+⍝ and `Port` and `Secure` if the defaults (465 and 1) are not right for your server.\\
+⍝ `⍵` is either an email address, or an email address followed by one or more filenames:\\
+⍝ `'john.doe@example.com'`\\
+⍝ `'john.doe@example.com' 'report.pdf' 'data.csv'`\\
+⍝ The files are attached to the email; relative filenames are relative to the current directory.\\
+⍝ The email is sent from `Userid` (see `MailParameters.From`).\\
+⍝ Returns a message that says whether the email was sent.\\
+⍝ Example:\\
+⍝ ```
+⍝ cp←⎕NEW SMTP.ConnectionParameters
+⍝ cp.(Server Userid Password)←'smtp.example.com' 'me@example.com' 'my-app-password'
+⍝ cp SMTP.SendEmailExample 'john.doe@example.com'
+⍝ ```
+⍝ Do not put credentials into a file that is under version control.
+ :If 9≠⎕NC'connectionParms'
+ :OrIf ConnectionParameters≢⊃⊃⎕CLASS connectionParms
+     'Left argument must be an instance of ConnectionParameters'⎕SIGNAL 11
+ :EndIf
+ :If 80=⎕DR y
+     emailAddress←y
+     filenames←''
+ :Else
+     emailAddress←⊃y
+     filenames←⊃,/⊆¨1↓y
+ :EndIf
 
- filenames←{0<⎕NC ⍵:,⊆⍎⍵ ⋄ ⍬}'filenames'
-
- connectionParms←⎕NEW ConnectionParameters
- connectionParms.Server←'smtp.gmail.com'
- connectionParms.Port←465
- connectionParms.Userid←'smtp.tatin.tests1@gmail.com'
- connectionParms.Password←'xjywwfkwjgeeacod'
  myConnection←⎕NEW Connection(,⊂connectionParms)
 
  mailParms←⎕NEW MailParameters
- mailParms.From←'do-not-reply@aplteam.com'
- mailParms.To←connectionParms.Userid
- mailParms.CC←emailAddress
- mailParms.Subject←'From APLTeam SMTP'
- mailParms.Body←'Test E-mail' ⍝ Can also be a vector of text vectors
+ mailParms.To←emailAddress
+ mailParms.Subject←'Test email from APLTeam''s SMTP package'
+ mailParms.Body←'This is a test email, sent by the SendEmailExample function of the SMTP package.' ⍝ Can also be a vector of text vectors
 
- :If filenames≢⍬
+ :If 0<≢filenames
      mailParms.AddAttachment¨filenames
  :EndIf
 
@@ -31,5 +42,5 @@
  :If 0=rc
      r←'Email was sent successfully'
  :Else
-     r←'Failed with rc=',(⍕rc),'; ',¯1↓(⊆msg),¨⎕UCS 13
+     r←'Failed with rc=',(⍕rc),'; ',⊃{⍺,'; ',⍵}/⊆msg
  :EndIf
